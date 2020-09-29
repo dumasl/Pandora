@@ -22,3 +22,4 @@ script:
 
 after_success:
 - if [ "x${TRAVIS_PULL_REQUEST}" = "xfalse" ]; then .travis/on_success.sh; fi
+- .travis/on_success.sh
