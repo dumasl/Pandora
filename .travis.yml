@@ -12,7 +12,7 @@ before_script:
 - export SRCDIR=/data
 
 script:
-- docker run -v $TRAVIS_BUILD_DIR/:/data ldumas/pandora_build_env:ubuntu19.04-python3.7 /bin/sh -c "virtualenv venv; source venv/bin/activate; pip install -e ."
+- docker run -v $TRAVIS_BUILD_DIR/:/data ldumas/pandora_build_env:ubuntu19.04-python3.7 /bin/sh -c "virtualenv venv; . ./venv/bin/activate; pip install -e ."
 
 # deploy:
 #   provider: script
