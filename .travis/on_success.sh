@@ -1,5 +1,5 @@
 if [ "x${TRAVIS_REPO_SLUG}" = "xdumasl/Pandora_pandora" ]; then
-    openssl aes-256-cbc -K $encrypted_f05cf190aee2_key -iv $encrypted_f05cf190aee2_iv -in .travis/github_deploy_key.enc -out github_deploy_key -d
+    openssl aes-256-cbc -K $encrypted_8ebb1ef83f64_key -iv $encrypted_8ebb1ef83f64_iv -in .travis/github_deploy_key.enc -out github_deploy_key -d
     chmod 600 github_deploy_key
     eval `ssh-agent -s`
     ssh-add github_deploy_key
