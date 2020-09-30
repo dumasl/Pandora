@@ -7,10 +7,7 @@ if [ "x${TRAVIS_REPO_SLUG}" = "xdumasl/Pandora_pandora" ]; then
     cd "$TRAVIS_BUILD_DIR"
     docker run -v $TRAVIS_BUILD_DIR:/data ldumas/pandora_build_env:ubuntu19.04-python3.7 /bin/sh -c "cd /data; . ./venv/bin/activate; pip install sphinx sphinx_rtd_theme sphinx_autoapi;"
     docker run -v $TRAVIS_BUILD_DIR:/data ldumas/pandora_build_env:ubuntu19.04-python3.7 /bin/sh -c "cd /data; . ./venv/bin/activate; cd doc; make html; chmod -R 777 build"
-    cd $TRAVIS_BUILD_DIR/doc/build/
-    ls -l
-    cd html/
-    ls -l
+    cd $TRAVIS_BUILD_DIR/doc/build/html/
     touch .nojekyll
     git init
     git checkout -b gh-pages
