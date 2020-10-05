@@ -5,8 +5,8 @@ if [ "x${TRAVIS_REPO_SLUG}" = "xdumasl/Pandora_pandora" ]; then
     ssh-add github_deploy_key
 
     cd "$TRAVIS_BUILD_DIR"
-    docker run -v $TRAVIS_BUILD_DIR:/data ldumas/pandora_build_env:ubuntu19.04-python3.7-pages /bin/sh -c "cd /data; . ./venv/bin/activate; cd doc; make html; chmod -R 777 build"
-    cd $TRAVIS_BUILD_DIR/doc/build/html/
+    docker run -v $TRAVIS_BUILD_DIR:/data ldumas/pandora_build_env:ubuntu19.10-python3.7-pages /bin/sh -c "cd /data; . ./venv/bin/activate; cd doc; make html; chmod -R 777 build"
+    cd $TRAVIS_BUILD_DIR/doc/build/html/                           
     touch .nojekyll
     git init
     git checkout -b gh-pages
