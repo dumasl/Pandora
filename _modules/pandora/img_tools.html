@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.img_tools &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../pandora.html">pandora</a> &raquo;</li>
+        
+      <li>pandora.img_tools</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.img_tools</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions associated to raster images.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage.interpolation</span> <span class="kn">import</span> <span class="n">zoom</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+
+
+<div class="viewcode-block" id="read_img"><a class="viewcode-back" href="../../api_reference/pandora/index.html#pandora.img_tools.read_img">[docs]</a><span class="k">def</span> <span class="nf">read_img</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">no_data</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read image and mask, and return the corresponding xarray.DataSet</span>
+
+<span class="sd">    :param img: Path to the image</span>
+<span class="sd">    :type img: string</span>
+<span class="sd">    :type no_data: no_data value in the image</span>
+<span class="sd">    :type no_data: float</span>
+<span class="sd">    :param cfg: image configuration, containing the mask conventions generated by this function</span>
+<span class="sd">    :param cfg: dict</span>
+<span class="sd">    :param mask: Path to the mask (optional)</span>
+<span class="sd">    :type mask: string</span>
+<span class="sd">    :return: xarray.DataSet</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">        xarray.DataSet containing the variables :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray float32</span>
+<span class="sd">            - msk : 2D (row, col) xarray.DataArray int16, with the convention defined in the configuration file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img_ds</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">img_ds</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;im&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))},</span>
+                         <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                 <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])})</span>
+
+    <span class="c1"># If there is no mask, and no data in the images, do not create the mask to minimize calculation time</span>
+    <span class="n">no_data_pixels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span> <span class="o">==</span> <span class="n">no_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">no_data_pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="c1"># Allocate the mask</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;msk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;valid_pixels&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">),</span>
+                                  <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Mask invalid pixels if needed</span>
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">input_mask</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Masks invalid pixels</span>
+        <span class="c1"># All pixels that are not no_data and valid_pixels are considered as invalid pixels</span>
+        <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;msk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">input_mask</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;valid_pixels&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;no_data&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># Masks no_data pixels</span>
+    <span class="c1"># If a pixel is invalid due to the input mask, and it is also no_data, then the value of this pixel in the</span>
+    <span class="c1"># generated mask will be = no_data</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;msk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">no_data_pixels</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;no_data&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">dataset</span></div>
+
+
+<div class="viewcode-block" id="shift_sec_img"><a class="viewcode-back" href="../../api_reference/pandora/img_tools/index.html#pandora.img_tools.shift_sec_img">[docs]</a><span class="k">def</span> <span class="nf">shift_sec_img</span><span class="p">(</span><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">subpix</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an array that contains the shifted secondary images</span>
+
+<span class="sd">    :param img_sec: secondary Dataset image</span>
+<span class="sd">    :type img_sec:</span>
+<span class="sd">    xarray.Dataset containing :</span>
+<span class="sd">        - im : 2D (row, col) xarray.DataArray</span>
+
+<span class="sd">    :param subpix: subpixel precision = (1 or 2 or 4)</span>
+<span class="sd">    :type subpix: int</span>
+<span class="sd">    :return: an array that contains the shifted secondary images</span>
+<span class="sd">    :rtype : array of xarray.Dataset</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img_sec_shift</span> <span class="o">=</span> <span class="p">[</span><span class="n">img_sec</span><span class="p">]</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># zoom factor = (number of columns with zoom / number of original columns)</span>
+    <span class="k">if</span> <span class="n">subpix</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># Shift the secondary image for subpixel precision 0.5</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">nx_</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nx_</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="mi">2</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">img_sec_shift</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;im&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)},</span>
+                                        <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ny_</span><span class="p">),</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">}))</span>
+
+    <span class="k">if</span> <span class="n">subpix</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="c1"># Shift the secondary image for subpixel precision 0.25</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">nx_</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nx_</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">img_sec_shift</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;im&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)},</span>
+                                        <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ny_</span><span class="p">),</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">}))</span>
+
+        <span class="c1"># Shift the secondary image for subpixel precision 0.5</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">nx_</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nx_</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="mi">2</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">img_sec_shift</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;im&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)},</span>
+                                        <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ny_</span><span class="p">),</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">}))</span>
+
+        <span class="c1"># Shift the secondary image for subpixel precision 0.75</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">nx_</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nx_</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="mi">3</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.75</span><span class="p">,</span> <span class="n">img_sec</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">img_sec_shift</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;im&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)},</span>
+                                        <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ny_</span><span class="p">),</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">}))</span>
+    <span class="k">return</span> <span class="n">img_sec_shift</span></div>
+
+
+<div class="viewcode-block" id="check_inside_image"><a class="viewcode-back" href="../../api_reference/pandora/img_tools/index.html#pandora.img_tools.check_inside_image">[docs]</a><span class="k">def</span> <span class="nf">check_inside_image</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the coordinates x,y are inside the image</span>
+
+<span class="sd">    :param img: Dataset image</span>
+<span class="sd">    :type img:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param x: row coordinates</span>
+<span class="sd">    :type x: int</span>
+<span class="sd">    :param y: column coordinates</span>
+<span class="sd">    :type y: int</span>
+<span class="sd">    :return: a boolean</span>
+<span class="sd">    :rtype: boolean</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nx_</span><span class="p">,</span> <span class="n">ny_</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">return</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">nx_</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">ny_</span></div>
+
+
+<div class="viewcode-block" id="census_transform"><a class="viewcode-back" href="../../api_reference/pandora/img_tools/index.html#pandora.img_tools.census_transform">[docs]</a><span class="k">def</span> <span class="nf">census_transform</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">window_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates the census transformed image from an image</span>
+
+<span class="sd">    :param image: Dataset image</span>
+<span class="sd">    :type image: xarray.Dataset containing the image im : 2D (row, col) xarray.Dataset</span>
+<span class="sd">    :param window_size: Census window size</span>
+<span class="sd">    :type window_size: int</span>
+<span class="sd">    :return: Dataset census transformed uint32</span>
+<span class="sd">    :rtype: xarray.Dataset containing the transformed image im: 2D (row, col) xarray.DataArray uint32</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">border</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Create a view of each window, by manipulating the internal data structure of array</span>
+    <span class="n">str_row</span><span class="p">,</span> <span class="n">str_col</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">strides</span>
+    <span class="n">shape_windows</span> <span class="o">=</span> <span class="p">(</span><span class="n">ny_</span> <span class="o">-</span> <span class="p">(</span><span class="n">window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">nx_</span> <span class="o">-</span> <span class="p">(</span><span class="n">window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">window_size</span><span class="p">)</span>
+    <span class="n">strides_windows</span> <span class="o">=</span> <span class="p">(</span><span class="n">str_row</span><span class="p">,</span> <span class="n">str_col</span><span class="p">,</span> <span class="n">str_row</span><span class="p">,</span> <span class="n">str_col</span><span class="p">)</span>
+    <span class="n">windows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">stride_tricks</span><span class="o">.</span><span class="n">as_strided</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">shape_windows</span><span class="p">,</span> <span class="n">strides_windows</span><span class="p">)</span>
+
+    <span class="c1"># Pixels inside the image which can be centers of windows</span>
+    <span class="n">central_pixels</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">border</span><span class="p">:</span><span class="o">-</span><span class="n">border</span><span class="p">,</span> <span class="n">border</span><span class="p">:</span><span class="o">-</span><span class="n">border</span><span class="p">]</span>
+
+    <span class="c1"># Allocate the census mask</span>
+    <span class="n">census</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny_</span> <span class="o">-</span> <span class="p">(</span><span class="n">window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">nx_</span> <span class="o">-</span> <span class="p">(</span><span class="n">window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint32&#39;</span><span class="p">)</span>
+
+    <span class="n">shift</span> <span class="o">=</span> <span class="p">(</span><span class="n">window_size</span> <span class="o">*</span> <span class="n">window_size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">window_size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">window_size</span><span class="p">):</span>
+            <span class="c1"># Computes the difference and shift the result</span>
+            <span class="n">census</span><span class="p">[:,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="p">((</span><span class="n">windows</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">central_pixels</span><span class="p">[:,</span> <span class="p">:])</span> <span class="o">&lt;&lt;</span> <span class="n">shift</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+            <span class="n">shift</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="n">census</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;im&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">census</span><span class="p">)},</span>
+                        <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">border</span><span class="p">,</span> <span class="n">ny_</span> <span class="o">-</span> <span class="n">border</span><span class="p">),</span>
+                                <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">border</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">-</span> <span class="n">border</span><span class="p">)})</span>
+
+    <span class="k">return</span> <span class="n">census</span></div>
+
+
+<div class="viewcode-block" id="compute_mean_raster"><a class="viewcode-back" href="../../api_reference/pandora/img_tools/index.html#pandora.img_tools.compute_mean_raster">[docs]</a><span class="k">def</span> <span class="nf">compute_mean_raster</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">win_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the mean within a sliding window for the whole image</span>
+
+<span class="sd">    :param img: Dataset image</span>
+<span class="sd">    :type img:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param win_size: window size</span>
+<span class="sd">    :type win_size: int</span>
+<span class="sd">    :return: mean raster</span>
+<span class="sd">    :rtype: numpy array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Example with win_size = 3 and the input :</span>
+    <span class="c1">#           10 | 5  | 3</span>
+    <span class="c1">#            2 | 10 | 5</span>
+    <span class="c1">#            5 | 3  | 1</span>
+
+    <span class="c1"># Compute the cumulative sum of the elements along the column axis</span>
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx_</span><span class="p">)),</span> <span class="n">img</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]]</span>
+    <span class="c1"># r_mean :   0 | 0  | 0</span>
+    <span class="c1">#           10 | 5  | 3</span>
+    <span class="c1">#            2 | 10 | 5</span>
+    <span class="c1">#            5 | 3  | 1</span>
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">r_mean</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># r_mean :   0 | 0  | 0</span>
+    <span class="c1">#           10 | 5  | 3</span>
+    <span class="c1">#           12 | 15 | 8</span>
+    <span class="c1">#           17 | 18 | 9</span>
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="n">r_mean</span><span class="p">[</span><span class="n">win_size</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">r_mean</span><span class="p">[:</span><span class="o">-</span><span class="n">win_size</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="c1"># r_mean :  17 | 18 | 9</span>
+
+    <span class="c1"># Compute the cumulative sum of the elements along the row axis</span>
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ny_</span> <span class="o">-</span> <span class="p">(</span><span class="n">win_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">r_mean</span><span class="p">]</span>
+    <span class="c1"># r_mean :   0 | 17 | 18 | 9</span>
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">r_mean</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># r_mean :   0 | 17 | 35 | 44</span>
+    <span class="n">r_mean</span> <span class="o">=</span> <span class="n">r_mean</span><span class="p">[:,</span> <span class="n">win_size</span><span class="p">:]</span> <span class="o">-</span> <span class="n">r_mean</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="n">win_size</span><span class="p">]</span>
+    <span class="c1"># r_mean : 44</span>
+    <span class="k">return</span> <span class="n">r_mean</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">win_size</span> <span class="o">*</span> <span class="n">win_size</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="compute_mean_patch"><a class="viewcode-back" href="../../api_reference/pandora/img_tools/index.html#pandora.img_tools.compute_mean_patch">[docs]</a><span class="k">def</span> <span class="nf">compute_mean_patch</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">win_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the mean within a window centered at position x,y</span>
+
+<span class="sd">    :param img: Dataset image</span>
+<span class="sd">    :type img:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param x: row coordinates</span>
+<span class="sd">    :type x: int</span>
+<span class="sd">    :param y: column coordinates</span>
+<span class="sd">    :type y: int</span>
+<span class="sd">    :param win_size: window size</span>
+<span class="sd">    :type win_size: int</span>
+<span class="sd">    :return: mean</span>
+<span class="sd">    :rtype : float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">begin_window</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">win_size</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">y</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">win_size</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">end_window</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">win_size</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">y</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">win_size</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="c1"># Check if the window is inside the image, and compute the mean</span>
+    <span class="k">if</span> <span class="n">check_inside_image</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">begin_window</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">begin_window</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+            <span class="n">check_inside_image</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">end_window</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">end_window</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">][</span><span class="n">begin_window</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">end_window</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">begin_window</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">end_window</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The window is outside the image&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">IndexError</span></div>
+
+
+<div class="viewcode-block" id="compute_std_raster"><a class="viewcode-back" href="../../api_reference/pandora/img_tools/index.html#pandora.img_tools.compute_std_raster">[docs]</a><span class="k">def</span> <span class="nf">compute_std_raster</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">win_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the standard deviation within a sliding window for the whole image</span>
+<span class="sd">    with the formula : std = sqrt( E[x^2] - E[x]^2 )</span>
+
+<span class="sd">    :param img: Dataset image</span>
+<span class="sd">    :type img:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param win_size: window size</span>
+<span class="sd">    :type win_size: int</span>
+<span class="sd">    :return: std raster</span>
+<span class="sd">    :rtype : numpy array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Computes E[x]</span>
+    <span class="n">mean_</span> <span class="o">=</span> <span class="n">compute_mean_raster</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">win_size</span><span class="p">)</span>
+
+    <span class="c1"># Computes E[x^2]</span>
+    <span class="n">raster_power_two</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;im&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">img</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)},</span>
+                                  <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])})</span>
+    <span class="n">mean_power_two</span> <span class="o">=</span> <span class="n">compute_mean_raster</span><span class="p">(</span><span class="n">raster_power_two</span><span class="p">,</span> <span class="n">win_size</span><span class="p">)</span>
+
+    <span class="c1"># Compute sqrt( E[x^2] - E[x]^2 )</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">mean_power_two</span> <span class="o">-</span> <span class="n">mean_</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="c1"># Avoid very small values</span>
+    <span class="n">var</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">var</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">)</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mean_power_two</span><span class="p">)))]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

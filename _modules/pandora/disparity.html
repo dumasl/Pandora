@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.disparity &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../pandora.html">pandora</a> &raquo;</li>
+        
+      <li>pandora.disparity</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.disparity</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions associated to the disparity map computation step.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage.morphology</span> <span class="kn">import</span> <span class="n">binary_dilation</span>
+
+<span class="kn">from</span> <span class="nn">pandora.img_tools</span> <span class="kn">import</span> <span class="n">compute_std_raster</span>
+<span class="kn">from</span> <span class="nn">pandora.constants</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="to_disp"><a class="viewcode-back" href="../../api_reference/pandora/disparity/index.html#pandora.disparity.to_disp">[docs]</a><span class="k">def</span> <span class="nf">to_disp</span><span class="p">(</span><span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">invalid_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Disparity computation by applying the Winner Takes All strategy</span>
+
+<span class="sd">    :param cv: the cost volume datset</span>
+<span class="sd">    :type cv:</span>
+<span class="sd">        xarray.Dataset, with the data variables:</span>
+<span class="sd">            - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">    :param invalid_value: disparity to assign to invalid pixels</span>
+<span class="sd">    :type invalid_value: float</span>
+<span class="sd">    :param img_ref: reference Dataset image</span>
+<span class="sd">    :type img_ref:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">    :type img_sec:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :return: Dataset with the disparity map and the confidence measure</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">        xarray.Dataset with the data variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">indices_nan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Winner Takes All strategy</span>
+    <span class="k">if</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;type_measure&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span>
+        <span class="c1"># Disparities are computed by selecting the maximal cost at each pixel</span>
+        <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indices_nan</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">argmax_split</span><span class="p">(</span><span class="n">cv</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Disparities are computed by selecting the minimal cost at each pixel</span>
+        <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indices_nan</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">argmin_split</span><span class="p">(</span><span class="n">cv</span><span class="p">)</span>
+
+    <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indices_nan</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">]</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">]</span>
+
+    <span class="c1"># ----- Disparity map -----</span>
+    <span class="n">disp_map</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">disp</span><span class="p">)},</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">})</span>
+
+    <span class="n">invalid_mc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">indices_nan</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># Pixels where the disparity interval is missing in the secondary image, have a disparity value invalid_value</span>
+    <span class="n">invalid_pixel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">invalid_mc</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">invalid_pixel</span><span class="p">]</span> <span class="o">=</span> <span class="n">invalid_value</span>
+
+    <span class="c1"># Save the disparity map in the cost volume</span>
+    <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;disp_indices&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">disp_map</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">d_range</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;disp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">disp_map</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">disp_map</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_range</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># ----- Confidence measure -----</span>
+    <span class="c1"># Allocate the confidence measure in the disparity_map dataset</span>
+    <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;confidence_measure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;confidence_measure&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Remove temporary values</span>
+    <span class="k">del</span> <span class="n">indices_nan</span>
+    <span class="k">del</span> <span class="n">invalid_mc</span>
+
+    <span class="k">return</span> <span class="n">disp_map</span></div>
+
+
+<div class="viewcode-block" id="validity_mask"><a class="viewcode-back" href="../../api_reference/pandora/disparity/index.html#pandora.disparity.validity_mask">[docs]</a><span class="k">def</span> <span class="nf">validity_mask</span><span class="p">(</span><span class="n">disp</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create the validity mask of the disparity map</span>
+
+<span class="sd">    :param disp: dataset with the disparity map and the confidence measure</span>
+<span class="sd">    :type disp:</span>
+<span class="sd">        xarray.Dataset with the data variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray(row, col, indicator)</span>
+<span class="sd">    :param img_ref: reference Dataset image</span>
+<span class="sd">    :type img_ref:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param img_sec: secondary Dataset image</span>
+<span class="sd">    :type img_sec:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param cv: cost volume dataset</span>
+<span class="sd">    :type cv:</span>
+<span class="sd">        xarray.Dataset, with the data variables:</span>
+<span class="sd">            - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">    :param cfg: images configuration containing the mask convention : valid_pixels, no_data</span>
+<span class="sd">    :type cfg: dict</span>
+<span class="sd">    :return: the dataset disparity with the data variable validity_mask</span>
+<span class="sd">    :rtype :</span>
+<span class="sd">        xarray.Dataset with the data variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mak 2D xarray.DataArray (row, col)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Allocate the validity mask</span>
+    <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">disp</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">),</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">])</span>
+
+    <span class="n">d_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_min&#39;</span><span class="p">])</span>
+    <span class="n">d_max</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_max&#39;</span><span class="p">])</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+    <span class="c1"># Negative disparity range</span>
+    <span class="k">if</span> <span class="n">d_max</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">bit_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_max</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># Information: the disparity interval is incomplete (border reached in the secondary image)</span>
+        <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(((</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_max</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_min</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="o">+=</span>\
+            <span class="n">PANDORA_MSK_PIXEL_SEC_INCOMPLETE_DISPARITY_RANGE</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Positive disparity range</span>
+        <span class="k">if</span> <span class="n">d_min</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">bit_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_min</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c1"># Information: the disparity interval is incomplete (border reached in the secondary image)</span>
+            <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(((</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_min</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_max</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))]</span> <span class="o">+=</span>\
+                <span class="n">PANDORA_MSK_PIXEL_SEC_INCOMPLETE_DISPARITY_RANGE</span>
+
+        <span class="c1"># Disparity range contains 0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bit_1</span> <span class="o">=</span> <span class="p">([],</span> <span class="p">)</span>
+            <span class="c1"># Information: the disparity interval is incomplete (border reached in the secondary image)</span>
+            <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(((</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_min</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="n">d_max</span> <span class="o">&gt;</span> <span class="n">col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))]</span> <span class="o">+=</span>\
+                <span class="n">PANDORA_MSK_PIXEL_SEC_INCOMPLETE_DISPARITY_RANGE</span>
+
+    <span class="c1"># Invalid pixel : the disparity interval is missing in the secondary image ( disparity range</span>
+    <span class="c1"># outside the image )</span>
+    <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">bit_1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">PANDORA_MSK_PIXEL_SEC_NODATA_OR_DISPARITY_RANGE_MISSING</span>
+
+    <span class="k">if</span> <span class="s1">&#39;msk&#39;</span> <span class="ow">in</span> <span class="n">img_ref</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">r_mask</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">align</span><span class="p">(</span><span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">],</span> <span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;msk&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Dilatation : pixels that contains no_data in their aggregation window become no_data</span>
+        <span class="n">dil</span> <span class="o">=</span> <span class="n">binary_dilation</span><span class="p">(</span><span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;msk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;no_data&#39;</span><span class="p">],</span>
+                              <span class="n">structure</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">],</span> <span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">])),</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;offset_row_col&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dil</span> <span class="o">=</span> <span class="n">dil</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="o">-</span><span class="n">offset</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span><span class="o">-</span><span class="n">offset</span><span class="p">]</span>
+
+        <span class="c1"># Invalid pixel : no_data in the reference image</span>
+        <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dil</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span> <span class="o">*</span> <span class="n">PANDORA_MSK_PIXEL_REF_NODATA_OR_BORDER</span>
+
+        <span class="c1"># Invalid pixel : invalidated by the validity mask of the reference image given as input</span>
+        <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">r_mask</span> <span class="o">!=</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;no_data&#39;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_mask</span> <span class="o">!=</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;valid_pixels&#39;</span><span class="p">]),</span>
+                                          <span class="n">PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_REF</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s1">&#39;msk&#39;</span> <span class="ow">in</span> <span class="n">img_sec</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">r_mask</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">align</span><span class="p">(</span><span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">],</span> <span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;msk&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Dilatation : pixels that contains no_data in their aggregation window become no_data</span>
+        <span class="n">dil</span> <span class="o">=</span> <span class="n">binary_dilation</span><span class="p">(</span><span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;msk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;no_data&#39;</span><span class="p">],</span>
+                              <span class="n">structure</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">],</span> <span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">])),</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;offset_row_col&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dil</span> <span class="o">=</span> <span class="n">dil</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="o">-</span><span class="n">offset</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span><span class="o">-</span><span class="n">offset</span><span class="p">]</span>
+
+        <span class="n">r_mask</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">r_mask</span> <span class="o">!=</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;no_data&#39;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_mask</span> <span class="o">!=</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;valid_pixels&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="c1"># Useful to calculate the case where the disparity interval is incomplete, and all remaining secondary</span>
+        <span class="c1"># positions are invalidated by the secondary mask</span>
+        <span class="n">b_2_7</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+        <span class="c1"># Useful to calculate the case where no_data in the secondary image invalidated the disparity interval</span>
+        <span class="n">no_data_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+
+        <span class="n">col_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d_min</span><span class="p">,</span> <span class="n">d_max</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># Diagonal in the cost volume</span>
+            <span class="n">col_d</span> <span class="o">=</span> <span class="n">col_range</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="n">valid_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">col_d</span> <span class="o">&gt;=</span> <span class="n">col_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">col_d</span> <span class="o">&lt;=</span> <span class="n">col_range</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+            <span class="c1"># No_data and masked pixels do not raise the same flag, we need to treat them differently</span>
+            <span class="n">b_2_7</span><span class="p">[:,</span> <span class="n">col_range</span><span class="p">[</span><span class="n">valid_index</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">r_mask</span><span class="p">[:,</span> <span class="n">col_d</span><span class="p">[</span><span class="n">valid_index</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+            <span class="n">b_2_7</span><span class="p">[:,</span> <span class="n">col_range</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">col_range</span><span class="p">,</span> <span class="n">valid_index</span><span class="p">)]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">no_data_sec</span><span class="p">[:,</span> <span class="n">col_range</span><span class="p">[</span><span class="n">valid_index</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">dil</span><span class="p">[:,</span> <span class="n">col_d</span><span class="p">[</span><span class="n">valid_index</span><span class="p">]]</span>
+            <span class="n">no_data_sec</span><span class="p">[:,</span> <span class="n">col_range</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">col_range</span><span class="p">,</span> <span class="n">valid_index</span><span class="p">)]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Exclusion of pixels that have flag 1 already enabled</span>
+        <span class="n">b_2_7</span><span class="p">[:,</span> <span class="n">bit_1</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">no_data_sec</span><span class="p">[:,</span> <span class="n">bit_1</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Invalid pixel: secondary positions invalidated by the mask of the secondary image given as input</span>
+        <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">b_2_7</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d_min</span><span class="p">,</span> <span class="n">d_max</span><span class="o">+</span><span class="mi">1</span><span class="p">)))]</span> <span class="o">+=</span>\
+            <span class="n">PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_SEC</span>
+
+        <span class="c1"># If Invalid pixel : the disparity interval is missing in the secondary image (disparity interval</span>
+        <span class="c1"># is invalidated by no_data in the secondary image )</span>
+        <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">no_data_sec</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d_min</span><span class="p">,</span> <span class="n">d_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))]</span> <span class="o">+=</span>\
+            <span class="n">PANDORA_MSK_PIXEL_SEC_NODATA_OR_DISPARITY_RANGE_MISSING</span>
+
+    <span class="k">return</span> <span class="n">disp</span></div>
+
+
+<div class="viewcode-block" id="argmin_split"><a class="viewcode-back" href="../../api_reference/pandora/disparity/index.html#pandora.disparity.argmin_split">[docs]</a><span class="k">def</span> <span class="nf">argmin_split</span><span class="p">(</span><span class="n">cost_volume</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the indices of the minimum values for a 3D DataArray, along axis 2.</span>
+<span class="sd">    Memory consumption is reduced by splitting the 3D Array.</span>
+
+<span class="sd">    :param cost_volume: the cost volume dataset</span>
+<span class="sd">    :type cost_volume: xarray.Dataset</span>
+<span class="sd">    :return: the disparities for which the cost volume values are the smallest</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">nd</span> <span class="o">=</span> <span class="n">cost_volume</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c1"># Numpy argmin is making a copy of the cost volume.</span>
+    <span class="c1"># To reduce memory, numpy argmin is applied on a small part of the cost volume.</span>
+    <span class="c1"># The cost volume is split (along the row axis) into multiple sub-arrays with a step of 100</span>
+    <span class="n">cv_chunked_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">cost_volume</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">y_begin</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cv_chunked_y</span><span class="p">)):</span>
+        <span class="c1"># To reduce memory, the cost volume is split (along the col axis) into multiple sub-arrays with a step of 100</span>
+        <span class="n">cv_chunked_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">cv_chunked_y</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_begin</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cv_chunked_x</span><span class="p">)):</span>
+
+            <span class="n">disp</span><span class="p">[</span><span class="n">y_begin</span><span class="p">:</span><span class="n">y_begin</span> <span class="o">+</span> <span class="n">cv_chunked_y</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_begin</span><span class="p">:</span> <span class="n">x_begin</span> <span class="o">+</span> <span class="n">cv_chunked_x</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                <span class="n">cost_volume</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;disp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">cv_chunked_x</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
+            <span class="n">x_begin</span> <span class="o">+=</span> <span class="n">cv_chunked_x</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">y_begin</span> <span class="o">+=</span> <span class="n">cv_chunked_y</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">disp</span></div>
+
+
+<div class="viewcode-block" id="argmax_split"><a class="viewcode-back" href="../../api_reference/pandora/disparity/index.html#pandora.disparity.argmax_split">[docs]</a><span class="k">def</span> <span class="nf">argmax_split</span><span class="p">(</span><span class="n">cost_volume</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the indices of the maximum values for a 3D DataArray, along axis 2.</span>
+<span class="sd">    Memory consumption is reduced by splitting the 3D Array.</span>
+
+<span class="sd">    :param cost_volume: the cost volume dataset</span>
+<span class="sd">    :type cost_volume: xarray.Dataset</span>
+<span class="sd">    :return: the disparities for which the cost volume values are the highest</span>
+<span class="sd">    :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">nd</span> <span class="o">=</span> <span class="n">cost_volume</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="c1"># Numpy argmax is making a copy of the cost volume.</span>
+    <span class="c1"># To reduce memory, numpy argmax is applied on a small part of the cost volume.</span>
+    <span class="c1"># The cost volume is split (along the row axis) into multiple sub-arrays with a step of 100</span>
+    <span class="n">cv_chunked_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">cost_volume</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">y_begin</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cv_chunked_y</span><span class="p">)):</span>
+        <span class="c1"># To reduce memory, the cost volume is split (along the col axis) into multiple sub-arrays with a step of 100</span>
+        <span class="n">cv_chunked_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">cv_chunked_y</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_begin</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cv_chunked_x</span><span class="p">)):</span>
+
+            <span class="n">disp</span><span class="p">[</span><span class="n">y_begin</span><span class="p">:</span><span class="n">y_begin</span> <span class="o">+</span> <span class="n">cv_chunked_y</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_begin</span><span class="p">:</span> <span class="n">x_begin</span> <span class="o">+</span> <span class="n">cv_chunked_x</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> \
+                <span class="n">cost_volume</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;disp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cv_chunked_x</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
+            <span class="n">x_begin</span> <span class="o">+=</span> <span class="n">cv_chunked_x</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">y_begin</span> <span class="o">+=</span> <span class="n">cv_chunked_y</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">disp</span></div>
+
+
+<div class="viewcode-block" id="coefficient_map"><a class="viewcode-back" href="../../api_reference/pandora/disparity/index.html#pandora.disparity.coefficient_map">[docs]</a><span class="k">def</span> <span class="nf">coefficient_map</span><span class="p">(</span><span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the coefficient map</span>
+
+<span class="sd">    :param cv: cost volume</span>
+<span class="sd">    :type cv: xarray.Dataset, with the data variables cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">    :return: the coefficient map</span>
+<span class="sd">    :rtype : 2D DataArray (row, col)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">]</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Create the coefficient map</span>
+    <span class="n">coeff_map</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">cv</span><span class="p">[</span><span class="s1">&#39;disp_indices&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                             <span class="n">coords</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;col&#39;</span><span class="p">,</span> <span class="n">col</span><span class="p">)])</span>
+    <span class="n">coeff_map</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Coefficient Map&#39;</span>
+    <span class="n">coeff_map</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span>
+
+    <span class="k">return</span> <span class="n">coeff_map</span></div>
+
+
+<div class="viewcode-block" id="approximate_right_disparity"><a class="viewcode-back" href="../../api_reference/pandora/disparity/index.html#pandora.disparity.approximate_right_disparity">[docs]</a><span class="k">def</span> <span class="nf">approximate_right_disparity</span><span class="p">(</span><span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">invalid_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create the right disparity map, by a diagonal search for the minimum in the reference cost volume</span>
+
+<span class="sd">    ERNST, Ines et HIRSCHMÜLLER, Heiko.</span>
+<span class="sd">    Mutual information based semi-global stereo matching on the GPU.</span>
+<span class="sd">    In : International Symposium on Visual Computing. Springer, Berlin, Heidelberg, 2008. p. 228-239.</span>
+
+<span class="sd">    :param cv: the cost volume dataset</span>
+<span class="sd">    :type cv:</span>
+<span class="sd">        xarray.Dataset, with the data variables:</span>
+<span class="sd">            - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">    :param img_sec: secondary Dataset image</span>
+<span class="sd">    :type img_sec:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param invalid_value: disparity to assign to invalid pixels</span>
+<span class="sd">    :type invalid_value: float</span>
+<span class="sd">    :param img_ref: reference Dataset image</span>
+<span class="sd">    :type img_ref:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :return: Dataset with the secondary disparity map, the confidence measure and the validity mask</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">        xarray.Dataset with the data variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">disp_range</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;disp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">col_range</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">row_range</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="c1"># Extract integer disparity</span>
+    <span class="n">disp_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">disp_range</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">disp_range</span><span class="p">)</span>
+
+    <span class="c1"># Allocate the disparity map</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row_range</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_range</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">disp_map</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)},</span>
+                          <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">],</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">]})</span>
+
+    <span class="c1"># Allocate the confidence measure</span>
+    <span class="n">confidence_measure</span> <span class="o">=</span> <span class="n">compute_std_raster</span><span class="p">(</span><span class="n">img_sec</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row_range</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_range</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">disp_map</span> <span class="o">=</span> <span class="n">disp_map</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">indicator</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;disparity_pandora_intensityStd&#39;</span><span class="p">])</span>
+    <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;confidence_measure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">confidence_measure</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                                                  <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">,</span> <span class="s1">&#39;indicator&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Allocate the validity mask</span>
+    <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">),</span>
+                                             <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">])</span>
+
+    <span class="n">disp_map</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">d_range</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;disp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">disp_map</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">disp_map</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_range</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">disp_map</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;right_left_mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;approximate&quot;</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col_range</span><span class="p">:</span>
+        <span class="n">x_d</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="n">disp_range</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">x_d</span> <span class="o">&gt;=</span> <span class="n">col_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x_d</span> <span class="o">&lt;=</span> <span class="n">col_range</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="c1"># The disparity interval is missing in the reference image</span>
+        <span class="k">if</span> <span class="n">x_d</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="n">c</span><span class="p">)]</span> <span class="o">=</span> <span class="n">invalid_value</span>
+
+            <span class="c1"># Invalid pixel : the disparity interval is missing in the secondary image</span>
+            <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="n">c</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">PANDORA_MSK_PIXEL_SEC_NODATA_OR_DISPARITY_RANGE_MISSING</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Diagonal search for the minimum or maximum</span>
+            <span class="k">if</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;measure&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;zncc&#39;</span><span class="p">:</span>
+                <span class="n">min_</span> <span class="o">=</span> <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">x_d</span><span class="p">[</span><span class="n">valid</span><span class="p">]),</span> <span class="n">dims</span><span class="o">=</span><span class="s1">&#39;disp_&#39;</span><span class="p">),</span>
+                                             <span class="n">disp</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">disp_range</span><span class="p">[</span><span class="n">valid</span><span class="p">]),</span>
+                                                               <span class="n">dims</span><span class="o">=</span><span class="s1">&#39;disp_&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;disp_&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">min_</span> <span class="o">=</span> <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">x_d</span><span class="p">[</span><span class="n">valid</span><span class="p">]),</span> <span class="n">dims</span><span class="o">=</span><span class="s1">&#39;disp_&#39;</span><span class="p">),</span>
+                                             <span class="n">disp</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">disp_range</span><span class="p">[</span><span class="n">valid</span><span class="p">]),</span>
+                                                               <span class="n">dims</span><span class="o">=</span><span class="s1">&#39;disp_&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;disp_&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Disparity interval is incomplete</span>
+            <span class="k">if</span> <span class="n">x_d</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">disp_range</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+                <span class="c1">#  Information: the disparity interval is incomplete (border reached in the secondary image)</span>
+                <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="n">c</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">PANDORA_MSK_PIXEL_SEC_INCOMPLETE_DISPARITY_RANGE</span>
+
+            <span class="n">disp_map</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="n">c</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">disp_range</span><span class="p">[</span><span class="n">valid</span><span class="p">])[</span><span class="n">min_</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">disp_map</span></div>
+
+
+<div class="viewcode-block" id="resize"><a class="viewcode-back" href="../../api_reference/pandora/disparity/index.html#pandora.disparity.resize">[docs]</a><span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">invalid_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pixels whose aggregation window exceeds the reference image are truncated in the output products.</span>
+<span class="sd">    This function returns the output products with the size of the input images : add rows and columns that have been</span>
+<span class="sd">    truncated. These added pixels will have bit 0 = 1 ( Invalid pixel : border of the reference image )</span>
+<span class="sd">    in the validity_mask  and will have the disparity = invalid_value in the disparity map.</span>
+
+<span class="sd">    :param dataset: Dataset which contains the output products</span>
+<span class="sd">    :type dataset: xarray.Dataset with the variables :</span>
+<span class="sd">        - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">        - confidence_measure 3D xarray.DataArray(row, col, indicator)</span>
+<span class="sd">        - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">    :param invalid_value: disparity to assign to invalid pixels ( pixels whose aggregation window exceeds the image)</span>
+<span class="sd">    :type invalid_value: float</span>
+<span class="sd">    :return: the dataset with the size of the input images</span>
+<span class="sd">    :rtype : xarray.Dataset with the variables :</span>
+<span class="sd">        - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">        - confidence_measure 3D xarray.DataArray(row, col, indicator)</span>
+<span class="sd">        - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;offset_row_col&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="n">c_row</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">]</span>
+    <span class="n">c_col</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;col&#39;</span><span class="p">]</span>
+
+    <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">c_row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">offset</span><span class="p">,</span> <span class="n">c_row</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">c_col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">offset</span><span class="p">,</span> <span class="n">c_col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span>
+
+    <span class="n">resize_disparity</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">array</span> <span class="o">==</span> <span class="s1">&#39;disparity_map&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">)),</span> <span class="n">invalid_value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span>
+                                <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">])</span>
+            <span class="n">resize_disparity</span><span class="p">[</span><span class="n">array</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">array</span><span class="p">]</span><span class="o">.</span><span class="n">combine_first</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">array</span> <span class="o">==</span> <span class="s1">&#39;confidence_measure&#39;</span><span class="p">:</span>
+            <span class="n">depth</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;indicator&#39;</span><span class="p">])</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">),</span> <span class="n">depth</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                                <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">},</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">,</span> <span class="s1">&#39;indicator&#39;</span><span class="p">])</span>
+            <span class="n">resize_disparity</span><span class="p">[</span><span class="n">array</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">array</span><span class="p">]</span><span class="o">.</span><span class="n">combine_first</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">array</span> <span class="o">==</span> <span class="s1">&#39;validity_mask&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">),</span> <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">])</span>
+
+            <span class="c1"># Invalid pixel : border of the reference image</span>
+            <span class="n">data</span> <span class="o">+=</span> <span class="n">PANDORA_MSK_PIXEL_REF_NODATA_OR_BORDER</span>
+
+            <span class="n">resize_disparity</span><span class="p">[</span><span class="n">array</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">array</span><span class="p">]</span><span class="o">.</span><span class="n">combine_first</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">array</span> <span class="o">==</span> <span class="s1">&#39;interpolated_coeff&#39;</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span>
+                                <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">])</span>
+            <span class="n">resize_disparity</span><span class="p">[</span><span class="n">array</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">array</span><span class="p">]</span><span class="o">.</span><span class="n">combine_first</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">resize_disparity</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">resize_disparity</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;offset_row_col&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">resize_disparity</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

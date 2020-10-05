@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.aggregation.cbca &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="pandora.filter" href="../../filter/index.html" />
+    <link rel="prev" title="pandora.aggregation.aggregation" href="../aggregation/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optimization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.optimization</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../refinement/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../stereo/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.validation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation.cbca</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/api_reference/pandora/aggregation/cbca/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.aggregation.cbca">
+<span id="pandora-aggregation-cbca"></span><h1><a class="reference internal" href="#module-pandora.aggregation.cbca" title="pandora.aggregation.cbca"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation.cbca</span></code></a><a class="headerlink" href="#module-pandora.aggregation.cbca" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions associated to the Cross Based Cost Aggregation (cbca) method.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.aggregation.cbca.CrossBasedCostAggregation" title="pandora.aggregation.cbca.CrossBasedCostAggregation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CrossBasedCostAggregation</span></code></a></p></td>
+<td><p>CrossBasedCostAggregation class, allows to perform the aggregation step</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.aggregation.cbca.cbca_step_1" title="pandora.aggregation.cbca.cbca_step_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cbca_step_1</span></code></a>(cv: np.ndarray) → np.ndarray</p></td>
+<td><p>Giving the matching cost for one disparity, build a horizontal integral image storing the cumulative row sum,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.aggregation.cbca.cbca_step_2" title="pandora.aggregation.cbca.cbca_step_2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cbca_step_2</span></code></a>(step1: np.ndarray, cross_ref: np.ndarray, cross_sec: np.ndarray, range_col: np.ndarray, range_col_sec: np.ndarray) → Tuple[np.ndarray, np.ndarray]</p></td>
+<td><p>Giving the horizontal integral image, computed the horizontal matching cost for one disparity,</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.aggregation.cbca.cbca_step_3" title="pandora.aggregation.cbca.cbca_step_3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cbca_step_3</span></code></a>(step2: xr.DataArray) → np.ndarray</p></td>
+<td><p>Giving the horizontal matching cost, build a vertical integral image for one disparity,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.aggregation.cbca.cbca_step_4" title="pandora.aggregation.cbca.cbca_step_4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cbca_step_4</span></code></a>(step3: np.ndarray, sum2: np.ndarray, cross_ref: np.ndarray, cross_sec: np.ndarray, range_col: np.ndarray, range_col_sec: np.ndarray) → Tuple[np.ndarray, np.ndarray]</p></td>
+<td><p>Giving the vertical integral image, build the fully aggregated matching cost for one disparity,</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.aggregation.cbca.cross_support" title="pandora.aggregation.cbca.cross_support"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cross_support</span></code></a>(image: np.ndarray, len_arms: int, intensity: float) → np.ndarray</p></td>
+<td><p>Compute the cross support for an image: find the 4 arms</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="pandora.aggregation.cbca.CrossBasedCostAggregation">
+<em class="property">class </em><code class="sig-prename descclassname">pandora.aggregation.cbca.</code><code class="sig-name descname">CrossBasedCostAggregation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#CrossBasedCostAggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.CrossBasedCostAggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../aggregation/index.html#pandora.aggregation.aggregation.AbstractAggregation" title="pandora.aggregation.aggregation.AbstractAggregation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandora.aggregation.aggregation.AbstractAggregation</span></code></a></p>
+<p>CrossBasedCostAggregation class, allows to perform the aggregation step</p>
+<dl class="py attribute">
+<dt id="pandora.aggregation.cbca.CrossBasedCostAggregation._CBCA_INTENSITY">
+<code class="sig-name descname">_CBCA_INTENSITY</code><em class="property"> = 30.0</em><a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#CrossBasedCostAggregation._CBCA_INTENSITY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.CrossBasedCostAggregation._CBCA_INTENSITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pandora.aggregation.cbca.CrossBasedCostAggregation._CBCA_DISTANCE">
+<code class="sig-name descname">_CBCA_DISTANCE</code><em class="property"> = 5</em><a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#CrossBasedCostAggregation._CBCA_DISTANCE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.CrossBasedCostAggregation._CBCA_DISTANCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.cbca.CrossBasedCostAggregation.check_conf">
+<code class="sig-name descname">check_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>float<span class="p">, </span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>Union<span class="p">[</span>str<span class="p">, </span>float<span class="p">, </span>int<span class="p">]</span><span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#CrossBasedCostAggregation.check_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.CrossBasedCostAggregation.check_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add default values to the dictionary if there are missing elements and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<em>dict</em>) – aggregation configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>aggregation configuration updated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.cbca.CrossBasedCostAggregation.desc">
+<code class="sig-name descname">desc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#CrossBasedCostAggregation.desc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.CrossBasedCostAggregation.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the aggregation method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.cbca.CrossBasedCostAggregation.cost_volume_aggregation">
+<code class="sig-name descname">cost_volume_aggregation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#CrossBasedCostAggregation.cost_volume_aggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.CrossBasedCostAggregation.cost_volume_aggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregated the cost volume with Cross-Based Cost Aggregation, using the pipeline define in
+Zhang, K., Lu, J., &amp; Lafruit, G. (2009).
+Cross-based local stereo matching using orthogonal integral images.
+IEEE transactions on circuits and systems for video technology, 19(7), 1073-1079.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+<li><p><strong>cv</strong> – cost volume dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the cost volume aggregated in the dataset</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>xarray.Dataset, with the data variables:</dt><dd><ul class="simple">
+<li><p>cost_volume 3D xarray.DataArray (row, col, disp)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.aggregation.cbca.cbca_step_1">
+<code class="sig-prename descclassname">pandora.aggregation.cbca.</code><code class="sig-name descname">cbca_step_1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">np.ndarray</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#cbca_step_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.cbca_step_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Giving the matching cost for one disparity, build a horizontal integral image storing the cumulative row sum,
+S_h(x, y) = S_h(x-1, y) + cv(x, y)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cv</strong> (<em>2D np.array</em><em> (</em><em>row</em><em>, </em><em>col</em><em>) </em><em>dtype = np.float32</em>) – cost volume for the current disparity</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the horizontal integral image, step 1</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>2D np.array (row, col + 1) dtype = np.float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.aggregation.cbca.cbca_step_2">
+<code class="sig-prename descclassname">pandora.aggregation.cbca.</code><code class="sig-name descname">cbca_step_2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">step1</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">cross_ref</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">cross_sec</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">range_col</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">range_col_sec</span><span class="p">:</span> <span class="n">np.ndarray</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>np.ndarray<span class="p">, </span>np.ndarray<span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#cbca_step_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.cbca_step_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Giving the horizontal integral image, computed the horizontal matching cost for one disparity,
+E_h(x, y) = S_h(x + right_arm_length, y) - S_h(x - left_arm_length -1, y)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step1</strong> (<em>2D np.array</em><em> (</em><em>row</em><em>, </em><em>col + 1</em><em>) </em><em>dtype = np.float32</em>) – horizontal integral image, from the cbca_step1, with an extra column that contains 0</p></li>
+<li><p><strong>cross_ref</strong> (<em>3D np.array</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>[</em><em>left</em><em>, </em><em>right</em><em>, </em><em>top</em><em>, </em><em>bot</em><em>]</em><em>) </em><em>dtype=np.int16</em>) – cross support of the reference image</p></li>
+<li><p><strong>cross_sec</strong> (<em>3D np.array</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>[</em><em>left</em><em>, </em><em>right</em><em>, </em><em>tpo</em><em>, </em><em>bot</em><em>]</em><em>) </em><em>dtype=np.int16</em>) – cross support of the secondary image</p></li>
+<li><p><strong>range_col</strong> (<em>1D np.array</em>) – reference column for the current disparity (i.e : np.arrange(nb columns), where the correspondent
+in the right image is reachable)</p></li>
+<li><p><strong>range_col_sec</strong> (<em>1D np.array</em>) – secondary column for the current disparity (i.e : np.arrange(nb columns) - disparity, where
+column - disparity &gt;= 0 and &lt;= nb columns)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the horizontal matching cost for the current disparity, and the number of support pixels used for the
+step 2</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple (2D np.array (row, col) dtype = np.float32, 2D np.array (row, col) dtype = np.float32)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.aggregation.cbca.cbca_step_3">
+<code class="sig-prename descclassname">pandora.aggregation.cbca.</code><code class="sig-name descname">cbca_step_3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">step2</span><span class="p">:</span> <span class="n">xr.DataArray</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#cbca_step_3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.cbca_step_3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Giving the horizontal matching cost, build a vertical integral image for one disparity,
+S_v = S_v(x, y - 1) + E_h(x, y)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>step2</strong> (<em>3D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>disp</em><em>)</em>) – horizontal matching cost, from the cbca_step2</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the vertical integral image for the current disparity</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>2D np.array (row + 1, col) dtype = np.float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.aggregation.cbca.cbca_step_4">
+<code class="sig-prename descclassname">pandora.aggregation.cbca.</code><code class="sig-name descname">cbca_step_4</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">step3</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">sum2</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">cross_ref</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">cross_sec</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">range_col</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">range_col_sec</span><span class="p">:</span> <span class="n">np.ndarray</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>np.ndarray<span class="p">, </span>np.ndarray<span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#cbca_step_4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.cbca_step_4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Giving the vertical integral image, build the fully aggregated matching cost for one disparity,
+E = S_v(x, y + bottom_arm_length) - S_v(x, y - top_arm_length - 1)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step3</strong> (<em>2D np.array</em><em> (</em><em>row + 1</em><em>, </em><em>col</em><em>) </em><em>dtype = np.float32</em>) – vertical integral image, from the cbca_step3, with an extra row that contains 0</p></li>
+<li><p><strong>sum2</strong> (<em>2D np.array</em><em> (</em><em>row</em><em>, </em><em>col</em><em>) </em><em>dtype = np.float32</em>) – the number of support pixels used for the step 2</p></li>
+<li><p><strong>cross_ref</strong> (<em>3D np.array</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>[</em><em>left</em><em>, </em><em>right</em><em>, </em><em>top</em><em>, </em><em>bot</em><em>]</em><em>) </em><em>dtype=np.int16</em>) – cross support of the reference image</p></li>
+<li><p><strong>cross_sec</strong> (<em>3D np.array</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>[</em><em>left</em><em>, </em><em>right</em><em>, </em><em>tpo</em><em>, </em><em>bot</em><em>]</em><em>) </em><em>dtype=np.int16</em>) – cross support of the secondary image</p></li>
+<li><p><strong>range_col</strong> (<em>1D np.array</em>) – reference column for the current disparity (i.e : np.arrange(nb columns), where the correspondent
+in the right image is reachable)</p></li>
+<li><p><strong>range_col_sec</strong> (<em>1D np.array</em>) – secondary column for the current disparity (i.e : np.arrange(nb columns) - disparity, where
+column - disparity &gt;= 0 and &lt;= nb columns)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the fully aggregated matching cost, and the total number of support pixels used for the aggregation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple(2D np.array (row , col) dtype = np.float32, 2D np.array (row , col) dtype = np.float32)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.aggregation.cbca.cross_support">
+<code class="sig-prename descclassname">pandora.aggregation.cbca.</code><code class="sig-name descname">cross_support</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">len_arms</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">intensity</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../../_modules/pandora/aggregation/cbca.html#cross_support"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.cbca.cross_support" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the cross support for an image: find the 4 arms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>2D np.array</em><em> (</em><em>row</em><em> , </em><em>col</em><em>) </em><em>dtype = np.float32</em>) – image</p></li>
+<li><p><strong>len_arms</strong> – maximal length arms</p></li>
+<li><p><strong>len_arms</strong> – int16</p></li>
+<li><p><strong>intensity</strong> – maximal intensity</p></li>
+<li><p><strong>intensity</strong> – float 32</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a 3D np.array ( row, col, [left, right, top, bot] ),
+with the four arms lengths computes for each pixel</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>3D np.array ( row, col, [left, right, top, bot] ), dtype=np.int16</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../filter/index.html" class="btn btn-neutral float-right" title="pandora.filter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../aggregation/index.html" class="btn btn-neutral float-left" title="pandora.aggregation.aggregation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

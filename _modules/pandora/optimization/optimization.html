@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.optimization.optimization &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../pandora.html">pandora</a> &raquo;</li>
+        
+          <li><a href="../optimization.html">pandora.optimization</a> &raquo;</li>
+        
+      <li>pandora.optimization.optimization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.optimization.optimization</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains classes and functions associated to the cost volume optimization step.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">json_checker</span> <span class="kn">import</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">And</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+
+<div class="viewcode-block" id="AbstractOptimization"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.AbstractOptimization">[docs]</a><span class="k">class</span> <span class="nc">AbstractOptimization</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractOptimization.__metaclass__"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.AbstractOptimization.__metaclass__">[docs]</a>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span></div>
+
+<div class="viewcode-block" id="AbstractOptimization.optimization_methods_avail"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.AbstractOptimization.optimization_methods_avail">[docs]</a>    <span class="n">optimization_methods_avail</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the plugin associated with the optimization_method given in the configuration</span>
+
+<span class="sd">        :param cfg: configuration {&#39;optimization_method&#39;: value}</span>
+<span class="sd">        :type cfg: dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="n">AbstractOptimization</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization_method&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractOptimization</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">optimization_methods_avail</span><span class="p">[</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization_method&#39;</span><span class="p">]])</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No optimization method named </span><span class="si">{}</span><span class="s2"> supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization_method&#39;</span><span class="p">]))</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization_method&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="n">unicode</span><span class="p">:</span>
+                    <span class="c1"># creating a plugin from registered short name given as unicode (py2 &amp; 3 compatibility)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractOptimization</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">optimization_methods_avail</span><span class="p">[</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization_method&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)])</span>
+                    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No optimization method named </span><span class="si">{}</span><span class="s2"> supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization_method&#39;</span><span class="p">]))</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractOptimization</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractOptimization.register_subclass"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.AbstractOptimization.register_subclass">[docs]</a>    <span class="k">def</span> <span class="nf">register_subclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">short_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Allows to register the subclass with its short name</span>
+
+<span class="sd">        :param short_name: the subclass to be registered</span>
+<span class="sd">        :type short_name: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">subclass</span><span class="p">):</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">optimization_methods_avail</span><span class="p">[</span><span class="n">short_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">subclass</span>
+            <span class="k">return</span> <span class="n">subclass</span>
+
+        <span class="k">return</span> <span class="n">decorator</span></div>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="AbstractOptimization.desc"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.AbstractOptimization.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the optimization method</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Optimization method description&#39;</span><span class="p">)</span></div>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="AbstractOptimization.optimize_cv"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.AbstractOptimization.optimize_cv">[docs]</a>    <span class="k">def</span> <span class="nf">optimize_cv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span></div></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimizes the cost volume</span>
+
+<span class="sd">        :param cv: the cost volume dataset</span>
+<span class="sd">        :type cv:</span>
+<span class="sd">            xarray.Dataset, with the data variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        :param img_ref: reference Dataset image</span>
+<span class="sd">        :type img_ref: xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec: xarray.DataArray</span>
+<span class="sd">        :return: the cost volume dataset</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">            xarray.Dataset, with the data variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="NoneOptimization"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.NoneOptimization">[docs]</a><span class="nd">@AbstractOptimization</span><span class="o">.</span><span class="n">register_subclass</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">NoneOptimization</span><span class="p">(</span><span class="n">AbstractOptimization</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Default plugin that does not perform optimization</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param cfg: optional configuration, {}</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="NoneOptimization.check_conf"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.NoneOptimization.check_conf">[docs]</a>    <span class="k">def</span> <span class="nf">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add default values to the dictionary if there are missing elements and check if the dictionary is correct</span>
+
+<span class="sd">        :param cfg: optimization configuration</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        :return cfg: optimization configuration updated</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;optimization_method&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg</span></div>
+
+<div class="viewcode-block" id="NoneOptimization.desc"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.NoneOptimization.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the optimization method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No optimization method&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NoneOptimization.optimize_cv"><a class="viewcode-back" href="../../../api_reference/pandora/optimization/optimization/index.html#pandora.optimization.NoneOptimization.optimize_cv">[docs]</a>    <span class="k">def</span> <span class="nf">optimize_cv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the cost volume without optimization</span>
+
+<span class="sd">        :param cv: the cost volume dataset</span>
+<span class="sd">        :type cv:</span>
+<span class="sd">            xarray.Dataset, with the data variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        :param img_ref: reference Dataset image</span>
+<span class="sd">        :type img_ref: xarray.Dataset</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec: xarray.Dataset</span>
+<span class="sd">        :return: the cost volume dataset</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">            xarray.Dataset, with the data variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cv</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

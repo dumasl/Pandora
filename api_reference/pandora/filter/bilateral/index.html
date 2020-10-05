@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.filter.bilateral &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="pandora.filter.filter" href="../filter/index.html" />
+    <link rel="prev" title="pandora.filter" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../aggregation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation</span></code></a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optimization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.optimization</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../refinement/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../stereo/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.validation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter.bilateral</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/api_reference/pandora/filter/bilateral/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.filter.bilateral">
+<span id="pandora-filter-bilateral"></span><h1><a class="reference internal" href="#module-pandora.filter.bilateral" title="pandora.filter.bilateral"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter.bilateral</span></code></a><a class="headerlink" href="#module-pandora.filter.bilateral" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions associated to the bilateral filter used to filter the disparity map.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.filter.bilateral.BilateralFilter" title="pandora.filter.bilateral.BilateralFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BilateralFilter</span></code></a></p></td>
+<td><p>BilateralFilter class allows to perform the filtering step</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="pandora.filter.bilateral.BilateralFilter">
+<em class="property">class </em><code class="sig-prename descclassname">pandora.filter.bilateral.</code><code class="sig-name descname">BilateralFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>float<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/filter/bilateral.html#BilateralFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.filter.bilateral.BilateralFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../filter/index.html#pandora.filter.filter.AbstractFilter" title="pandora.filter.filter.AbstractFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandora.filter.filter.AbstractFilter</span></code></a></p>
+<p>BilateralFilter class allows to perform the filtering step</p>
+<dl class="py attribute">
+<dt id="pandora.filter.bilateral.BilateralFilter._SIGMA_COLOR">
+<code class="sig-name descname">_SIGMA_COLOR</code><em class="property"> = 2.0</em><a class="reference internal" href="../../../../_modules/pandora/filter/bilateral.html#BilateralFilter._SIGMA_COLOR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.filter.bilateral.BilateralFilter._SIGMA_COLOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pandora.filter.bilateral.BilateralFilter._SIGMA_SPACE">
+<code class="sig-name descname">_SIGMA_SPACE</code><em class="property"> = 6.0</em><a class="reference internal" href="../../../../_modules/pandora/filter/bilateral.html#BilateralFilter._SIGMA_SPACE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.filter.bilateral.BilateralFilter._SIGMA_SPACE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pandora.filter.bilateral.BilateralFilter.check_conf">
+<code class="sig-name descname">check_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>float<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>Union<span class="p">[</span>str<span class="p">, </span>float<span class="p">]</span><span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/filter/bilateral.html#BilateralFilter.check_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.filter.bilateral.BilateralFilter.check_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add default values to the dictionary if there are missing elements and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<em>dict</em>) – filter configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>filter configuration updated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.filter.bilateral.BilateralFilter.desc">
+<code class="sig-name descname">desc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/filter/bilateral.html#BilateralFilter.desc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.filter.bilateral.BilateralFilter.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the filtering method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.filter.bilateral.BilateralFilter.filter_disparity">
+<code class="sig-name descname">filter_disparity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">disp</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../../_modules/pandora/filter/bilateral.html#BilateralFilter.filter_disparity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.filter.bilateral.BilateralFilter.filter_disparity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply bilateral filter using openCV.
+Filter size is computed from sigmaSpace</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disp</strong> – the disparity map dataset</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> (<em>xarray.Dataset</em>) – secondary Dataset image</p></li>
+<li><p><strong>cv</strong> (<em>xarray.Dataset</em>) – cost volume dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Tye img_ref</dt>
+<dd class="field-even"><p>xarray.Dataset</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the Dataset with the filtered DataArray disparity_map</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>xarray.Dataset with the variables :</dt><dd><ul class="simple">
+<li><p>disparity_map 2D xarray.DataArray (row, col)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+<li><p>validity_mask 2D xarray.DataArray (row, col)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../filter/index.html" class="btn btn-neutral float-right" title="pandora.filter.filter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="pandora.filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

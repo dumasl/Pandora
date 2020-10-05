@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.filter.bilateral &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../pandora.html">pandora</a> &raquo;</li>
+        
+          <li><a href="../filter.html">pandora.filter</a> &raquo;</li>
+        
+      <li>pandora.filter.bilateral</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.filter.bilateral</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions associated to the bilateral filter used to filter the disparity map.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">json_checker</span> <span class="kn">import</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">And</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">filter</span>
+
+
+<div class="viewcode-block" id="BilateralFilter"><a class="viewcode-back" href="../../../api_reference/pandora/filter/bilateral/index.html#pandora.filter.bilateral.BilateralFilter">[docs]</a><span class="nd">@filter</span><span class="o">.</span><span class="n">AbstractFilter</span><span class="o">.</span><span class="n">register_subclass</span><span class="p">(</span><span class="s1">&#39;bilateral&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BilateralFilter</span><span class="p">(</span><span class="nb">filter</span><span class="o">.</span><span class="n">AbstractFilter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    BilateralFilter class allows to perform the filtering step</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Default configuration, do not change these values</span>
+<div class="viewcode-block" id="BilateralFilter._SIGMA_COLOR"><a class="viewcode-back" href="../../../api_reference/pandora/filter/bilateral/index.html#pandora.filter.bilateral.BilateralFilter._SIGMA_COLOR">[docs]</a>    <span class="n">_SIGMA_COLOR</span> <span class="o">=</span> <span class="mf">2.</span></div>
+<div class="viewcode-block" id="BilateralFilter._SIGMA_SPACE"><a class="viewcode-back" href="../../../api_reference/pandora/filter/bilateral/index.html#pandora.filter.bilateral.BilateralFilter._SIGMA_SPACE">[docs]</a>    <span class="n">_SIGMA_SPACE</span> <span class="o">=</span> <span class="mf">6.</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param cfg: optional configuration, {&#39;sigmaColor&#39; : value, &#39;sigmaSpace&#39; : value}</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sigmaColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;sigma_color&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sigmaSpace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;sigma_space&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BilateralFilter.check_conf"><a class="viewcode-back" href="../../../api_reference/pandora/filter/bilateral/index.html#pandora.filter.bilateral.BilateralFilter.check_conf">[docs]</a>    <span class="k">def</span> <span class="nf">check_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add default values to the dictionary if there are missing elements and check if the dictionary is correct</span>
+
+<span class="sd">        :param cfg: filter configuration</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        :return cfg: filter configuration updated</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Give the default value if the required element is not in the configuration</span>
+        <span class="k">if</span> <span class="s1">&#39;sigma_color&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;sigma_color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SIGMA_COLOR</span>
+        <span class="k">if</span> <span class="s1">&#39;sigma_space&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;sigma_space&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SIGMA_SPACE</span>
+
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;filter_method&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;bilateral&#39;</span><span class="p">),</span>
+            <span class="s2">&quot;sigma_color&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;sigma_space&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg</span></div>
+
+<div class="viewcode-block" id="BilateralFilter.desc"><a class="viewcode-back" href="../../../api_reference/pandora/filter/bilateral/index.html#pandora.filter.bilateral.BilateralFilter.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the filtering method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bilateral filter description&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BilateralFilter.filter_disparity"><a class="viewcode-back" href="../../../api_reference/pandora/filter/bilateral/index.html#pandora.filter.bilateral.BilateralFilter.filter_disparity">[docs]</a>    <span class="k">def</span> <span class="nf">filter_disparity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disp</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply bilateral filter using openCV.</span>
+<span class="sd">        Filter size is computed from sigmaSpace</span>
+
+<span class="sd">        :param disp: the disparity map dataset</span>
+<span class="sd">        :type disp:</span>
+<span class="sd">            xarray.Dataset with the variables :</span>
+<span class="sd">                - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">                - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        :param img_ref: reference Dataset image</span>
+<span class="sd">        :tye img_ref: xarray.Dataset</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec: xarray.Dataset</span>
+<span class="sd">        :param cv: cost volume dataset</span>
+<span class="sd">        :type cv: xarray.Dataset</span>
+<span class="sd">        :return: the Dataset with the filtered DataArray disparity_map</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">            xarray.Dataset with the variables :</span>
+<span class="sd">                - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">                - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">disp</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bilateralFilter</span><span class="p">(</span><span class="n">disp</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigmaColor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sigmaColor</span><span class="p">,</span>
+                                                         <span class="n">sigmaSpace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sigmaSpace</span><span class="p">)</span>
+        <span class="n">disp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bilateral&#39;</span>
+
+        <span class="k">return</span> <span class="n">disp</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.constants &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../pandora.html">pandora</a> &raquo;</li>
+        
+      <li>pandora.constants</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.constants</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains all the parameters related to the validity mask, defining each bit.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># INVALID POINTS CONSTANTS</span>
+<span class="c1"># INVALID</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_INVALID"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_INVALID">[docs]</a><span class="n">PANDORA_MSK_PIXEL_INVALID</span> <span class="o">=</span> <span class="mb">0b1111000011</span></div>
+<span class="c1"># if bit 0 activated : The pixel is invalid : border of reference image, OR nodata in reference image</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_REF_NODATA_OR_BORDER"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_REF_NODATA_OR_BORDER">[docs]</a><span class="n">PANDORA_MSK_PIXEL_REF_NODATA_OR_BORDER</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">)</span></div>
+<span class="c1"># if bit 1 activated : The pixel is invalid : disparity range to explore is missing in secondary image, OR</span>
+<span class="c1">#               nodata in secondary image</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_SEC_NODATA_OR_DISPARITY_RANGE_MISSING"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_SEC_NODATA_OR_DISPARITY_RANGE_MISSING">[docs]</a><span class="n">PANDORA_MSK_PIXEL_SEC_NODATA_OR_DISPARITY_RANGE_MISSING</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span></div>
+<span class="c1"># if bit 2 activated : Information : disparity range to explore is incomplete (borders reached in secondary image)</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_SEC_INCOMPLETE_DISPARITY_RANGE"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_SEC_INCOMPLETE_DISPARITY_RANGE">[docs]</a><span class="n">PANDORA_MSK_PIXEL_SEC_INCOMPLETE_DISPARITY_RANGE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span></div>
+<span class="c1"># if bit 3 activated : Information : Computation stopped during pixelic step, under pixelic interpolation never ended</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_STOPPED_INTERPOLATION"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_STOPPED_INTERPOLATION">[docs]</a><span class="n">PANDORA_MSK_PIXEL_STOPPED_INTERPOLATION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span></div>
+<span class="c1"># if bit 4 activated : Information : Occlusion was filled</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_FILLED_OCCLUSION"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_FILLED_OCCLUSION">[docs]</a><span class="n">PANDORA_MSK_PIXEL_FILLED_OCCLUSION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span></div>
+<span class="c1"># if bit 5 activated : Information : Mismatch was filled</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_FILLED_MISMATCH"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_FILLED_MISMATCH">[docs]</a><span class="n">PANDORA_MSK_PIXEL_FILLED_MISMATCH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">)</span></div>
+<span class="c1"># if bit 6 activated : The pixel is invalid : invalidated by validity mask of reference image</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_REF"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_REF">[docs]</a><span class="n">PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_REF</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">)</span></div>
+<span class="c1"># if bit 7 activated : The pixel is invalid : invalidated by validity mask of secondary image</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_SEC"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_SEC">[docs]</a><span class="n">PANDORA_MSK_PIXEL_IN_VALIDITY_MASK_SEC</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span><span class="p">)</span></div>
+<span class="c1"># if bit 8 activated : The pixel is invalid : pixel in occlusion area</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_OCCLUSION"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_OCCLUSION">[docs]</a><span class="n">PANDORA_MSK_PIXEL_OCCLUSION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span></div>
+<span class="c1"># if bit 9 activate : The pixel is invalid : mismatch</span>
+<div class="viewcode-block" id="PANDORA_MSK_PIXEL_MISMATCH"><a class="viewcode-back" href="../../api_reference/pandora/constants/index.html#pandora.constants.PANDORA_MSK_PIXEL_MISMATCH">[docs]</a><span class="n">PANDORA_MSK_PIXEL_MISMATCH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">9</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

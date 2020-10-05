@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.stereo.sad_ssd &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="pandora.stereo.stereo" href="../stereo/index.html" />
+    <link rel="prev" title="pandora.stereo.census" href="../census/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../aggregation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optimization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.optimization</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../refinement/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement</span></code></a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.validation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo.sad_ssd</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/api_reference/pandora/stereo/sad_ssd/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.stereo.sad_ssd">
+<span id="pandora-stereo-sad-ssd"></span><h1><a class="reference internal" href="#module-pandora.stereo.sad_ssd" title="pandora.stereo.sad_ssd"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo.sad_ssd</span></code></a><a class="headerlink" href="#module-pandora.stereo.sad_ssd" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions associated to SAD and SSD methods used in the cost volume measure step.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.stereo.sad_ssd.SadSsd" title="pandora.stereo.sad_ssd.SadSsd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SadSsd</span></code></a></p></td>
+<td><p>SadSsd class allows to compute the cost volume</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="pandora.stereo.sad_ssd.SadSsd">
+<em class="property">class </em><code class="sig-prename descclassname">pandora.stereo.sad_ssd.</code><code class="sig-name descname">SadSsd</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../stereo/index.html#pandora.stereo.stereo.AbstractStereo" title="pandora.stereo.stereo.AbstractStereo"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandora.stereo.stereo.AbstractStereo</span></code></a></p>
+<p>SadSsd class allows to compute the cost volume</p>
+<dl class="py attribute">
+<dt id="pandora.stereo.sad_ssd.SadSsd._WINDOW_SIZE">
+<code class="sig-name descname">_WINDOW_SIZE</code><em class="property"> = 5</em><a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd._WINDOW_SIZE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd._WINDOW_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pandora.stereo.sad_ssd.SadSsd._SUBPIX">
+<code class="sig-name descname">_SUBPIX</code><em class="property"> = 1</em><a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd._SUBPIX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd._SUBPIX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pandora.stereo.sad_ssd.SadSsd.check_conf">
+<code class="sig-name descname">check_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span><span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd.check_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd.check_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add default values to the dictionary if there are missing elements and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<em>dict</em>) – stereo configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>stereo configuration updated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.stereo.sad_ssd.SadSsd.desc">
+<code class="sig-name descname">desc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd.desc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the stereo method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.stereo.sad_ssd.SadSsd.compute_cost_volume">
+<code class="sig-name descname">compute_cost_volume</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">disp_min</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">disp_max</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd.compute_cost_volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd.compute_cost_volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the cost volume for a pair of images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+<li><p><strong>disp_min</strong> (<em>int</em>) – minimum disparity</p></li>
+<li><p><strong>disp_max</strong> (<em>int</em>) – maximum disparity</p></li>
+<li><p><strong>cfg</strong> (<em>dict</em>) – images configuration containing the mask convention : valid_pixels, no_data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the cost volume dataset</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>xarray.Dataset, with the data variables:</dt><dd><ul class="simple">
+<li><p>cost_volume 3D xarray.DataArray (row, col, disp)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.stereo.sad_ssd.SadSsd.ad_cost">
+<code class="sig-name descname">ad_cost</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">p</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">q</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd.ad_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd.ad_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the absolute difference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>tuple</em>) – Point interval, in the reference image, over which the squared difference will be applied</p></li>
+<li><p><strong>q</strong> (<em>tuple</em>) – Point interval, in the secondary image, over which the squared difference will be applied</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the absolute difference pixel-wise between elements in the interval</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.stereo.sad_ssd.SadSsd.sd_cost">
+<code class="sig-name descname">sd_cost</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">p</span><span class="p">:</span> <span class="n">Tuple</span></em>, <em class="sig-param"><span class="n">q</span><span class="p">:</span> <span class="n">Tuple</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd.sd_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd.sd_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the square difference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>tuple</em>) – Point interval, in the reference image, over which the squared difference will be applied</p></li>
+<li><p><strong>q</strong> (<em>tuple</em>) – Point interval, in the secondary image, over which the squared difference will be applied</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the squared difference pixel-wise between elements in the interval</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.stereo.sad_ssd.SadSsd.pixel_wise_aggregation">
+<code class="sig-name descname">pixel_wise_aggregation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">cost_volume</span><span class="p">:</span> <span class="n">np.ndarray</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../../_modules/pandora/stereo/sad_ssd.html#SadSsd.pixel_wise_aggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.stereo.sad_ssd.SadSsd.pixel_wise_aggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summing pixel wise matching cost over square windows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cost_volume</strong> (<em>numpy array 3D</em><em> (</em><em>disp</em><em>, </em><em>col</em><em>, </em><em>row</em><em>)</em>) – the cost volume</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the cost volume aggregated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array 3D ( disp, col, row)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../stereo/index.html" class="btn btn-neutral float-right" title="pandora.stereo.stereo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../census/index.html" class="btn btn-neutral float-left" title="pandora.stereo.census" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

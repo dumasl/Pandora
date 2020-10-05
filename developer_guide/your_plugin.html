@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to develop a plugin &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Before coding" href="before_coding.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../developer_guide.html">Developer guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="before_coding.html">Before coding</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to develop a plugin</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../developer_guide.html">Developer guide</a> &raquo;</li>
+        
+      <li>How to develop a plugin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/developer_guide/your_plugin.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-develop-a-plugin">
+<span id="develop-plugin"></span><h1>How to develop a plugin<a class="headerlink" href="#how-to-develop-a-plugin" title="Permalink to this headline">¶</a></h1>
+<p>One of the strengths of Pandora framework is the ability to develop an algorithm and use it as an external plugin.
+This mechanism makes it possible to enrich methods avalaible for each step of Pandora.</p>
+<p>The following sections describe the 4 major rules to respect in order to create your python package you want to use as
+a Pandora plugin.</p>
+<ol class="arabic simple">
+<li><p>Instantiate a subclass</p></li>
+</ol>
+<p>Each subpackage of Pandora, representing one particular step, defines an <a class="reference external" href="https://docs.python.org/3/library/abc.html">abstract base classes</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@stereo</span><span class="o">.</span><span class="n">AbstractStereo</span><span class="o">.</span><span class="n">register_subclass</span><span class="p">(</span><span class="s1">&#39;my_stereo_method&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MYSTEREO</span><span class="p">(</span><span class="n">stereo</span><span class="o">.</span><span class="n">AbstractStereo</span><span class="p">):</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Provide definitions of abstract methods</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Describes the stere method</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My similarity measure&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">compute_cost_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Just an example&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Implement a configuration checking method for parameters checking</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_config</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_my_stereo_param</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;my_stereo_param&#39;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;subpix&#39;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">check_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add default values to the dictionary if there are missing elements and check if the dictionary is correct</span>
+
+<span class="sd">    :param cfg: stereo configuration</span>
+<span class="sd">    :type cfg: dict</span>
+<span class="sd">    :return cfg: stereo configuration updated</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Give the default value if the required element is not in the configuration</span>
+    <span class="k">if</span> <span class="s1">&#39;window_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WINDOW_SIZE</span>
+    <span class="k">if</span> <span class="s1">&#39;subpix&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;subpix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SUBPIX</span>
+
+    <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;stereo_method&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;my_stereo_method&#39;</span><span class="p">),</span>
+        <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">11</span><span class="p">),</span>
+        <span class="s2">&quot;subpix&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;my_stereo_param&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+    <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cfg</span> <span class="n">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Make your plugin avalaible</p></li>
+</ol>
+<p>Pandora works with <a class="reference external" href="https://packaging.python.org/specifications/entry-points/">entry point specification</a>
+and can load all plugin refered in the “pandora.plugin” group.</p>
+<p>So, you must declare, on your setup.py file, an entry point:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plugin_my_stereo_method&#39;</span><span class="p">,</span>
+      <span class="n">setup_requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;very-good-setuptools-git-version&#39;</span><span class="p">],</span>
+      <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Pandora plugin to compute cost volume with my new matching cost algorithm&#39;</span><span class="p">,</span>
+      <span class="n">long_description</span><span class="o">=</span><span class="n">readme</span><span class="p">(),</span>
+      <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span>
+      <span class="n">install_requires</span><span class="o">=</span><span class="n">requirements</span><span class="p">,</span>
+      <span class="n">entry_points</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">          [pandora.plugin]</span>
+<span class="s2">          plugin_my_stereo_method = plugin_my_stereo_method.my_stereo_method:MYSTEREO</span>
+<span class="s2">      &quot;&quot;&quot;</span><span class="p">,</span>
+      <span class="n">cmdclass</span><span class="o">=</span><span class="n">cmdclass</span><span class="p">,</span>
+      <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="before_coding.html" class="btn btn-neutral float-left" title="Before coding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

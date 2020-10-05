@@ -1,0 +1,118 @@
+:mod:`pandora.optimization.optimization`
+========================================
+
+.. py:module:: pandora.optimization.optimization
+
+.. autoapi-nested-parse::
+
+   This module contains classes and functions associated to the cost volume optimization step.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pandora.optimization.optimization.AbstractOptimization
+   pandora.optimization.optimization.NoneOptimization
+
+
+
+.. py:class:: AbstractOptimization
+
+   Bases: :class:`object`
+
+   .. attribute:: __metaclass__
+      
+
+      
+
+   .. attribute:: optimization_methods_avail
+      
+
+      
+
+   .. method:: register_subclass(cls, short_name: str)
+      :classmethod:
+
+      Allows to register the subclass with its short name
+
+      :param short_name: the subclass to be registered
+      :type short_name: string
+
+
+   .. method:: desc(self)
+      :abstractmethod:
+
+      Describes the optimization method
+
+
+   .. method:: optimize_cv(self, cv: xr.Dataset, img_ref: xr.Dataset, img_sec: xr.Dataset) -> xr.Dataset
+      :abstractmethod:
+
+      Optimizes the cost volume
+
+      :param cv: the cost volume dataset
+      :type cv:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :param img_ref: reference Dataset image
+      :type img_ref: xarray.DataArray
+      :param img_sec: secondary Dataset image
+      :type img_sec: xarray.DataArray
+      :return: the cost volume dataset
+      :rtype:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+
+
+
+.. py:class:: NoneOptimization(**cfg: Dict[str, dict])
+
+   Bases: :class:`pandora.optimization.optimization.AbstractOptimization`
+
+   Default plugin that does not perform optimization
+
+   .. method:: check_conf(**cfg: str) -> Dict[str, str]
+      :staticmethod:
+
+      Add default values to the dictionary if there are missing elements and check if the dictionary is correct
+
+      :param cfg: optimization configuration
+      :type cfg: dict
+      :return cfg: optimization configuration updated
+      :rtype: dict
+
+
+   .. method:: desc(self)
+
+      Describes the optimization method
+
+
+   .. method:: optimize_cv(self, cv: xr.Dataset, img_ref: xr.Dataset, img_sec: xr.Dataset) -> xr.Dataset
+
+      Return the cost volume without optimization
+
+      :param cv: the cost volume dataset
+      :type cv:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :param img_ref: reference Dataset image
+      :type img_ref: xarray.Dataset
+      :param img_sec: secondary Dataset image
+      :type img_sec: xarray.Dataset
+      :return: the cost volume dataset
+      :rtype:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+
+
+

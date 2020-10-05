@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.disparity &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="pandora.img_tools" href="../img_tools/index.html" />
+    <link rel="prev" title="pandora.constants" href="../constants/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../JSON_checker/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.JSON_checker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../common/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.common</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.constants</span></code></a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.disparity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../img_tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.img_tools</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../marge/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.marge</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../output_tree_design/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.output_tree_design</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.disparity</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api_reference/pandora/disparity/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.disparity">
+<span id="pandora-disparity"></span><h1><a class="reference internal" href="#module-pandora.disparity" title="pandora.disparity"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.disparity</span></code></a><a class="headerlink" href="#module-pandora.disparity" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions associated to the disparity map computation step.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.disparity.to_disp" title="pandora.disparity.to_disp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_disp</span></code></a>(cv: xr.Dataset, invalid_value: float = 0, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None) → xr.Dataset</p></td>
+<td><p>Disparity computation by applying the Winner Takes All strategy</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.disparity.validity_mask" title="pandora.disparity.validity_mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validity_mask</span></code></a>(disp: xr.Dataset, img_ref: xr.Dataset, img_sec: xr.Dataset, cv: xr.Dataset = None, **cfg: int) → xr.Dataset</p></td>
+<td><p>Create the validity mask of the disparity map</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.disparity.argmin_split" title="pandora.disparity.argmin_split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argmin_split</span></code></a>(cost_volume: xr.Dataset) → np.ndarray</p></td>
+<td><p>Find the indices of the minimum values for a 3D DataArray, along axis 2.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.disparity.argmax_split" title="pandora.disparity.argmax_split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argmax_split</span></code></a>(cost_volume: xr.Dataset) → np.ndarray</p></td>
+<td><p>Find the indices of the maximum values for a 3D DataArray, along axis 2.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.disparity.coefficient_map" title="pandora.disparity.coefficient_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coefficient_map</span></code></a>(cv: xr.DataArray) → xr.DataArray</p></td>
+<td><p>Return the coefficient map</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.disparity.approximate_right_disparity" title="pandora.disparity.approximate_right_disparity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">approximate_right_disparity</span></code></a>(cv: xr.Dataset, img_sec: xr.Dataset, invalid_value: float = 0, img_ref: xr.Dataset = None) → xr.Dataset</p></td>
+<td><p>Create the right disparity map, by a diagonal search for the minimum in the reference cost volume</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.disparity.resize" title="pandora.disparity.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(dataset: xr.Dataset, invalid_value: float = 0) → xr.Dataset</p></td>
+<td><p>Pixels whose aggregation window exceeds the reference image are truncated in the output products.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="pandora.disparity.to_disp">
+<code class="sig-prename descclassname">pandora.disparity.</code><code class="sig-name descname">to_disp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">invalid_value</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../_modules/pandora/disparity.html#to_disp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.disparity.to_disp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disparity computation by applying the Winner Takes All strategy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cv</strong> – the cost volume datset</p></li>
+<li><p><strong>invalid_value</strong> (<em>float</em>) – disparity to assign to invalid pixels</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dataset with the disparity map and the confidence measure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>xarray.Dataset with the data variables :</dt><dd><ul class="simple">
+<li><p>disparity_map 2D xarray.DataArray (row, col)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.disparity.validity_mask">
+<code class="sig-prename descclassname">pandora.disparity.</code><code class="sig-name descname">validity_mask</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">disp</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../_modules/pandora/disparity.html#validity_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.disparity.validity_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the validity mask of the disparity map</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disp</strong> – dataset with the disparity map and the confidence measure</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+<li><p><strong>cv</strong> – cost volume dataset</p></li>
+<li><p><strong>cfg</strong> (<em>dict</em>) – images configuration containing the mask convention : valid_pixels, no_data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the dataset disparity with the data variable validity_mask</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>:rtype :</dt><dd><dl class="simple">
+<dt>xarray.Dataset with the data variables :</dt><dd><ul class="simple">
+<li><p>disparity_map 2D xarray.DataArray (row, col)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+<li><p>validity_mak 2D xarray.DataArray (row, col)</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.disparity.argmin_split">
+<code class="sig-prename descclassname">pandora.disparity.</code><code class="sig-name descname">argmin_split</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cost_volume</span><span class="p">:</span> <span class="n">xr.Dataset</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../_modules/pandora/disparity.html#argmin_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.disparity.argmin_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the indices of the minimum values for a 3D DataArray, along axis 2.
+Memory consumption is reduced by splitting the 3D Array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cost_volume</strong> (<em>xarray.Dataset</em>) – the cost volume dataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the disparities for which the cost volume values are the smallest</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.disparity.argmax_split">
+<code class="sig-prename descclassname">pandora.disparity.</code><code class="sig-name descname">argmax_split</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cost_volume</span><span class="p">:</span> <span class="n">xr.Dataset</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../_modules/pandora/disparity.html#argmax_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.disparity.argmax_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the indices of the maximum values for a 3D DataArray, along axis 2.
+Memory consumption is reduced by splitting the 3D Array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cost_volume</strong> (<em>xarray.Dataset</em>) – the cost volume dataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the disparities for which the cost volume values are the highest</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.disparity.coefficient_map">
+<code class="sig-prename descclassname">pandora.disparity.</code><code class="sig-name descname">coefficient_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.DataArray</span></em><span class="sig-paren">)</span> &#x2192; xr.DataArray<a class="reference internal" href="../../../_modules/pandora/disparity.html#coefficient_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.disparity.coefficient_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the coefficient map</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cv</strong> (<em>xarray.Dataset</em><em>, </em><em>with the data variables cost_volume 3D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>disp</em><em>)</em>) – cost volume</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the coefficient map</p>
+</dd>
+</dl>
+<p>:rtype : 2D DataArray (row, col)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.disparity.approximate_right_disparity">
+<code class="sig-prename descclassname">pandora.disparity.</code><code class="sig-name descname">approximate_right_disparity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">invalid_value</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../_modules/pandora/disparity.html#approximate_right_disparity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.disparity.approximate_right_disparity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the right disparity map, by a diagonal search for the minimum in the reference cost volume</p>
+<p>ERNST, Ines et HIRSCHMÜLLER, Heiko.
+Mutual information based semi-global stereo matching on the GPU.
+In : International Symposium on Visual Computing. Springer, Berlin, Heidelberg, 2008. p. 228-239.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cv</strong> – the cost volume dataset</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+<li><p><strong>invalid_value</strong> (<em>float</em>) – disparity to assign to invalid pixels</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dataset with the secondary disparity map, the confidence measure and the validity mask</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>xarray.Dataset with the data variables :</dt><dd><ul class="simple">
+<li><p>disparity_map 2D xarray.DataArray (row, col)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+<li><p>validity_mask 2D xarray.DataArray (row, col)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.disparity.resize">
+<code class="sig-prename descclassname">pandora.disparity.</code><code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">invalid_value</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../_modules/pandora/disparity.html#resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.disparity.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pixels whose aggregation window exceeds the reference image are truncated in the output products.
+This function returns the output products with the size of the input images : add rows and columns that have been
+truncated. These added pixels will have bit 0 = 1 ( Invalid pixel : border of the reference image )
+in the validity_mask  and will have the disparity = invalid_value in the disparity map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>xarray.Dataset with the variables :
+- disparity_map 2D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>)
+</em><em>- confidence_measure 3D xarray.DataArray</em><em>(</em><em>row</em><em>, </em><em>col</em><em>, </em><em>indicator</em><em>)
+</em><em>- validity_mask 2D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>)</em>) – Dataset which contains the output products</p></li>
+<li><p><strong>invalid_value</strong> (<em>float</em>) – disparity to assign to invalid pixels ( pixels whose aggregation window exceeds the image)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the dataset with the size of the input images</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>:rtype<span class="classifier">xarray.Dataset with the variables :</span></dt><dd><ul class="simple">
+<li><p>disparity_map 2D xarray.DataArray (row, col)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray(row, col, indicator)</p></li>
+<li><p>validity_mask 2D xarray.DataArray (row, col)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../img_tools/index.html" class="btn btn-neutral float-right" title="pandora.img_tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../constants/index.html" class="btn btn-neutral float-left" title="pandora.constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

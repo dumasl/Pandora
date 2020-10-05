@@ -1,0 +1,85 @@
+:mod:`pandora.aggregation`
+==========================
+
+.. py:module:: pandora.aggregation
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   aggregation/index.rst
+   cbca/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pandora.aggregation.AbstractAggregation
+
+
+
+.. py:class:: AbstractAggregation
+
+   Bases: :class:`object`
+
+   .. attribute:: __metaclass__
+      
+
+      
+
+   .. attribute:: aggreg_methods_avail
+      
+
+      
+
+   .. method:: register_subclass(cls, short_name: str)
+      :classmethod:
+
+      Allows to register the subclass with its short name
+
+      :param short_name: the subclass to be registered
+      :type short_name: string
+
+
+   .. method:: desc(self)
+      :abstractmethod:
+
+      Describes the aggregation method
+
+
+   .. method:: cost_volume_aggregation(self, img_ref: xr.Dataset, img_sec: xr.Dataset, cv: xr.Dataset) -> xr.Dataset
+      :abstractmethod:
+
+      Aggregate the cost volume for a pair of images
+
+      :param img_ref: reference Dataset image
+      :type img_ref:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk (optional): 2D (row, col) xarray.DataArray
+      :param img_sec: secondary Dataset image
+      :type img_sec:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk (optional): 2D (row, col) xarray.DataArray
+      :param cv: the cost volume dataset
+      :type cv:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :return: the cost volume aggregated in the dataset
+      :rtype:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+
+
+

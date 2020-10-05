@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.JSON_checker &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../pandora.html">pandora</a> &raquo;</li>
+        
+      <li>pandora.JSON_checker</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.JSON_checker</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions allowing to check the configuration given to Pandora pipeline.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">json_checker</span> <span class="kn">import</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">And</span><span class="p">,</span> <span class="n">Or</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Mapping</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">stereo</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">optimization</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">aggregation</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">filter</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">validation</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">refinement</span>
+
+
+<div class="viewcode-block" id="gdal_can_open_mandatory"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.gdal_can_open_mandatory">[docs]</a><span class="k">def</span> <span class="nf">gdal_can_open_mandatory</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if file f can be open by gdal</span>
+
+<span class="sd">    :param f: File to test</span>
+<span class="sd">    :type f: string</span>
+<span class="sd">    :returns: True if rasterio can open file and False otherwise</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Impossible to read file </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="gdal_can_open"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.gdal_can_open">[docs]</a><span class="k">def</span> <span class="nf">gdal_can_open</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if file f can be open by gdal</span>
+
+<span class="sd">    :param f: File to test</span>
+<span class="sd">    :type f: string</span>
+<span class="sd">    :returns: True if rasterio can open file and False otherwise</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">f</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span> <span class="ow">or</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gdal_can_open_mandatory</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_images"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.check_images">[docs]</a><span class="k">def</span> <span class="nf">check_images</span><span class="p">(</span><span class="n">img_ref</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">msk_ref</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">msk_sec</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check the images</span>
+
+<span class="sd">    :param img_ref: path to the reference image</span>
+<span class="sd">    :type img_ref: string</span>
+<span class="sd">    :param img_sec: path to the secondary image</span>
+<span class="sd">    :type img_sec: string</span>
+<span class="sd">    :param msk_ref: path to the mask of the reference image</span>
+<span class="sd">    :type msk_ref: string</span>
+<span class="sd">    :param msk_sec: path to the mask of the secondary image</span>
+<span class="sd">    :type msk_sec: string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># verify that the images have 1 channel</span>
+    <span class="n">ref_</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_ref</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ref_</span><span class="o">.</span><span class="n">count</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The input images must be 1-channel grayscale images&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sec_</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_sec</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sec_</span><span class="o">.</span><span class="n">count</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The input images must be 1-channel grayscale images&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># verify that the images have the same size</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ref_</span><span class="o">.</span><span class="n">width</span> <span class="o">!=</span> <span class="n">sec_</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
+            <span class="p">(</span><span class="n">ref_</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">sec_</span><span class="o">.</span><span class="n">height</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Images must have the same size&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># verify that image and mask have the same size</span>
+    <span class="k">if</span> <span class="n">msk_ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">msk_</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">msk_ref</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ref_</span><span class="o">.</span><span class="n">width</span> <span class="o">!=</span> <span class="n">msk_</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">ref_</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">msk_</span><span class="o">.</span><span class="n">height</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Image and masks must have the same size&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># verify that image and mask have the same size</span>
+    <span class="k">if</span> <span class="n">msk_sec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">msk_</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">msk_sec</span><span class="p">)</span>
+        <span class="c1"># verify that the image and mask have the same size</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sec_</span><span class="o">.</span><span class="n">width</span> <span class="o">!=</span> <span class="n">msk_</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">sec_</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">msk_</span><span class="o">.</span><span class="n">height</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Image and masks must have the same size&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_disparity"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.check_disparity">[docs]</a><span class="k">def</span> <span class="nf">check_disparity</span><span class="p">(</span><span class="n">disp_min</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check the disparity</span>
+
+<span class="sd">    :param disp_min: minimal disparity</span>
+<span class="sd">    :type disp_min: int</span>
+<span class="sd">    :param disp_max: maximal disparity</span>
+<span class="sd">    :type disp_max: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># verify the disparity</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">disp_min</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">disp_max</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Disparity range must be greater than 0&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_config_pipeline"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.get_config_pipeline">[docs]</a><span class="k">def</span> <span class="nf">get_config_pipeline</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the pipeline configuration</span>
+
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return cfg: partial configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="s1">&#39;invalid_disparity&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;invalid_disparity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;invalid_disparity&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;stereo&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;stereo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;stereo&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;aggregation&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;aggregation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;aggregation&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;optimization&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;optimization&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;refinement&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;refinement&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;refinement&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;filter&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;filter&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;validation&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="get_config_input"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.get_config_input">[docs]</a><span class="k">def</span> <span class="nf">get_config_input</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the input configuration</span>
+
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return cfg: partial configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="s1">&#39;input&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="get_config_image"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.get_config_image">[docs]</a><span class="k">def</span> <span class="nf">get_config_image</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the image configuration</span>
+
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return cfg: partial configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="s1">&#39;image&#39;</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="check_pipeline_section"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.check_pipeline_section">[docs]</a><span class="k">def</span> <span class="nf">check_pipeline_section</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Complete and check if the pipeline dictionary is correct</span>
+
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return cfg: global configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Add missing steps and inputs defaults values in user_cfg</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">default_short_configuration_pipeline</span><span class="p">,</span> <span class="n">user_cfg</span><span class="p">)</span>
+
+    <span class="c1"># Initialize the plugins</span>
+    <span class="n">stereo_</span> <span class="o">=</span> <span class="n">stereo</span><span class="o">.</span><span class="n">AbstractStereo</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;stereo&quot;</span><span class="p">])</span>
+    <span class="n">aggregation_</span> <span class="o">=</span> <span class="n">aggregation</span><span class="o">.</span><span class="n">AbstractAggregation</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">])</span>
+    <span class="n">optimization_</span> <span class="o">=</span> <span class="n">optimization</span><span class="o">.</span><span class="n">AbstractOptimization</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;optimization&quot;</span><span class="p">])</span>
+    <span class="n">refinement_</span> <span class="o">=</span> <span class="n">refinement</span><span class="o">.</span><span class="n">AbstractRefinement</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;refinement&quot;</span><span class="p">])</span>
+    <span class="n">filter_</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">AbstractFilter</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;filter&quot;</span><span class="p">])</span>
+    <span class="n">validation_</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">AbstractValidation</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;validation&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Load configuration steps</span>
+    <span class="n">cfg_stereo</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;stereo&#39;</span><span class="p">:</span> <span class="n">stereo_</span><span class="o">.</span><span class="n">cfg</span><span class="p">}</span>
+    <span class="n">cfg_aggregation</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;aggregation&#39;</span><span class="p">:</span> <span class="n">aggregation_</span><span class="o">.</span><span class="n">cfg</span><span class="p">}</span>
+    <span class="n">cfg_optimization</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;optimization&#39;</span><span class="p">:</span> <span class="n">optimization_</span><span class="o">.</span><span class="n">cfg</span><span class="p">}</span>
+    <span class="n">cfg_refinement</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;refinement&#39;</span><span class="p">:</span> <span class="n">refinement_</span><span class="o">.</span><span class="n">cfg</span><span class="p">}</span>
+    <span class="n">cfg_filter</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="n">filter_</span><span class="o">.</span><span class="n">cfg</span><span class="p">}</span>
+    <span class="n">cfg_validation</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;validation&#39;</span><span class="p">:</span> <span class="n">validation_</span><span class="o">.</span><span class="n">cfg</span><span class="p">}</span>
+
+    <span class="c1"># Update the configuration with steps configuration</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_stereo</span><span class="p">)</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_aggregation</span><span class="p">)</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_optimization</span><span class="p">)</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_refinement</span><span class="p">)</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_filter</span><span class="p">)</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_validation</span><span class="p">)</span>
+
+    <span class="n">configuration_schema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;invalid_disparity&quot;</span><span class="p">:</span> <span class="n">Or</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+        <span class="s2">&quot;stereo&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="s2">&quot;aggregation&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="s2">&quot;optimization&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="s2">&quot;refinement&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="s2">&quot;validation&quot;</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="p">}</span>
+
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">configuration_schema</span><span class="p">)</span>
+    <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="check_image_section"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.check_image_section">[docs]</a><span class="k">def</span> <span class="nf">check_image_section</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Complete and check if the dictionary is correct</span>
+
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return cfg: global configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Add missing steps and inputs defaults values in user_cfg</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">default_short_configuration_image</span><span class="p">,</span> <span class="n">user_cfg</span><span class="p">)</span>
+
+    <span class="c1"># check schema</span>
+    <span class="n">configuration_schema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">image_configuration_schema</span>
+    <span class="p">}</span>
+
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">configuration_schema</span><span class="p">)</span>
+    <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="check_input_section"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.check_input_section">[docs]</a><span class="k">def</span> <span class="nf">check_input_section</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Complete and check if the dictionary is correct</span>
+
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return cfg: global configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Add missing steps and inputs defaults values in user_cfg</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">default_short_configuration_input</span><span class="p">,</span> <span class="n">user_cfg</span><span class="p">)</span>
+
+    <span class="c1"># check schema</span>
+    <span class="n">configuration_schema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">input_configuration_schema</span>
+    <span class="p">}</span>
+
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">configuration_schema</span><span class="p">)</span>
+    <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="c1"># custom checking</span>
+    <span class="n">check_disparity</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;disp_min&#39;</span><span class="p">],</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;disp_max&#39;</span><span class="p">])</span>
+    <span class="n">check_images</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;img_ref&#39;</span><span class="p">],</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;img_sec&#39;</span><span class="p">],</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;ref_mask&#39;</span><span class="p">],</span>
+                 <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;sec_mask&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="check_conf"><a class="viewcode-back" href="../../api_reference/pandora/index.html#pandora.JSON_checker.check_conf">[docs]</a><span class="k">def</span> <span class="nf">check_conf</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Complete and check if the dictionary is correct</span>
+
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return cfg: global configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check pipeline</span>
+    <span class="n">user_cfg_pipeline</span> <span class="o">=</span> <span class="n">get_config_pipeline</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">)</span>
+    <span class="n">cfg_pipeline</span> <span class="o">=</span> <span class="n">check_pipeline_section</span><span class="p">(</span><span class="n">user_cfg_pipeline</span><span class="p">)</span>
+
+    <span class="c1"># check image</span>
+    <span class="n">user_cfg_image</span> <span class="o">=</span> <span class="n">get_config_image</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">)</span>
+    <span class="n">cfg_image</span> <span class="o">=</span> <span class="n">check_image_section</span><span class="p">(</span><span class="n">user_cfg_image</span><span class="p">)</span>
+
+    <span class="c1"># check input</span>
+    <span class="n">user_cfg_input</span> <span class="o">=</span> <span class="n">get_config_input</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">)</span>
+    <span class="n">cfg_input</span> <span class="o">=</span> <span class="n">check_input_section</span><span class="p">(</span><span class="n">user_cfg_input</span><span class="p">)</span>
+
+    <span class="c1"># concatenate updated config</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">concat_conf</span><span class="p">([</span><span class="n">cfg_image</span><span class="p">,</span> <span class="n">cfg_input</span><span class="p">,</span> <span class="n">cfg_pipeline</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="concat_conf"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.concat_conf">[docs]</a><span class="k">def</span> <span class="nf">concat_conf</span><span class="p">(</span><span class="n">cfg_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Concatenate dictionaries</span>
+
+<span class="sd">    :param cfg_list: list of configurations</span>
+<span class="sd">    :type cfg_list: List of dict</span>
+<span class="sd">    :return cfg: global configuration</span>
+<span class="sd">    :rtype cfg: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># concatenate updated config</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cfg_list</span><span class="p">:</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cfg</span></div>
+
+
+<div class="viewcode-block" id="input_configuration_schema"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.input_configuration_schema">[docs]</a><span class="n">input_configuration_schema</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;img_ref&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">gdal_can_open_mandatory</span><span class="p">),</span>
+    <span class="s2">&quot;img_sec&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">gdal_can_open_mandatory</span><span class="p">),</span>
+    <span class="s2">&quot;ref_mask&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span> <span class="n">gdal_can_open</span><span class="p">),</span>
+    <span class="s2">&quot;sec_mask&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span> <span class="n">gdal_can_open</span><span class="p">),</span>
+    <span class="s2">&quot;disp_min&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;disp_max&quot;</span><span class="p">:</span> <span class="nb">int</span></div>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="image_configuration_schema"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.image_configuration_schema">[docs]</a><span class="n">image_configuration_schema</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;nodata1&quot;</span><span class="p">:</span> <span class="n">Or</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+    <span class="s2">&quot;nodata2&quot;</span><span class="p">:</span> <span class="n">Or</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+    <span class="s2">&quot;valid_pixels&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;no_data&quot;</span><span class="p">:</span> <span class="nb">int</span></div>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="default_short_configuration_image"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.default_short_configuration_image">[docs]</a><span class="n">default_short_configuration_image</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;nodata1&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;nodata2&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;valid_pixels&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;no_data&quot;</span><span class="p">:</span> <span class="mi">1</span></div>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="default_short_configuration_input"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.default_short_configuration_input">[docs]</a><span class="n">default_short_configuration_input</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_mask&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;sec_mask&quot;</span><span class="p">:</span> <span class="kc">None</span></div>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="default_short_configuration_pipeline"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.default_short_configuration_pipeline">[docs]</a><span class="n">default_short_configuration_pipeline</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;invalid_disparity&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span>
+    <span class="s2">&quot;stereo&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;stereo_method&quot;</span><span class="p">:</span> <span class="s2">&quot;ssd&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;aggregation&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;aggregation_method&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;optimization&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;optimization_method&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;refinement&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;refinement_method&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;filter_method&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;validation_method&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span></div>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="default_short_configuration"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.default_short_configuration">[docs]</a><span class="n">default_short_configuration</span> <span class="o">=</span> <span class="n">concat_conf</span><span class="p">([</span><span class="n">default_short_configuration_image</span><span class="p">,</span> <span class="n">default_short_configuration_input</span><span class="p">,</span>
+                                           <span class="n">default_short_configuration_pipeline</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="read_config_file"><a class="viewcode-back" href="../../api_reference/pandora/index.html#pandora.JSON_checker.read_config_file">[docs]</a><span class="k">def</span> <span class="nf">read_config_file</span><span class="p">(</span><span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read a json configuration file</span>
+
+<span class="sd">    :param config_file: path to a json file containing the algorithm parameters</span>
+<span class="sd">    :type config_file: string</span>
+<span class="sd">    :return user_cfg: configuration dictionary</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">user_cfg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">user_cfg</span></div>
+
+
+<div class="viewcode-block" id="update_conf"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.update_conf">[docs]</a><span class="k">def</span> <span class="nf">update_conf</span><span class="p">(</span><span class="n">def_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span> <span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the default configuration with the user configuration,</span>
+
+<span class="sd">    :param def_cfg: default configuration</span>
+<span class="sd">    :type def_cfg: dict</span>
+<span class="sd">    :param user_cfg: user configuration</span>
+<span class="sd">    :type user_cfg: dict</span>
+<span class="sd">    :return: the user and default configuration</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">def_cfg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">user_cfg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="n">config</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_conf</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">{}),</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;np.nan&quot;</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">config</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">config</span></div>
+
+
+<div class="viewcode-block" id="is_method"><a class="viewcode-back" href="../../api_reference/pandora/JSON_checker/index.html#pandora.JSON_checker.is_method">[docs]</a><span class="k">def</span> <span class="nf">is_method</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">methods</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if s is a method in methods</span>
+
+<span class="sd">    :param s: String to test</span>
+<span class="sd">    :type s: string</span>
+<span class="sd">    :param methods: list of available methods</span>
+<span class="sd">    :type methods: list of strings</span>
+<span class="sd">    :returns: True if s a method and False otherwise</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not in available methods : &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">methods</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

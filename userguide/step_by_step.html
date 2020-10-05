@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Stereo correspondence: step by step &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pandora’s data" href="pandora_data.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../userguide.html">Userguide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Stereo correspondence: step by step</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matching-cost-computation">Matching cost computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cost-aggregation">Cost Aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimisation">Optimisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disparity-computation">Disparity computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disparity-refinement">Disparity refinement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validation-and-filtering-of-the-disparity-map">Validation and filtering of the disparity map</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pandora_data.html">Pandora’s data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../userguide.html">Userguide</a> &raquo;</li>
+        
+      <li>Stereo correspondence: step by step</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/userguide/step_by_step.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="stereo-correspondence-step-by-step">
+<h1>Stereo correspondence: step by step<a class="headerlink" href="#stereo-correspondence-step-by-step" title="Permalink to this headline">¶</a></h1>
+<p>The following sections describe Pandora’s stereo matching steps.</p>
+<div class="section" id="matching-cost-computation">
+<h2>Matching cost computation<a class="headerlink" href="#matching-cost-computation" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to compute the cost volume containing the similarity coefficients.
+Different measures of similarity are available in Pandora :</p>
+<ul class="simple">
+<li><p>SAD (Sum of Absolute Differences)</p></li>
+<li><p>SSD (Sum of Squared Differences)</p></li>
+<li><p>Census <a class="footnote-reference brackets" href="#id11" id="id1">1</a></p></li>
+<li><p>ZNCC (Zero mean Normalized Cross Correlation)</p></li>
+</ul>
+<p>It is possible to oversample the cost volume by a factor of 2 or 4 ( with the <em>subpix</em> parameter ) compared to
+to the input images. It can be useful for <a class="reference internal" href="#disparity-refinement"><span class="std std-ref">Disparity refinement</span></a></p>
+<p>Pandora can take into account a mask and a nodata value for each image. The masks and nodata are used during
+the matching cost computation  :</p>
+<ul class="simple">
+<li><p>Nodata pixel management: if the reference window contains nodata, the center pixel of the window is invalidated.
+Therefore,the disparity range is invalidated : <img class="math" src="../_images/math/5684d37c08feba0108dbc6d33cd66dc6eb16a56f.png" alt="cost(x, y, \forall d) = nan"/>.
+If the secondary window contains nodata, the center pixel is invalidated. As a result, the pixels of the reference image
+such as <img class="math" src="../_images/math/3d358b713d400b689eb8917689ff60cd2a067fbc.png" alt="I_{L}(x, y) = I_{R}(x + d, y)"/>, are invalidated <img class="math" src="../_images/math/10e75b11d651ab44a55439be275bbc3e2d84bd89.png" alt="cost(x, y, d) = nan"/></p></li>
+<li><p>Management of hidden pixels: if the center pixel of the reference window is hidden, the disparity range is
+invalidated : <img class="math" src="../_images/math/5684d37c08feba0108dbc6d33cd66dc6eb16a56f.png" alt="cost(x, y, \forall d) = nan"/>.
+If the pixel in the center of the secondary window is hidden, the pixels of the reference image such as
+<img class="math" src="../_images/math/3d358b713d400b689eb8917689ff60cd2a067fbc.png" alt="I_{L}(x, y) = I_{R}(x + d, y)"/> are invalidated <img class="math" src="../_images/math/10e75b11d651ab44a55439be275bbc3e2d84bd89.png" alt="cost(x, y, d) = nan"/></p></li>
+</ul>
+</div>
+<div class="section" id="cost-aggregation">
+<h2>Cost Aggregation<a class="headerlink" href="#cost-aggregation" title="Permalink to this headline">¶</a></h2>
+<p>The second step is to aggregate the matching costs:</p>
+<ul class="simple">
+<li><p>Cross-based Cost Aggregation <a class="footnote-reference brackets" href="#id12" id="id2">2</a>. This method consists in creating aggregation support regions that adapt to the structures
+present in the scene.</p></li>
+</ul>
+</div>
+<div class="section" id="optimisation">
+<h2>Optimisation<a class="headerlink" href="#optimisation" title="Permalink to this headline">¶</a></h2>
+<p>The third step is to minimize a global energy defined by</p>
+<blockquote>
+<div><p><img class="math" src="../_images/math/0ff17a8e44949459a56cc2d28069d029fb1569f5.png" alt="E(d) = E_{data}(d) + \lambda E_{smooth}(d)"/></p>
+</div></blockquote>
+<p>First term, called data term represents raw matching cost measurement. The second one, the smoothness term, represents smoothness assumptions made
+by the algorithm.</p>
+<p>The methods available in Pandora are</p>
+<ul class="simple">
+<li><p>Semi-Global Matching <a class="footnote-reference brackets" href="#id15" id="id3">5</a>, made available by plugin_libsgm and libsgm.</p></li>
+</ul>
+</div>
+<div class="section" id="disparity-computation">
+<h2>Disparity computation<a class="headerlink" href="#disparity-computation" title="Permalink to this headline">¶</a></h2>
+<p>This step looks for the disparity for each pixel of the image that produces the best matching cost:
+it’s called the Winner Takes All strategy.</p>
+<p>The disparity calculated by Pandora is such that:</p>
+<blockquote>
+<div><p><img class="math" src="../_images/math/3d358b713d400b689eb8917689ff60cd2a067fbc.png" alt="I_{L}(x, y) = I_{R}(x + d, y)"/></p>
+</div></blockquote>
+<p>avec <img class="math" src="../_images/math/29db33422117288d9b79e89db01cc25aba66b772.png" alt="I_{L}"/> , <img class="math" src="../_images/math/fd820bcb9ed20f9e1d8b6b3933bcf2ff7a116d14.png" alt="I_{R}"/> the reference image (left image) and the secondary image (right image), and
+<img class="math" src="../_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/> the disparity.</p>
+</div>
+<div class="section" id="disparity-refinement">
+<span id="id4"></span><h2>Disparity refinement<a class="headerlink" href="#disparity-refinement" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of this step is to refine the disparity identified in the previous step. it consists in interpolating the
+coefficients of similarity.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cost volume disparity dimension is sampled at the input images rate by default.
+Thus disparities tested are integers. However, to prevent from aliasing effects when
+refining the disparity map, one can use the <em>subpix</em> parameter.
+This will add subpixel disparities into the cost volume by oversampling the disparity dimension by a factor 2 or 4.</p>
+</div>
+<p>The available interpolation methods are :</p>
+<ul>
+<li><p>Vfit <a class="footnote-reference brackets" href="#id14" id="id5">4</a>, consists in estimating a symmetrical form V from 3 points: the disparity <img class="math" src="../_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/> identified at
+the previous step as well as <img class="math" src="../_images/math/48c9d6f5f946d9b543220b90bdd6d9e59f00267e.png" alt="d - 1"/> and <img class="math" src="../_images/math/05d4cd8eeb03da66f2901eebaa45c4f071380186.png" alt="d + 1"/> with their costs. The following figure
+represents the function to be estimated :</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/Vfit.png"><img alt="../_images/Vfit.png" src="../_images/Vfit.png" style="width: 300px; height: 200px;" /></a>
+</div></blockquote>
+<p>The interpolation is given by the following formula, where <img class="math" src="../_images/math/d520a12f1579170834c32ad5f656de081bbb36fe.png" alt="c"/> the matching cost, and <img class="math" src="../_images/math/141bbefb74014fc5e43499901bf78607ae335583.png" alt="p"/> the slope :</p>
+<blockquote>
+<div><div class="math">
+<p><img src="../_images/math/d8f212cd1a9b6b8a33ce7a44cdb74621efcfb8e6.png" alt="y &amp;= c(d + 1) + (x - 1) * p  \\
+y &amp;= c(d - 1) + (x - (-1)) * -p  \\
+x &amp;= (c(d - 1) - c(d + 1)) / (2*p)"/></p>
+</div></div></blockquote>
+</li>
+<li><p>Quadratic, consists in estimating a parabola from 3 points: the disparity <img class="math" src="../_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/> identified at
+the previous step as well as <img class="math" src="../_images/math/48c9d6f5f946d9b543220b90bdd6d9e59f00267e.png" alt="d - 1"/> and <img class="math" src="../_images/math/05d4cd8eeb03da66f2901eebaa45c4f071380186.png" alt="d + 1"/> with their costs. The following figure
+represents the function to be estimated :</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/Quadratic.png"><img alt="../_images/Quadratic.png" src="../_images/Quadratic.png" style="width: 300px; height: 200px;" /></a>
+<div class="math">
+<p><img src="../_images/math/9ce83c00038e230a6990d0e46525065e21ba62da.png" alt="y &amp;= ax^2 + bx + c \\
+a &amp;= (c(d-1) - 2*c(d) + c(d+1) / 2 \\
+b &amp;= (c(d+1) - c(d-1)) / 2 \\
+c &amp;= c(d) \\
+x &amp;= -b / 2a \\"/></p>
+</div></div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="validation-and-filtering-of-the-disparity-map">
+<h2>Validation and filtering of the disparity map<a class="headerlink" href="#validation-and-filtering-of-the-disparity-map" title="Permalink to this headline">¶</a></h2>
+<p>The last step is to apply post-treatments to the disparity map.</p>
+<p>The filtering methods allow to homogenize the disparity maps, those available in pandora are :</p>
+<ul class="simple">
+<li><p>median filter. The median filter is applied to the valid pixels of the disparity map, invalid pixels are ignored.</p></li>
+<li><p>bilateral filter.</p></li>
+</ul>
+<p>Validation methods provide a confidence index on the calculated disparity, those available in pandora are</p>
+<ul>
+<li><p>The cross checking ( cross checking <a class="footnote-reference brackets" href="#id13" id="id6">3</a> ), which allows to invalidate disparities. It consists in reversing the role
+of the images (the reference image becomes the secondary image, and vice versa) and to compare the disparity <img class="math" src="../_images/math/43c6d61e109f303140a24bd5c350a540e1bd4aee.png" alt="disp_{L}"/>
+(corresponding to the reference image  <img class="math" src="../_images/math/29db33422117288d9b79e89db01cc25aba66b772.png" alt="I_{L}"/> ) with <img class="math" src="../_images/math/2b4df1c5685b131ca02a6e4c8e0d9a569d9c96db.png" alt="disp_{R}"/> (corresponding to the secondary image <img class="math" src="../_images/math/fd820bcb9ed20f9e1d8b6b3933bcf2ff7a116d14.png" alt="I_{R}"/> ) :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Si <img class="math" src="../_images/math/c3f205a88016dc4640a90174948ff058da709d9e.png" alt="| disp_{L}(p) + disp_{R}(p + disp_{L}(p)) | \leq threshold"/>, then point p is valid</p></li>
+<li><p>Si <img class="math" src="../_images/math/f7eeadb517e026d288c06057964d4c9c38d9130e.png" alt="| disp_{L}(p) + disp_{R}(p + disp_{L}(p)) | \geq threshold"/>, then point p is invalid</p></li>
+</ul>
+</div></blockquote>
+<p>The threshold is 1 by default, but it can be changed with the <em>cross_checking_threshold</em> parameter.
+Pandora will then distinguish between occlusion and mismatch by following the methodology outlined in <a class="footnote-reference brackets" href="#id15" id="id7">5</a>.
+For each pixel p of the reference image invalidated by the cross-checking :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If there is a disparity d such as <img class="math" src="../_images/math/9798bf75e92d278822ccc4a965aeae9d4b80ed7a.png" alt="disp_{R}(p+d)=-d"/>, it is a mismatch.</p></li>
+<li><p>Otherwise, it’s an occlusion.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cross checking does not modify the disparity map, it only informs bits 8 and 9 in the
+validity mask.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a validation step is set, it is possible to calculate the secondary disparity map by reversing the role of the images.</p>
+</div>
+<p>It is possible to fill in occlusions and mismatches detected during cross-validation:.</p>
+<ul>
+<li><p>using the method proposed in <a class="footnote-reference brackets" href="#id16" id="id8">6</a> : the disparity of a occluded pixel is modified using the
+first valid disparity from the left. The disparity of a pixel considered as a mismatch becomes the
+median of the first 16 valid pixels in the directions shown below (note: these directions are not related to the libSGM ):</p>
+<blockquote>
+<div><div class="figure align-default">
+<a class="reference internal image-reference" href="../_images/Directions_mc_cnn.png"><img alt="../_images/Directions_mc_cnn.png" src="../_images/Directions_mc_cnn.png" style="width: 300px; height: 200px;" /></a>
+</div>
+</div></blockquote>
+</li>
+<li><p>using the method proposed in <a class="footnote-reference brackets" href="#id15" id="id9">5</a> : the disparity of an occluded pixel is modified using the second method in <a class="footnote-reference brackets" href="#id15" id="id10">5</a> :
+Smallest disparity (the disparity closest to 0) in 8 directions. The disparity of a pixel considered to be a
+mismatch becomes the median of the first 8 valid pixels in the directions shown below. Mismatches that are direct neighbours of
+occluded pixel are treated as occlusions.</p>
+<blockquote>
+<div><div class="figure align-default">
+<a class="reference internal image-reference" href="../_images/Directions_interpolation_sgm.png"><img alt="../_images/Directions_interpolation_sgm.png" src="../_images/Directions_interpolation_sgm.png" style="width: 300px; height: 200px;" /></a>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The parameter <em>interpolated_disparity</em> is used to select the method to correct occlusions and mismatches.</p>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Zabih, R., &amp; Woodfill, J. (1994, May). Non-parametric local transforms for computing visual correspondence.
+In European conference on computer vision (pp. 151-158). Springer, Berlin, Heidelberg.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Zhang, K., Lu, J., &amp; Lafruit, G. (2009). Cross-based local stereo matching using orthogonal integral images.
+IEEE transactions on circuits and systems for video technology, 19(7), 1073-1079.</p>
+</dd>
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id6">3</a></span></dt>
+<dd><p>Fua, P. (1993). A parallel stereo algorithm that produces dense depth maps and preserves image features.
+Machine vision and applications, 6(1), 35-49.</p>
+</dd>
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id5">4</a></span></dt>
+<dd><p>HALLER, István, PANTILIE, C., ONIGA, F., et al. Real-time semi-global dense stereo solution with improved
+sub-pixel accuracy. In : 2010 IEEE Intelligent Vehicles Symposium. IEEE, 2010. p. 369-376.</p>
+</dd>
+<dt class="label" id="id15"><span class="brackets">5</span><span class="fn-backref">(<a href="#id3">1</a>,<a href="#id7">2</a>,<a href="#id9">3</a>,<a href="#id10">4</a>)</span></dt>
+<dd><p>HIRSCHMULLER, Heiko. Stereo processing by semiglobal matching and mutual information. IEEE Transactions on
+pattern analysis and machine intelligence, 2007, vol. 30, no 2, p. 328-341.</p>
+</dd>
+<dt class="label" id="id16"><span class="brackets"><a class="fn-backref" href="#id8">6</a></span></dt>
+<dd><p>ŽBONTAR, Jure et LECUN, Yann. Stereo matching by training a convolutional neural network to compare image patches.
+The journal of machine learning research, 2016, vol. 17, no 1, p. 2287-2318.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pandora_data.html" class="btn btn-neutral float-right" title="Pandora’s data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Stereo correspondence: step by step" href="step_by_step.html" />
+    <link rel="prev" title="Userguide" href="../userguide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../userguide.html">Userguide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-file">Configuration file</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#input-parameters">Input parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#image-parameters">Image parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stereo-parameters">Stereo parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aggregation-parameters">Aggregation parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optimization-parameters">Optimization parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#refinement-parameters">Refinement parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filtering-parameters">Filtering parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validation-parameters">Validation parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#output">Output</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#validity-mask">Validity mask</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="step_by_step.html">Stereo correspondence: step by step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandora_data.html">Pandora’s data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../userguide.html">Userguide</a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/userguide/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>The use as a binary is as follows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ pandora config.json output_dir
+</pre></div>
+</div>
+<p>Required arguments are :</p>
+<ul class="simple">
+<li><p><em>config.json</em>: configuration file. Paramaters are described in <a class="reference internal" href="#config-file"><span class="std std-ref">Configuration file</span></a></p></li>
+<li><p><em>output_dir</em>: le chemin vers le dossier de sortie</p></li>
+</ul>
+<p>The other optional arguments, also available, are :</p>
+<ul class="simple">
+<li></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The disparity calculated by Pandora is such that :</p>
+<blockquote>
+<div><p><img class="math" src="../_images/math/3d358b713d400b689eb8917689ff60cd2a067fbc.png" alt="I_{L}(x, y) = I_{R}(x + d, y)"/></p>
+</div></blockquote>
+<p>with <img class="math" src="../_images/math/29db33422117288d9b79e89db01cc25aba66b772.png" alt="I_{L}"/> , <img class="math" src="../_images/math/fd820bcb9ed20f9e1d8b6b3933bcf2ff7a116d14.png" alt="I_{R}"/> the reference image (left image) and the secondary image (right image), and
+<img class="math" src="../_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/> the disparity.</p>
+</div>
+<div class="section" id="configuration-file">
+<span id="config-file"></span><h2>Configuration file<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file provides a list of parameters to Pandora so that the processing pipeline can
+run according to the parameters chosen by the user.</p>
+<p>Pandora works with JSON formatted data with the following nested structures.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
+  &quot;input&quot; : {
+    ...
+  },
+  &quot;stereo&quot; : {
+    ...
+  },
+  &quot;aggregation&quot; : {
+    ...
+  },
+  &quot;optimization&quot; : {
+    ...
+  },
+  &quot;refinement&quot;: {
+    ...
+  },
+  &quot;filter&quot; : {
+   ...
+  },
+  &quot;validation&quot; : {
+    ...
+  },
+  &quot;invalid_disparity&quot;: ...
+}
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 31%" />
+<col style="width: 5%" />
+<col style="width: 13%" />
+<col style="width: 24%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Sub structures</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>input</em></p></td>
+<td><p>Input data to process</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#input-parameters"><span class="std std-ref">Input parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>image</em></p></td>
+<td><p>Images and masks parameters</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#image-parameters"><span class="std std-ref">Image parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><em>stereo</em></p></td>
+<td><p>Pixel and mask parameters</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#stereo-parameters"><span class="std std-ref">Stereo parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>aggregation</em></p></td>
+<td><p>Aggregation step parameters</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#aggreg-parameters"><span class="std std-ref">Aggregation parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><em>optimization</em></p></td>
+<td><p>Optimization step parameters</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#optim-parameters"><span class="std std-ref">Optimization parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>refinement</em></p></td>
+<td><p>Refinement step parameters</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#refine-parameters"><span class="std std-ref">Refinement parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><em>filter</em></p></td>
+<td><p>Filtering step parameters</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#filter-parameters"><span class="std std-ref">Filtering parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>validation</em></p></td>
+<td><p>Validation step parameters</p></td>
+<td><p>dict</p></td>
+<td></td>
+<td><p><a class="reference internal" href="#valid-parameters"><span class="std std-ref">Validation parameters</span></a></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><em>invalid disparity</em></p></td>
+<td><p>Disparity value for invalid pixel</p></td>
+<td><p>int</p></td>
+<td><p>-99999</p></td>
+<td></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="input-parameters">
+<span id="id1"></span><h3>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 34%" />
+<col style="width: 9%" />
+<col style="width: 16%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>img_ref</em></p></td>
+<td><p>Path to the reference image</p></td>
+<td><p>string</p></td>
+<td></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>img_sec</em></p></td>
+<td><p>Path to the secondary image</p></td>
+<td><p>string</p></td>
+<td></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><em>disp_min</em></p></td>
+<td><p>minimal disparity</p></td>
+<td><p>int</p></td>
+<td></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>disp_max</em></p></td>
+<td><p>maximal disparity</p></td>
+<td><p>int</p></td>
+<td></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><em>ref_mask</em></p></td>
+<td><p>path to the reference mask</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>sec_mask</em></p></td>
+<td><p>path to the secondary mask</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="image-parameters">
+<span id="id2"></span><h3>Image parameters<a class="headerlink" href="#image-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 43%" />
+<col style="width: 8%" />
+<col style="width: 19%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>nodata1</p></td>
+<td><p>Nodata value for reference image</p></td>
+<td><p>int</p></td>
+<td><p>0</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>nodata2</p></td>
+<td><p>Nodata value for secondary image</p></td>
+<td><p>int</p></td>
+<td><p>0</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>valid_pixels</p></td>
+<td><p>Valid pixel value in the mask</p></td>
+<td><p>int</p></td>
+<td><p>0</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>no_data</p></td>
+<td><p>Nodata pixel value in the mask</p></td>
+<td><p>int</p></td>
+<td><p>1</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="stereo-parameters">
+<span id="id3"></span><h3>Stereo parameters<a class="headerlink" href="#stereo-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 31%" />
+<col style="width: 7%" />
+<col style="width: 13%" />
+<col style="width: 27%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Available value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>stereo_method</em></p></td>
+<td><p>Similarity measure</p></td>
+<td><p>string</p></td>
+<td><p>“ssd”</p></td>
+<td><p>“ssd” , “sad”, “census, “zncc”</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>window_size</em></p></td>
+<td><p>Window size for similarity measure</p></td>
+<td><p>int</p></td>
+<td><p>5</p></td>
+<td><p>Must be &gt;0</p>
+<p>For “census” : {3,5}</p>
+</td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p><em>subpix</em></p></td>
+<td><p>Cost volume upsampling factor</p></td>
+<td><p>int</p></td>
+<td><p>1</p></td>
+<td><p>{1,2,4}</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>Example for <em>subpix</em> parameter with disp_min = 0 and disp_max = 2</dt><dd><ul class="simple">
+<li><p>if <em>subpix</em> = 1, cost volume contains {0,1,2} disparities</p></li>
+<li><p>if <em>subpix</em> = 2, cost volume contains {0., 0.5, 1., 1.5, 2.} disparities</p></li>
+<li><p>if <em>subpix</em> = 4, cost volume containes {0., 0.25, 0.5, 0.75, 1., 1.25, 1.5, 1.75, 2.} disparities</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="aggregation-parameters">
+<span id="aggreg-parameters"></span><h3>Aggregation parameters<a class="headerlink" href="#aggregation-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 32%" />
+<col style="width: 5%" />
+<col style="width: 10%" />
+<col style="width: 12%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Available value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>aggregation_method</em></p></td>
+<td><p>Aggregation method</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>“cbca”</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>cbca_intensity</em></p></td>
+<td><p>Maximum intensity difference between 2 points</p></td>
+<td><p>float</p></td>
+<td><p>30.0</p></td>
+<td><p>&gt;0</p></td>
+<td><p>No. Only available if “cbca” method</p></td>
+</tr>
+<tr class="row-even"><td><p><em>cbca_distance</em></p></td>
+<td><p>Maximum distance difference between 2 points</p></td>
+<td><p>int</p></td>
+<td><p>5</p></td>
+<td><p>&gt;0</p></td>
+<td><p>No. Only available if “cbca” method</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="optimization-parameters">
+<span id="optim-parameters"></span><h3>Optimization parameters<a class="headerlink" href="#optimization-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 19%" />
+<col style="width: 7%" />
+<col style="width: 13%" />
+<col style="width: 32%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Available value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>optimization_method</em></p></td>
+<td><p>Optimization méthode</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>“sgm” if plugin_libsgm is installed</p></td>
+<td><p>Yes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If plugin_libsgm is installed, see the documentation of this package. There are subparameters for sgm method.</p>
+</div>
+</div>
+<div class="section" id="refinement-parameters">
+<span id="refine-parameters"></span><h3>Refinement parameters<a class="headerlink" href="#refinement-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 20%" />
+<col style="width: 9%" />
+<col style="width: 16%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Available value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>refinement_method</em></p></td>
+<td><p>Refinement method</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>“vift”, “quadratic”</p></td>
+<td><p>Yes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="filtering-parameters">
+<span id="filter-parameters"></span><h3>Filtering parameters<a class="headerlink" href="#filtering-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 22%" />
+<col style="width: 6%" />
+<col style="width: 12%" />
+<col style="width: 18%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Available value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>filter_method</em></p></td>
+<td><p>Filtering method</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>“median”, “bilateral”</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>filter_size</em></p></td>
+<td><p>Filter’s size</p></td>
+<td><p>int</p></td>
+<td><p>3</p></td>
+<td><p>&gt;= 1</p></td>
+<td><p>No
+Only avalaible if median filter</p></td>
+</tr>
+<tr class="row-even"><td><p><em>sigma_color</em></p></td>
+<td><p>Bilateral filter parameter</p></td>
+<td><p>float</p></td>
+<td><p>2.0</p></td>
+<td></td>
+<td><p>No
+Only avalaible if bilateral filter</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>sigma_space</em></p></td>
+<td><p>Bilateral filter parameter</p></td>
+<td><p>float</p></td>
+<td><p>6.0</p></td>
+<td></td>
+<td><p>No</p>
+<p>Only avalaible if bilateral filter</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="validation-parameters">
+<span id="valid-parameters"></span><h3>Validation parameters<a class="headerlink" href="#validation-parameters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 53%" />
+<col style="width: 4%" />
+<col style="width: 8%" />
+<col style="width: 14%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Available value</p></th>
+<th class="head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>validation_method</em></p></td>
+<td><p>Validation method</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>“cross_checking”</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>right_left_mode</em></p></td>
+<td><p>Method for right disparity map computation
+- if “accurate”: right disparity map computed from scratch</p></td>
+<td><p>string</p></td>
+<td><p>“accurate”</p></td>
+<td><p>“accurate”</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p><em>interpolated_disparity</em></p></td>
+<td><p>Interpolation method for filling occlusion and mismatches</p></td>
+<td><p>string</p></td>
+<td><p>“none”</p></td>
+<td><p>“mc_cnn”, “sgm”</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>filter_interpolated_disparities</em></p></td>
+<td><p>Disparity map filtering. If activated, filtering method is the one defined on  <a class="reference internal" href="#filter-parameters"><span class="std std-ref">Filtering parameters</span></a></p></td>
+<td><p>bool</p></td>
+<td><p>True</p></td>
+<td><p>False</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>Pandora will store several data in the output folder, the tree structure is defined in the file
+pandora/output_tree_design.py.</p>
+<p>Saved images</p>
+<ul class="simple">
+<li><p><em>ref_disparity.tif</em>, <em>sec_disparity.tif</em> : disparity maps in reference and secondary image geometry.</p></li>
+<li><p><em>ref_validity_mask.tif</em>, <em>sec_validity_mask.tif</em> : the <a class="reference internal" href="#validity-mask"><span class="std std-ref">Validity mask</span></a> in reference image geometry, and
+secondary. Note that bits 4, 5, 8 and 9 can only be calculated if a validation step is set.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Secondary products are only available if a validation step is
+configured ( ex: validation_method = cross_checking).</p>
+</div>
+<div class="section" id="validity-mask">
+<span id="id4"></span><h3>Validity mask<a class="headerlink" href="#validity-mask" title="Permalink to this headline">¶</a></h3>
+<p>Validity masks indicate why a pixel in the image is invalid and
+provide information on the reliability of the match. These masks are 16-bit encoded: each bit
+represents a rejection / information criterion (= 1 if rejection / information, = 0 otherwise):</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 92%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Bit</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>The point is invalid, there are two possible cases:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>border of reference image</p></li>
+<li><p>nodata of reference image</p></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>The point is invalid, there are two possible cases:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Disparity range does not permit to find any point on the secondary image</p></li>
+<li><p>nodata of secondary image</p></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Information : disparity range cannot be used completely , reaching border of secondary image</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Information: calculations stopped at the pixel stage, sub-pixel interpolation was not successful
+(for vfit: pixels d-1 and/or d+1 could not be calculated)</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Information : closed occlusion</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>Information : closed mismatch</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>The point is invalid: invalidated by the validity mask associated to the reference image</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>The point is invalid: secondary positions to be scanned invalidated by the mask of the secondary image</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>The Point is invalid: point located in an occlusion area</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>The point is invalid: mismatch</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="step_by_step.html" class="btn btn-neutral float-right" title="Stereo correspondence: step by step" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../userguide.html" class="btn btn-neutral float-left" title="Userguide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

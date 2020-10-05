@@ -1,0 +1,177 @@
+:mod:`pandora.disparity`
+========================
+
+.. py:module:: pandora.disparity
+
+.. autoapi-nested-parse::
+
+   This module contains functions associated to the disparity map computation step.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pandora.disparity.to_disp
+   pandora.disparity.validity_mask
+   pandora.disparity.argmin_split
+   pandora.disparity.argmax_split
+   pandora.disparity.coefficient_map
+   pandora.disparity.approximate_right_disparity
+   pandora.disparity.resize
+
+
+.. function:: to_disp(cv: xr.Dataset, invalid_value: float = 0, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None) -> xr.Dataset
+
+   Disparity computation by applying the Winner Takes All strategy
+
+   :param cv: the cost volume datset
+   :type cv:
+       xarray.Dataset, with the data variables:
+           - cost_volume 3D xarray.DataArray (row, col, disp)
+           - confidence_measure 3D xarray.DataArray (row, col, indicator)
+   :param invalid_value: disparity to assign to invalid pixels
+   :type invalid_value: float
+   :param img_ref: reference Dataset image
+   :type img_ref:
+       xarray.Dataset containing :
+           - im : 2D (row, col) xarray.DataArray
+           - msk : 2D (row, col) xarray.DataArray
+       :param img_sec: secondary Dataset image
+   :type img_sec:
+       xarray.Dataset containing :
+           - im : 2D (row, col) xarray.DataArray
+           - msk : 2D (row, col) xarray.DataArray
+   :return: Dataset with the disparity map and the confidence measure
+   :rtype:
+       xarray.Dataset with the data variables :
+           - disparity_map 2D xarray.DataArray (row, col)
+           - confidence_measure 3D xarray.DataArray (row, col, indicator)
+
+
+.. function:: validity_mask(disp: xr.Dataset, img_ref: xr.Dataset, img_sec: xr.Dataset, cv: xr.Dataset = None, **cfg: int) -> xr.Dataset
+
+   Create the validity mask of the disparity map
+
+   :param disp: dataset with the disparity map and the confidence measure
+   :type disp:
+       xarray.Dataset with the data variables :
+           - disparity_map 2D xarray.DataArray (row, col)
+           - confidence_measure 3D xarray.DataArray(row, col, indicator)
+   :param img_ref: reference Dataset image
+   :type img_ref:
+       xarray.Dataset containing :
+           - im : 2D (row, col) xarray.DataArray
+           - msk : 2D (row, col) xarray.DataArray
+   :param img_sec: secondary Dataset image
+   :type img_sec:
+       xarray.Dataset containing :
+           - im : 2D (row, col) xarray.DataArray
+           - msk : 2D (row, col) xarray.DataArray
+   :param cv: cost volume dataset
+   :type cv:
+       xarray.Dataset, with the data variables:
+           - cost_volume 3D xarray.DataArray (row, col, disp)
+           - confidence_measure 3D xarray.DataArray (row, col, indicator)
+   :param cfg: images configuration containing the mask convention : valid_pixels, no_data
+   :type cfg: dict
+   :return: the dataset disparity with the data variable validity_mask
+   :rtype :
+       xarray.Dataset with the data variables :
+           - disparity_map 2D xarray.DataArray (row, col)
+           - confidence_measure 3D xarray.DataArray (row, col, indicator)
+           - validity_mak 2D xarray.DataArray (row, col)
+
+
+.. function:: argmin_split(cost_volume: xr.Dataset) -> np.ndarray
+
+   Find the indices of the minimum values for a 3D DataArray, along axis 2.
+   Memory consumption is reduced by splitting the 3D Array.
+
+   :param cost_volume: the cost volume dataset
+   :type cost_volume: xarray.Dataset
+   :return: the disparities for which the cost volume values are the smallest
+   :rtype: np.ndarray
+
+
+.. function:: argmax_split(cost_volume: xr.Dataset) -> np.ndarray
+
+   Find the indices of the maximum values for a 3D DataArray, along axis 2.
+   Memory consumption is reduced by splitting the 3D Array.
+
+   :param cost_volume: the cost volume dataset
+   :type cost_volume: xarray.Dataset
+   :return: the disparities for which the cost volume values are the highest
+   :rtype: np.ndarray
+
+
+.. function:: coefficient_map(cv: xr.DataArray) -> xr.DataArray
+
+   Return the coefficient map
+
+   :param cv: cost volume
+   :type cv: xarray.Dataset, with the data variables cost_volume 3D xarray.DataArray (row, col, disp)
+   :return: the coefficient map
+   :rtype : 2D DataArray (row, col)
+
+
+.. function:: approximate_right_disparity(cv: xr.Dataset, img_sec: xr.Dataset, invalid_value: float = 0, img_ref: xr.Dataset = None) -> xr.Dataset
+
+   Create the right disparity map, by a diagonal search for the minimum in the reference cost volume
+
+   ERNST, Ines et HIRSCHMÜLLER, Heiko.
+   Mutual information based semi-global stereo matching on the GPU.
+   In : International Symposium on Visual Computing. Springer, Berlin, Heidelberg, 2008. p. 228-239.
+
+   :param cv: the cost volume dataset
+   :type cv:
+       xarray.Dataset, with the data variables:
+           - cost_volume 3D xarray.DataArray (row, col, disp)
+           - confidence_measure 3D xarray.DataArray (row, col, indicator)
+   :param img_sec: secondary Dataset image
+   :type img_sec:
+       xarray.Dataset containing :
+           - im : 2D (row, col) xarray.DataArray
+           - msk : 2D (row, col) xarray.DataArray
+   :param invalid_value: disparity to assign to invalid pixels
+   :type invalid_value: float
+   :param img_ref: reference Dataset image
+   :type img_ref:
+       xarray.Dataset containing :
+           - im : 2D (row, col) xarray.DataArray
+           - msk : 2D (row, col) xarray.DataArray
+   :return: Dataset with the secondary disparity map, the confidence measure and the validity mask
+   :rtype:
+       xarray.Dataset with the data variables :
+           - disparity_map 2D xarray.DataArray (row, col)
+           - confidence_measure 3D xarray.DataArray (row, col, indicator)
+           - validity_mask 2D xarray.DataArray (row, col)
+
+
+.. function:: resize(dataset: xr.Dataset, invalid_value: float = 0) -> xr.Dataset
+
+   Pixels whose aggregation window exceeds the reference image are truncated in the output products.
+   This function returns the output products with the size of the input images : add rows and columns that have been
+   truncated. These added pixels will have bit 0 = 1 ( Invalid pixel : border of the reference image )
+   in the validity_mask  and will have the disparity = invalid_value in the disparity map.
+
+   :param dataset: Dataset which contains the output products
+   :type dataset: xarray.Dataset with the variables :
+       - disparity_map 2D xarray.DataArray (row, col)
+       - confidence_measure 3D xarray.DataArray(row, col, indicator)
+       - validity_mask 2D xarray.DataArray (row, col)
+   :param invalid_value: disparity to assign to invalid pixels ( pixels whose aggregation window exceeds the image)
+   :type invalid_value: float
+   :return: the dataset with the size of the input images
+   :rtype : xarray.Dataset with the variables :
+       - disparity_map 2D xarray.DataArray (row, col)
+       - confidence_measure 3D xarray.DataArray(row, col, indicator)
+       - validity_mask 2D xarray.DataArray (row, col)
+
+

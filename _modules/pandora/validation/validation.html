@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.validation.validation &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../pandora.html">pandora</a> &raquo;</li>
+        
+          <li><a href="../validation.html">pandora.validation</a> &raquo;</li>
+        
+      <li>pandora.validation.validation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.validation.validation</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains classes and functions associated to the validation step.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">json_checker</span> <span class="kn">import</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">And</span><span class="p">,</span> <span class="n">Or</span>
+<span class="kn">from</span> <span class="nn">pandora</span> <span class="kn">import</span> <span class="n">JSON_checker</span> <span class="k">as</span> <span class="n">jcheck</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">pandora.constants</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="AbstractValidation"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.AbstractValidation">[docs]</a><span class="k">class</span> <span class="nc">AbstractValidation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractValidation.__metaclass__"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.AbstractValidation.__metaclass__">[docs]</a>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span></div>
+
+<div class="viewcode-block" id="AbstractValidation.validation_methods_avail"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.AbstractValidation.validation_methods_avail">[docs]</a>    <span class="n">validation_methods_avail</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the plugin associated with the validation_method given in the configuration</span>
+
+<span class="sd">        :param cfg: configuration {&#39;validation_method&#39;: value}</span>
+<span class="sd">        :type cfg: dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="n">AbstractValidation</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation_method&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractValidation</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">validation_methods_avail</span><span class="p">[</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation_method&#39;</span><span class="p">]])</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No validation method named </span><span class="si">{}</span><span class="s2"> supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation_method&#39;</span><span class="p">]))</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation_method&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="n">unicode</span><span class="p">:</span>
+                    <span class="c1"># creating a plugin from registered short name given as unicode (py2 &amp; 3 compatibility)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractValidation</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span>
+                            <span class="bp">cls</span><span class="o">.</span><span class="n">validation_methods_avail</span><span class="p">[</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation_method&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)])</span>
+                    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No validation matching method named </span><span class="si">{}</span><span class="s2"> supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation_method&#39;</span><span class="p">]))</span>
+                        <span class="k">raise</span> <span class="ne">KeyError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractValidation</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractValidation.register_subclass"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.AbstractValidation.register_subclass">[docs]</a>    <span class="k">def</span> <span class="nf">register_subclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">short_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Allows to register the subclass with its short name</span>
+
+<span class="sd">        :param short_name: the subclass to be registered</span>
+<span class="sd">        :type short_name: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">subclass</span><span class="p">):</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">validation_methods_avail</span><span class="p">[</span><span class="n">short_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">subclass</span>
+            <span class="k">return</span> <span class="n">subclass</span>
+
+        <span class="k">return</span> <span class="n">decorator</span></div>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="AbstractValidation.desc"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.AbstractValidation.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the validation method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Validation method description&#39;</span><span class="p">)</span></div>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="AbstractValidation.disparity_checking"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.AbstractValidation.disparity_checking">[docs]</a>    <span class="k">def</span> <span class="nf">disparity_checking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">dataset_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span></div></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determination of occlusions and false matches by performing a consistency check on valid pixels. \</span>
+<span class="sd">        Update the validity_mask :</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel</span>
+<span class="sd">        Update the measure map: add the disp RL / disp LR distances</span>
+
+<span class="sd">        :param dataset_ref: Reference Dataset</span>
+<span class="sd">        :type dataset_ref: xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        :param dataset_sec: Secondary Dataset</span>
+<span class="sd">        :type dataset_sec: xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        :param img_ref: reference Datset image</span>
+<span class="sd">        :type img_ref:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param cv: cost_volume Dataset</span>
+<span class="sd">        :type cv:</span>
+<span class="sd">            xarray.Dataset with the variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        :return: the reference dataset, with the bit 8 and 9 of the validity_mask :</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel</span>
+<span class="sd">        :rtype : xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="NoneValidation"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.NoneValidation">[docs]</a><span class="nd">@AbstractValidation</span><span class="o">.</span><span class="n">register_subclass</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">NoneValidation</span><span class="p">(</span><span class="n">AbstractValidation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Default plugin that does not perform validation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param cfg: optional configuration, {}</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="NoneValidation.check_conf"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.NoneValidation.check_conf">[docs]</a>    <span class="k">def</span> <span class="nf">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add default values to the dictionary if there are missing elements and check if the dictionary is correct</span>
+
+<span class="sd">        :param cfg: validation configuration</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        :return cfg: validation configuration updated</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Give the default value if the required element is not in the configuration</span>
+        <span class="c1"># Need to initialize &#39;interpolated_disparity&#39; to run Pandora pipeline</span>
+        <span class="k">if</span> <span class="s1">&#39;interpolated_disparity&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;interpolated_disparity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
+
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;validation_method&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">),</span>
+            <span class="s2">&quot;interpolated_disparity&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg</span></div>
+
+<div class="viewcode-block" id="NoneValidation.desc"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.NoneValidation.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the validation method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No validation step&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NoneValidation.disparity_checking"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.NoneValidation.disparity_checking">[docs]</a>    <span class="k">def</span> <span class="nf">disparity_checking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">dataset_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determination of occlusions and false matches by performing a consistency check on valid pixels. \</span>
+<span class="sd">        Update the validity_mask :</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel</span>
+<span class="sd">        Update the measure map: add the disp RL / disp LR distances</span>
+
+<span class="sd">        :param dataset_ref: Reference Dataset</span>
+<span class="sd">        :type dataset_ref: xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        :param dataset_sec: Secondary Dataset</span>
+<span class="sd">        :type dataset_sec: xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        :param img_ref: reference Datset image</span>
+<span class="sd">        :type img_ref:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param cv: cost_volume Dataset</span>
+<span class="sd">        :type cv:</span>
+<span class="sd">            xarray.Dataset with the variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        :return: the reference dataset, with the bit 8 and 9 of the validity_mask :</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel</span>
+<span class="sd">        :rtype : xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">dataset_ref</span></div></div>
+
+
+<div class="viewcode-block" id="CrossChecking"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.CrossChecking">[docs]</a><span class="nd">@AbstractValidation</span><span class="o">.</span><span class="n">register_subclass</span><span class="p">(</span><span class="s1">&#39;cross_checking&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CrossChecking</span><span class="p">(</span><span class="n">AbstractValidation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CrossChecking class allows to perform the validation step</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Default configuration, do not change this value</span>
+<div class="viewcode-block" id="CrossChecking._THRESHOLD"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.CrossChecking._THRESHOLD">[docs]</a>    <span class="n">_THRESHOLD</span> <span class="o">=</span> <span class="mf">1.</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param cfg: optional configuration, {&#39;cross_checking_threshold&#39;: value,</span>
+<span class="sd">                                            &#39;interpolated_disparity&#39;: value, &#39;filter_interpolated_disparities&#39;: value}</span>
+<span class="sd">        :type cfg: dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;cross_checking_threshold&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="CrossChecking.check_conf"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.CrossChecking.check_conf">[docs]</a>    <span class="k">def</span> <span class="nf">check_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add default values to the dictionary if there are missing elements and check if the dictionary is correct</span>
+
+<span class="sd">        :param cfg: optimization configuration</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        :return cfg: optimization configuration updated</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Give the default value if the required element is not in the configuration</span>
+        <span class="k">if</span> <span class="s1">&#39;cross_checking_threshold&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;cross_checking_threshold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_THRESHOLD</span>
+        <span class="k">if</span> <span class="s1">&#39;right_left_mode&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;right_left_mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;accurate&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;interpolated_disparity&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;interpolated_disparity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;filter_interpolated_disparities&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;filter_interpolated_disparities&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;validation_method&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;cross_checking&#39;</span><span class="p">),</span>
+            <span class="s2">&quot;cross_checking_threshold&quot;</span><span class="p">:</span> <span class="n">Or</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span>
+            <span class="s2">&quot;right_left_mode&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jcheck</span><span class="o">.</span><span class="n">is_method</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;accurate&#39;</span><span class="p">,</span> <span class="s1">&#39;approximate&#39;</span><span class="p">])),</span>
+            <span class="s2">&quot;interpolated_disparity&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jcheck</span><span class="o">.</span><span class="n">is_method</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;mc-cnn&#39;</span><span class="p">,</span> <span class="s1">&#39;sgm&#39;</span><span class="p">])),</span>
+            <span class="s2">&quot;filter_interpolated_disparities&quot;</span><span class="p">:</span> <span class="nb">bool</span>
+        <span class="p">}</span>
+
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg</span></div>
+
+<div class="viewcode-block" id="CrossChecking.desc"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.CrossChecking.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the validation method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cross-checking method&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CrossChecking.disparity_checking"><a class="viewcode-back" href="../../../api_reference/pandora/validation/validation/index.html#pandora.validation.CrossChecking.disparity_checking">[docs]</a>    <span class="k">def</span> <span class="nf">disparity_checking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">dataset_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determination of occlusions and false matches by performing a consistency check on valid pixels. \</span>
+<span class="sd">        Update the validity_mask :</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel</span>
+<span class="sd">        Update the measure map: add the disp RL / disp LR distances</span>
+
+<span class="sd">        :param dataset_ref: Reference Dataset</span>
+<span class="sd">        :type dataset_ref: xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        :param dataset_sec: Secondary Dataset</span>
+<span class="sd">        :type dataset_sec: xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        :param img_ref: reference Datset image</span>
+<span class="sd">        :type img_ref:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param cv: cost_volume Dataset</span>
+<span class="sd">        :type cv:</span>
+<span class="sd">            xarray.Dataset with the variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        :return: the reference dataset, with the bit 8 and 9 of the validity_mask :</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel</span>
+<span class="sd">            - If out &amp; MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel</span>
+<span class="sd">        :rtype : xarray.Dataset with the variables :</span>
+<span class="sd">            - disparity_map 2D xarray.DataArray (row, col)</span>
+<span class="sd">            - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">            - validity_mask 2D xarray.DataArray (row, col)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nb_row</span><span class="p">,</span> <span class="n">nb_col</span><span class="p">,</span> <span class="n">nb_indicator</span> <span class="o">=</span> <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;confidence_measure&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">disparity_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">dataset_ref</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_min&#39;</span><span class="p">],</span> <span class="n">dataset_ref</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;disp_max&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Add a new indicator to the confidence measure DataArray</span>
+        <span class="n">conf_measure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nb_row</span><span class="p">,</span> <span class="n">nb_col</span><span class="p">,</span> <span class="n">nb_indicator</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">conf_measure</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;confidence_measure&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="n">indicator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">dataset_ref</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;indicator&#39;</span><span class="p">])</span>
+        <span class="n">indicator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s1">&#39;validation_pandora_distanceOfDisp&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Remove confidence_measure dataArray from the dataset to update it</span>
+        <span class="n">dataset_ref</span> <span class="o">=</span> <span class="n">dataset_ref</span><span class="o">.</span><span class="n">drop_dims</span><span class="p">(</span><span class="s1">&#39;indicator&#39;</span><span class="p">)</span>
+        <span class="n">dataset_ref</span> <span class="o">=</span> <span class="n">dataset_ref</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">indicator</span><span class="o">=</span><span class="n">indicator</span><span class="p">)</span>
+        <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;confidence_measure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">conf_measure</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">,</span> <span class="s1">&#39;indicator&#39;</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nb_row</span><span class="p">):</span>
+            <span class="c1"># Exclude invalid pixel :</span>
+            <span class="n">valid_pixel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&amp;</span> <span class="n">PANDORA_MSK_PIXEL_INVALID</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">col_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nb_col</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+            <span class="n">col_ref</span> <span class="o">=</span> <span class="n">col_ref</span><span class="p">[</span><span class="n">valid_pixel</span><span class="p">]</span>
+
+            <span class="n">col_sec</span> <span class="o">=</span> <span class="n">col_ref</span> <span class="o">+</span> <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col_ref</span><span class="p">]</span>
+            <span class="c1"># Round elements of the array to the nearest integer</span>
+            <span class="n">col_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="n">col_sec</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="c1"># Left-Right consistency, for pixel i :</span>
+            <span class="c1"># If | Disp_sec(i + rint(Disp_ref(i)) + Disp_ref(i) | &gt; self._threshold : i is invalid, mismatched or occlusion detected</span>
+            <span class="c1"># If | Disp_sec(i + rint(Disp_ref(i)) + Disp_ref(i) | &lt;= self._threshold : i is valid</span>
+
+            <span class="c1"># Apply cross checking on pixels i + round(Disp_ref(i) inside the secondary image</span>
+            <span class="n">inside_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">col_sec</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">col_sec</span> <span class="o">&lt;</span> <span class="n">nb_col</span><span class="p">))</span>
+
+            <span class="c1"># Conversion from nan to inf</span>
+            <span class="n">sec_disp</span> <span class="o">=</span> <span class="n">dataset_sec</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col_sec</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">]]</span>
+            <span class="n">sec_disp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">sec_disp</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">ref_disp</span> <span class="o">=</span> <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col_ref</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">]]</span>
+            <span class="n">ref_disp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">ref_disp</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+            <span class="c1"># Allocate to the measure map, the distance disp LR / disp RL indicator</span>
+            <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;confidence_measure&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">inside_sec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sec_disp</span> <span class="o">+</span> <span class="n">ref_disp</span><span class="p">)</span>
+
+            <span class="c1"># Reference image pixels invalidated by the cross checking</span>
+            <span class="n">invalid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sec_disp</span> <span class="o">+</span> <span class="n">ref_disp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threshold</span>
+
+            <span class="c1"># Detect mismatched and occlusion :</span>
+            <span class="c1"># For a reference image pixel i invalidated by the cross checking :</span>
+            <span class="c1"># mismatch if : Disp_sec(i + d) = -d, for any other d</span>
+            <span class="c1"># occlusion otherwise</span>
+
+            <span class="c1"># Index : i + d, for any other d. 2D np array (nb invalid pixels, nb disparity )</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">disparity_range</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">col_ref</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">][</span><span class="n">invalid</span><span class="p">]),</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">+</span> \
+                    <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">col_ref</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">][</span><span class="n">invalid</span><span class="p">],</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">disparity_range</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+            <span class="n">inside_col_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">nb_col</span><span class="p">))</span>
+
+            <span class="c1"># disp_sec : Disp_sec(i + d)</span>
+            <span class="n">disp_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">disp_sec</span><span class="p">[</span><span class="n">inside_col_disp</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset_sec</span><span class="p">[</span><span class="s1">&#39;disparity_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">index</span><span class="p">[</span><span class="n">inside_col_disp</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+
+            <span class="c1"># Check if Disp_sec(i + d) == -d</span>
+            <span class="n">comp</span> <span class="o">=</span> <span class="p">(</span><span class="n">disp_sec</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">disparity_range</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">col_ref</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">][</span><span class="n">invalid</span><span class="p">]),</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+            <span class="n">comp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">comp</span><span class="p">[</span><span class="n">comp</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col_ref</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">][</span><span class="n">invalid</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">PANDORA_MSK_PIXEL_OCCLUSION</span>
+            <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col_ref</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">][</span><span class="n">invalid</span><span class="p">]]</span> <span class="o">+=</span> \
+                <span class="p">(</span><span class="n">PANDORA_MSK_PIXEL_MISMATCH</span> <span class="o">*</span> <span class="n">comp</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+            <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col_ref</span><span class="p">[</span><span class="n">inside_sec</span><span class="p">][</span><span class="n">invalid</span><span class="p">]]</span> <span class="o">-=</span> \
+                <span class="p">(</span><span class="n">PANDORA_MSK_PIXEL_OCCLUSION</span> <span class="o">*</span> <span class="n">comp</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+
+            <span class="c1"># Pixels i + round(Disp_ref(i) outside the secondary image are occlusions</span>
+            <span class="n">outside_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">col_sec</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">col_sec</span> <span class="o">&gt;=</span> <span class="n">nb_col</span><span class="p">))</span>
+            <span class="n">dataset_ref</span><span class="p">[</span><span class="s1">&#39;validity_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col_ref</span><span class="p">[</span><span class="n">outside_sec</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">PANDORA_MSK_PIXEL_OCCLUSION</span>
+
+        <span class="n">dataset_ref</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cross_checking&#39;</span>
+
+        <span class="k">return</span> <span class="n">dataset_ref</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

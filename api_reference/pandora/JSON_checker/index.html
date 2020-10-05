@@ -1,0 +1,585 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.JSON_checker &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="pandora.common" href="../common/index.html" />
+    <link rel="prev" title="pandora.validation.validation" href="../validation/validation/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.JSON_checker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../common/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.common</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../disparity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.disparity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../img_tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.img_tools</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../marge/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.marge</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../output_tree_design/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.output_tree_design</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.JSON_checker</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api_reference/pandora/JSON_checker/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.JSON_checker">
+<span id="pandora-json-checker"></span><h1><a class="reference internal" href="#module-pandora.JSON_checker" title="pandora.JSON_checker"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.JSON_checker</span></code></a><a class="headerlink" href="#module-pandora.JSON_checker" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions allowing to check the configuration given to Pandora pipeline.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.gdal_can_open_mandatory" title="pandora.JSON_checker.gdal_can_open_mandatory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gdal_can_open_mandatory</span></code></a>(f: str) → bool</p></td>
+<td><p>Test if file f can be open by gdal</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.JSON_checker.gdal_can_open" title="pandora.JSON_checker.gdal_can_open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gdal_can_open</span></code></a>(f: str) → bool</p></td>
+<td><p>Test if file f can be open by gdal</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.check_images" title="pandora.JSON_checker.check_images"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_images</span></code></a>(img_ref: str, img_sec: str, msk_ref: str, msk_sec: str) → None</p></td>
+<td><p>Check the images</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.JSON_checker.check_disparity" title="pandora.JSON_checker.check_disparity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_disparity</span></code></a>(disp_min: int, disp_max: int) → None</p></td>
+<td><p>Check the disparity</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.get_config_pipeline" title="pandora.JSON_checker.get_config_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_config_pipeline</span></code></a>(user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Get the pipeline configuration</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.JSON_checker.get_config_input" title="pandora.JSON_checker.get_config_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_config_input</span></code></a>(user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Get the input configuration</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.get_config_image" title="pandora.JSON_checker.get_config_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_config_image</span></code></a>(user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Get the image configuration</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.JSON_checker.check_pipeline_section" title="pandora.JSON_checker.check_pipeline_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_pipeline_section</span></code></a>(user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Complete and check if the pipeline dictionary is correct</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.check_image_section" title="pandora.JSON_checker.check_image_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_image_section</span></code></a>(user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Complete and check if the dictionary is correct</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.JSON_checker.check_input_section" title="pandora.JSON_checker.check_input_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_input_section</span></code></a>(user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Complete and check if the dictionary is correct</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.check_conf" title="pandora.JSON_checker.check_conf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_conf</span></code></a>(user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Complete and check if the dictionary is correct</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.JSON_checker.concat_conf" title="pandora.JSON_checker.concat_conf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat_conf</span></code></a>(cfg_list: List[Dict[str, dict]]) → Dict[str, dict]</p></td>
+<td><p>Concatenate dictionaries</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.read_config_file" title="pandora.JSON_checker.read_config_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_config_file</span></code></a>(config_file: str) → Dict[str, dict]</p></td>
+<td><p>Read a json configuration file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.JSON_checker.update_conf" title="pandora.JSON_checker.update_conf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_conf</span></code></a>(def_cfg: Dict[str, dict], user_cfg: Dict[str, dict]) → Dict[str, dict]</p></td>
+<td><p>Update the default configuration with the user configuration,</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.JSON_checker.is_method" title="pandora.JSON_checker.is_method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_method</span></code></a>(s: str, methods: List[str]) → bool</p></td>
+<td><p>Test if s is a method in methods</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="pandora.JSON_checker.gdal_can_open_mandatory">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">gdal_can_open_mandatory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#gdal_can_open_mandatory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.gdal_can_open_mandatory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if file f can be open by gdal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>string</em>) – File to test</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if rasterio can open file and False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.gdal_can_open">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">gdal_can_open</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#gdal_can_open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.gdal_can_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if file f can be open by gdal</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>string</em>) – File to test</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if rasterio can open file and False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.check_images">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">check_images</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">msk_ref</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">msk_sec</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#check_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.check_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_ref</strong> (<em>string</em>) – path to the reference image</p></li>
+<li><p><strong>img_sec</strong> (<em>string</em>) – path to the secondary image</p></li>
+<li><p><strong>msk_ref</strong> (<em>string</em>) – path to the mask of the reference image</p></li>
+<li><p><strong>msk_sec</strong> (<em>string</em>) – path to the mask of the secondary image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.check_disparity">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">check_disparity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">disp_min</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">disp_max</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#check_disparity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.check_disparity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the disparity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disp_min</strong> (<em>int</em>) – minimal disparity</p></li>
+<li><p><strong>disp_max</strong> (<em>int</em>) – maximal disparity</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.get_config_pipeline">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">get_config_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#get_config_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.get_config_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the pipeline configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>partial configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.get_config_input">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">get_config_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#get_config_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.get_config_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the input configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>partial configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.get_config_image">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">get_config_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#get_config_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.get_config_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the image configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>partial configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.check_pipeline_section">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">check_pipeline_section</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#check_pipeline_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.check_pipeline_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete and check if the pipeline dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>global configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.check_image_section">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">check_image_section</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#check_image_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.check_image_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>global configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.check_input_section">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">check_input_section</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#check_input_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.check_input_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>global configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.check_conf">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">check_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#check_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.check_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>global configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.concat_conf">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">concat_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cfg_list</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#concat_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.concat_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate dictionaries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg_list</strong> (<em>List of dict</em>) – list of configurations</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>global configuration</p>
+</dd>
+<dt class="field-odd">Rtype cfg</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pandora.JSON_checker.input_configuration_schema">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">input_configuration_schema</code><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#input_configuration_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.input_configuration_schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="pandora.JSON_checker.image_configuration_schema">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">image_configuration_schema</code><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#image_configuration_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.image_configuration_schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="pandora.JSON_checker.default_short_configuration_image">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">default_short_configuration_image</code><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#default_short_configuration_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.default_short_configuration_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="pandora.JSON_checker.default_short_configuration_input">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">default_short_configuration_input</code><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#default_short_configuration_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.default_short_configuration_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="pandora.JSON_checker.default_short_configuration_pipeline">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">default_short_configuration_pipeline</code><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#default_short_configuration_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.default_short_configuration_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="pandora.JSON_checker.default_short_configuration">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">default_short_configuration</code><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#default_short_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.default_short_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.read_config_file">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">read_config_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config_file</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#read_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.read_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a json configuration file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_file</strong> (<em>string</em>) – path to a json file containing the algorithm parameters</p>
+</dd>
+<dt class="field-even">Return user_cfg</dt>
+<dd class="field-even"><p>configuration dictionary</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.update_conf">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">update_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">def_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>dict<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#update_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.update_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the default configuration with the user configuration,</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>def_cfg</strong> (<em>dict</em>) – default configuration</p></li>
+<li><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the user and default configuration</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.JSON_checker.is_method">
+<code class="sig-prename descclassname">pandora.JSON_checker.</code><code class="sig-name descname">is_method</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">methods</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../../../_modules/pandora/JSON_checker.html#is_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.JSON_checker.is_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if s is a method in methods</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>string</em>) – String to test</p></li>
+<li><p><strong>methods</strong> (<em>list of strings</em>) – list of available methods</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if s a method and False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../common/index.html" class="btn btn-neutral float-right" title="pandora.common" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../validation/validation/index.html" class="btn btn-neutral float-left" title="pandora.validation.validation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

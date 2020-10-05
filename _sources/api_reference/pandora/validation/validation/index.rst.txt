@@ -1,0 +1,229 @@
+:mod:`pandora.validation.validation`
+====================================
+
+.. py:module:: pandora.validation.validation
+
+.. autoapi-nested-parse::
+
+   This module contains classes and functions associated to the validation step.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pandora.validation.validation.AbstractValidation
+   pandora.validation.validation.NoneValidation
+   pandora.validation.validation.CrossChecking
+
+
+
+.. py:class:: AbstractValidation
+
+   Bases: :class:`object`
+
+   .. attribute:: __metaclass__
+      
+
+      
+
+   .. attribute:: validation_methods_avail
+      
+
+      
+
+   .. method:: register_subclass(cls, short_name: str)
+      :classmethod:
+
+      Allows to register the subclass with its short name
+
+      :param short_name: the subclass to be registered
+      :type short_name: string
+
+
+   .. method:: desc(self)
+      :abstractmethod:
+
+      Describes the validation method
+
+
+   .. method:: disparity_checking(self, dataset_ref: xr.Dataset, dataset_sec: xr.Dataset, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None, cv: xr.Dataset = None) -> xr.Dataset
+      :abstractmethod:
+
+      Determination of occlusions and false matches by performing a consistency check on valid pixels.         Update the validity_mask :
+          - If out & MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel
+          - If out & MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel
+      Update the measure map: add the disp RL / disp LR distances
+
+      :param dataset_ref: Reference Dataset
+      :type dataset_ref: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param dataset_sec: Secondary Dataset
+      :type dataset_sec: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param img_ref: reference Datset image
+      :type img_ref:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param img_sec: secondary Dataset image
+      :type img_sec:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param cv: cost_volume Dataset
+      :type cv:
+          xarray.Dataset with the variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :return: the reference dataset, with the bit 8 and 9 of the validity_mask :
+          - If out & MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel
+          - If out & MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel
+      :rtype : xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+
+
+
+.. py:class:: NoneValidation(**cfg: str)
+
+   Bases: :class:`pandora.validation.validation.AbstractValidation`
+
+   Default plugin that does not perform validation
+
+   .. method:: check_conf(**cfg: str) -> Dict[str, str]
+      :staticmethod:
+
+      Add default values to the dictionary if there are missing elements and check if the dictionary is correct
+
+      :param cfg: validation configuration
+      :type cfg: dict
+      :return cfg: validation configuration updated
+      :rtype: dict
+
+
+   .. method:: desc(self)
+
+      Describes the validation method
+
+
+   .. method:: disparity_checking(self, dataset_ref: xr.Dataset, dataset_sec: xr.Dataset, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None, cv: xr.Dataset = None) -> xr.Dataset
+
+      Determination of occlusions and false matches by performing a consistency check on valid pixels.         Update the validity_mask :
+          - If out & MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel
+          - If out & MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel
+      Update the measure map: add the disp RL / disp LR distances
+
+      :param dataset_ref: Reference Dataset
+      :type dataset_ref: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param dataset_sec: Secondary Dataset
+      :type dataset_sec: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param img_ref: reference Datset image
+      :type img_ref:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param img_sec: secondary Dataset image
+      :type img_sec:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param cv: cost_volume Dataset
+      :type cv:
+          xarray.Dataset with the variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :return: the reference dataset, with the bit 8 and 9 of the validity_mask :
+          - If out & MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel
+          - If out & MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel
+      :rtype : xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+
+
+
+.. py:class:: CrossChecking(**cfg)
+
+   Bases: :class:`pandora.validation.validation.AbstractValidation`
+
+   CrossChecking class allows to perform the validation step
+
+   .. attribute:: _THRESHOLD
+      :annotation: = 1.0
+
+      
+
+   .. method:: check_conf(self, **cfg: Union[str, int, float, bool]) -> Dict[str, Union[str, int, float, bool]]
+
+      Add default values to the dictionary if there are missing elements and check if the dictionary is correct
+
+      :param cfg: optimization configuration
+      :type cfg: dict
+      :return cfg: optimization configuration updated
+      :rtype: dict
+
+
+   .. method:: desc(self)
+
+      Describes the validation method
+
+
+   .. method:: disparity_checking(self, dataset_ref: xr.Dataset, dataset_sec: xr.Dataset, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None, cv: xr.Dataset = None) -> xr.Dataset
+
+      Determination of occlusions and false matches by performing a consistency check on valid pixels.         Update the validity_mask :
+          - If out & MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel
+          - If out & MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel
+      Update the measure map: add the disp RL / disp LR distances
+
+      :param dataset_ref: Reference Dataset
+      :type dataset_ref: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param dataset_sec: Secondary Dataset
+      :type dataset_sec: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param img_ref: reference Datset image
+      :type img_ref:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param img_sec: secondary Dataset image
+      :type img_sec:
+          xarray.Dataset containing :
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param cv: cost_volume Dataset
+      :type cv:
+          xarray.Dataset with the variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :return: the reference dataset, with the bit 8 and 9 of the validity_mask :
+          - If out & MSK_PIXEL_OCCLUSION != 0 : Invalid pixel : occluded pixel
+          - If out & MSK_PIXEL_MISMATCH  != 0  : Invalid pixel : mismatched pixel
+      :rtype : xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+
+
+

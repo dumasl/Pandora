@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.refinement.vfit &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="pandora.stereo" href="../../stereo/index.html" />
+    <link rel="prev" title="pandora.refinement.refinement" href="../refinement/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../aggregation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optimization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.optimization</span></code></a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../stereo/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.validation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement.vfit</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/api_reference/pandora/refinement/vfit/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.refinement.vfit">
+<span id="pandora-refinement-vfit"></span><h1><a class="reference internal" href="#module-pandora.refinement.vfit" title="pandora.refinement.vfit"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement.vfit</span></code></a><a class="headerlink" href="#module-pandora.refinement.vfit" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions associated to the vfit method used in the refinement step.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.refinement.vfit.Vfit" title="pandora.refinement.vfit.Vfit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vfit</span></code></a></p></td>
+<td><p>Vfit class allows to perform the subpixel cost refinement step</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="pandora.refinement.vfit.Vfit">
+<em class="property">class </em><code class="sig-prename descclassname">pandora.refinement.vfit.</code><code class="sig-name descname">Vfit</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/refinement/vfit.html#Vfit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.refinement.vfit.Vfit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../refinement/index.html#pandora.refinement.refinement.AbstractRefinement" title="pandora.refinement.refinement.AbstractRefinement"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandora.refinement.refinement.AbstractRefinement</span></code></a></p>
+<p>Vfit class allows to perform the subpixel cost refinement step</p>
+<dl class="py method">
+<dt id="pandora.refinement.vfit.Vfit.check_conf">
+<em class="property">static </em><code class="sig-name descname">check_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/refinement/vfit.html#Vfit.check_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.refinement.vfit.Vfit.check_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add default values to the dictionary if there are missing elements and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<em>dict</em>) – refinement configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>refinement configuration updated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.refinement.vfit.Vfit.desc">
+<code class="sig-name descname">desc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/refinement/vfit.html#Vfit.desc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.refinement.vfit.Vfit.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the subpixel refinement method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.refinement.vfit.Vfit.subpixel_refinement">
+<code class="sig-name descname">subpixel_refinement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">disp</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>xr.Dataset<span class="p">, </span>xr.Dataset<span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/refinement/vfit.html#Vfit.subpixel_refinement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.refinement.vfit.Vfit.subpixel_refinement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subpixel refinement of disparities and costs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cv</strong> – the cost volume dataset</p></li>
+<li><p><strong>disp</strong> (<em>xarray.Dataset with the variables :
+- disparity_map 2D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>)
+</em><em>- confidence_measure 3D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>indicator</em><em>)
+</em><em>- validity_mask 2D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>)</em>) – Dataset</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>cv Dataset with the variables (unchanged):</dt><dd><ul class="simple">
+<li><p>cost_volume 3D xarray.DataArray (row, col, disp)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+</ul>
+</dd>
+<dt>disp Dataset with the variables:</dt><dd><ul class="simple">
+<li><p>disparity_map 2D xarray.DataArray (row, col) that contains the refined disparities</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator) (unchanged)</p></li>
+<li><dl class="simple">
+<dt>validity_mask 2D xarray.DataArray (row, col) with the state of the pixel ( Information:</dt><dd><p>calculations stopped at the pixel step, sub-pixel interpolation did not succeed )</p>
+</dd>
+</dl>
+</li>
+<li><p>interpolated_coeff 2D xarray.DataArray (row, col) that contains the refined cost</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple(Dataset cv, Dataset disp)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.refinement.vfit.Vfit.approximate_subpixel_refinement">
+<code class="sig-name descname">approximate_subpixel_refinement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">cv_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">disp_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../../_modules/pandora/refinement/vfit.html#Vfit.approximate_subpixel_refinement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.refinement.vfit.Vfit.approximate_subpixel_refinement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subpixel refinement of the secondary disparities map, which was created with the approximate method : a diagonal
+search for the minimum on the reference cost volume</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cv_ref</strong> – the reference cost volume dataset</p></li>
+<li><p><strong>disp_sec</strong> (<em>xarray.Dataset with the variables :
+- disparity_map 2D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>)
+</em><em>- confidence_measure 3D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>indicator</em><em>)
+</em><em>- validity_mask 2D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>)</em>) – secondary disparity map</p></li>
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>disp_sec Dataset with the variables :</dt><dd><ul class="simple">
+<li><p>disparity_map 2D xarray.DataArray (row, col) that contains the refined disparities</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator) (unchanged)</p></li>
+<li><dl class="simple">
+<dt>validity_mask 2D xarray.DataArray (row, col) with the value of bit 3 ( Information:</dt><dd><p>calculations stopped at the pixel step, sub-pixel interpolation did not succeed )</p>
+</dd>
+</dl>
+</li>
+<li><p>interpolated_coeff 2D xarray.DataArray (row, col) that contains the refined cost</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.refinement.vfit.Vfit.vfit">
+<em class="property">static </em><code class="sig-name descname">vfit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cost</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">disp</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">measure</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">, </span>int<span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/refinement/vfit.html#Vfit.vfit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.refinement.vfit.Vfit.vfit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the subpixel disparity and cost, by matching a symmetric V shape (linear interpolation)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cost</strong> (<em>1D numpy array :</em><em> [</em><em>cost</em><em>[</em><em>disp -1</em><em>]</em><em>, </em><em>cost</em><em>[</em><em>disp</em><em>]</em><em>, </em><em>cost</em><em>[</em><em>disp + 1</em><em>]</em><em>]</em>) – cost of the values disp - 1, disp, disp + 1</p></li>
+<li><p><strong>disp</strong> (<em>float</em>) – the disparity</p></li>
+<li><p><strong>measure</strong> – the type of measure used to create the cost volume</p></li>
+<li><p><strong>measure</strong> – string = min | max</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the refined disparity (disp + sub_disp), the refined cost and the state of the pixel( Information:</p>
+</dd>
+</dl>
+<p>calculations stopped at the pixel step, sub-pixel interpolation did not succeed )
+:rtype: float, float, int</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../stereo/index.html" class="btn btn-neutral float-right" title="pandora.stereo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../refinement/index.html" class="btn btn-neutral float-left" title="pandora.refinement.refinement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

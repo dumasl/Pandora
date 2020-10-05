@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.common &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="pandora.constants" href="../constants/index.html" />
+    <link rel="prev" title="pandora.JSON_checker" href="../JSON_checker/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../JSON_checker/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.JSON_checker</span></code></a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.common</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../disparity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.disparity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../img_tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.img_tools</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../marge/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.marge</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../output_tree_design/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.output_tree_design</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.common</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api_reference/pandora/common/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.common">
+<span id="pandora-common"></span><h1><a class="reference internal" href="#module-pandora.common" title="pandora.common"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.common</span></code></a><a class="headerlink" href="#module-pandora.common" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions allowing to save the results and the configuration of Pandora pipeline.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.common.write_data_array" title="pandora.common.write_data_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_data_array</span></code></a>(data_array: xr.DataArray, filename: str, dtype: rasterio.dtypes = rasterio.dtypes.float32) → None</p></td>
+<td><p>Write a xarray.DataArray in a tiff file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.common.mkdir_p" title="pandora.common.mkdir_p"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mkdir_p</span></code></a>(path: str) → None</p></td>
+<td><p>Create a directory without complaining if it already exists.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.common.save_results" title="pandora.common.save_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_results</span></code></a>(ref: xr.Dataset, sec: xr.Dataset, output: str) → None</p></td>
+<td><p>Save results in the output directory</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.common.save_config" title="pandora.common.save_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_config</span></code></a>(output: str, user_cfg: Dict) → None</p></td>
+<td><p>Save the user configuration in json file</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="pandora.common.write_data_array">
+<code class="sig-prename descclassname">pandora.common.</code><code class="sig-name descname">write_data_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_array</span><span class="p">:</span> <span class="n">xr.DataArray</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="p">:</span> <span class="n">rasterio.dtypes</span> <span class="o">=</span> <span class="default_value">rasterio.dtypes.float32</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../../_modules/pandora/common.html#write_data_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.common.write_data_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a xarray.DataArray in a tiff file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_array</strong> (<em>2D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>) or </em><em>3D xarray.DataArray</em><em> (</em><em>row</em><em>, </em><em>col</em><em>, </em><em>indicator</em><em>)</em>) – data</p></li>
+<li><p><strong>filename</strong> (<em>string</em>) – output filename</p></li>
+<li><p><strong>dtype</strong> (<em>GDALDataType</em>) – band types</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.common.mkdir_p">
+<code class="sig-prename descclassname">pandora.common.</code><code class="sig-name descname">mkdir_p</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../../_modules/pandora/common.html#mkdir_p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.common.mkdir_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a directory without complaining if it already exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.common.save_results">
+<code class="sig-prename descclassname">pandora.common.</code><code class="sig-name descname">save_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">output</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../../_modules/pandora/common.html#save_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.common.save_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save results in the output directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref</strong> (<em>xr.Dataset</em>) – reference dataset, which contains the variables :
+- disparity_map : the disparity map in the geometry of the reference image 2D DataArray (row, col)
+- confidence_measure : the confidence measure in the geometry of the reference image 3D DataArray (row, col, indicator)
+- validity_mask : the validity mask in the geometry of the reference image 2D DataArray (row, col)</p></li>
+<li><p><strong>sec</strong> (<em>xr.Dataset</em>) – secondary dataset. If there is no validation step, the secondary Dataset will be empty.
+If a validation step is configured, the dataset will contain the variables :
+- disparity_map : the disparity map in the geometry of the secondary image 2D DataArray (row, col)
+- confidence_measure : the confidence in the geometry of the secondary image 3D DataArray (row, col, indicator)
+- validity_mask : the validity mask in the geometry of the reference image 2D DataArray (row, col)</p></li>
+<li><p><strong>output</strong> (<em>string</em>) – output directory</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.common.save_config">
+<code class="sig-prename descclassname">pandora.common.</code><code class="sig-name descname">save_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">user_cfg</span><span class="p">:</span> <span class="n">Dict</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../../_modules/pandora/common.html#save_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.common.save_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the user configuration in json file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<em>string</em>) – Path to output directory</p></li>
+<li><p><strong>user_cfg</strong> (<em>dict</em>) – user configuration</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../constants/index.html" class="btn btn-neutral float-right" title="pandora.constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../JSON_checker/index.html" class="btn btn-neutral float-left" title="pandora.JSON_checker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

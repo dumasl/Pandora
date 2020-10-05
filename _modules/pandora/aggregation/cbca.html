@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.aggregation.cbca &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../pandora.html">pandora</a> &raquo;</li>
+        
+          <li><a href="../aggregation.html">pandora.aggregation</a> &raquo;</li>
+        
+      <li>pandora.aggregation.cbca</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.aggregation.cbca</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions associated to the Cross Based Cost Aggregation (cbca) method.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
+<span class="kn">from</span> <span class="nn">json_checker</span> <span class="kn">import</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">And</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="kn">from</span> <span class="nn">pandora.img_tools</span> <span class="kn">import</span> <span class="n">shift_sec_img</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">aggregation</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage.filters</span> <span class="kn">import</span> <span class="n">median_filter</span>
+
+
+<div class="viewcode-block" id="CrossBasedCostAggregation"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.CrossBasedCostAggregation">[docs]</a><span class="nd">@aggregation</span><span class="o">.</span><span class="n">AbstractAggregation</span><span class="o">.</span><span class="n">register_subclass</span><span class="p">(</span><span class="s1">&#39;cbca&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CrossBasedCostAggregation</span><span class="p">(</span><span class="n">aggregation</span><span class="o">.</span><span class="n">AbstractAggregation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CrossBasedCostAggregation class, allows to perform the aggregation step</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Default configuration, do not change these values</span>
+<div class="viewcode-block" id="CrossBasedCostAggregation._CBCA_INTENSITY"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.CrossBasedCostAggregation._CBCA_INTENSITY">[docs]</a>    <span class="n">_CBCA_INTENSITY</span> <span class="o">=</span> <span class="mf">30.</span></div>
+<div class="viewcode-block" id="CrossBasedCostAggregation._CBCA_DISTANCE"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.CrossBasedCostAggregation._CBCA_DISTANCE">[docs]</a>    <span class="n">_CBCA_DISTANCE</span> <span class="o">=</span> <span class="mi">5</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param cfg: optional configuration, {&#39;cbca_intensity&#39;: value, &#39;cbca_distance&#39;: value}</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cbca_intensity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;cbca_intensity&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cbca_distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;cbca_distance&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="CrossBasedCostAggregation.check_conf"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.CrossBasedCostAggregation.check_conf">[docs]</a>    <span class="k">def</span> <span class="nf">check_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add default values to the dictionary if there are missing elements and check if the dictionary is correct</span>
+
+<span class="sd">        :param cfg: aggregation configuration</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        :return cfg: aggregation configuration updated</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Give the default value if the required element is not in the configuration</span>
+        <span class="k">if</span> <span class="s1">&#39;cbca_intensity&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;cbca_intensity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CBCA_INTENSITY</span>
+        <span class="k">if</span> <span class="s1">&#39;cbca_distance&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;cbca_distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CBCA_DISTANCE</span>
+
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;aggregation_method&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;cbca&#39;</span><span class="p">),</span>
+            <span class="s2">&quot;cbca_intensity&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;cbca_distance&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg</span></div>
+
+<div class="viewcode-block" id="CrossBasedCostAggregation.desc"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.CrossBasedCostAggregation.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the aggregation method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CrossBasedCostAggregation method&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CrossBasedCostAggregation.cost_volume_aggregation"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.CrossBasedCostAggregation.cost_volume_aggregation">[docs]</a>    <span class="k">def</span> <span class="nf">cost_volume_aggregation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Aggregated the cost volume with Cross-Based Cost Aggregation, using the pipeline define in</span>
+<span class="sd">        Zhang, K., Lu, J., &amp; Lafruit, G. (2009).</span>
+<span class="sd">        Cross-based local stereo matching using orthogonal integral images.</span>
+<span class="sd">        IEEE transactions on circuits and systems for video technology, 19(7), 1073-1079.</span>
+
+<span class="sd">        :param img_ref: reference Dataset image</span>
+<span class="sd">        :type img_ref:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param cv: cost volume dataset</span>
+<span class="sd">        :type cv:</span>
+<span class="sd">            xarray.Dataset, with the data variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        :return: the cost volume aggregated in the dataset</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">            xarray.Dataset, with the data variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">subpix</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Contains the shifted secondary images</span>
+        <span class="n">img_sec_shift</span> <span class="o">=</span> <span class="n">shift_sec_img</span><span class="p">(</span><span class="n">img_sec</span><span class="p">,</span> <span class="n">subpix</span><span class="p">)</span>
+
+        <span class="c1"># Compute the reference cross support. Apply a 3×3 median filter to the input image</span>
+        <span class="n">cross_ref</span> <span class="o">=</span> <span class="n">cross_support</span><span class="p">(</span><span class="n">median_filter</span><span class="p">(</span><span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">),</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">_cbca_distance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cbca_intensity</span><span class="p">)</span>
+
+        <span class="c1"># Compute the secondary cross support. Apply a 3×3 median filter to the input image</span>
+        <span class="n">cross_sec</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">img_sec_shift</span><span class="p">)):</span>
+            <span class="n">cross_sec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cross_support</span><span class="p">(</span><span class="n">median_filter</span><span class="p">(</span><span class="n">img_sec_shift</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">),</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">_cbca_distance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cbca_intensity</span><span class="p">))</span>
+
+        <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span><span class="p">,</span> <span class="n">nb_disp</span> <span class="o">=</span> <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># Allocate the numpy aggregated cost volume cv = (disp, col, row), for efficient memory management</span>
+        <span class="n">agg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nb_disp</span><span class="p">,</span> <span class="n">nx_</span><span class="p">,</span> <span class="n">ny_</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="c1"># Add invalid costs (i.e = np.nan ) to the output aggregated cost volume (because the step 1 of cbca do not</span>
+        <span class="c1"># propagate invalid pixels, we need to retrieve them at the end of aggregation )</span>
+        <span class="c1"># Much faster than :</span>
+        <span class="c1"># id_nan = np.isnan(cv[&#39;cost_volume&#39;].data)</span>
+        <span class="c1"># compute the aggregation ..</span>
+        <span class="c1"># cv[&#39;cost_volume&#39;].data[id_nan] = np.nan</span>
+        <span class="n">agg</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">agg</span> <span class="o">*=</span> <span class="mi">0</span>
+
+        <span class="n">disparity_range</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;disp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">range_col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nx_</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_disp</span><span class="p">):</span>
+            <span class="n">i_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">disparity_range</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">%</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">])</span>
+
+            <span class="c1"># Step 1 : horizontal integral image</span>
+            <span class="n">step1</span> <span class="o">=</span> <span class="n">cbca_step_1</span><span class="p">(</span><span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">d</span><span class="p">])</span>
+
+            <span class="n">range_col_sec</span> <span class="o">=</span> <span class="n">range_col</span> <span class="o">+</span> <span class="n">disparity_range</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+            <span class="n">valid_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">range_col_sec</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">range_col_sec</span> <span class="o">&lt;</span> <span class="n">cross_sec</span><span class="p">[</span><span class="n">i_sec</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+            <span class="c1"># Step 2 : horizontal matching cost</span>
+            <span class="n">step2</span><span class="p">,</span> <span class="n">sum2</span> <span class="o">=</span> <span class="n">cbca_step_2</span><span class="p">(</span><span class="n">step1</span><span class="p">,</span> <span class="n">cross_ref</span><span class="p">,</span> <span class="n">cross_sec</span><span class="p">[</span><span class="n">i_sec</span><span class="p">],</span> <span class="n">range_col</span><span class="p">[</span><span class="n">valid_index</span><span class="p">],</span> <span class="n">range_col_sec</span><span class="p">[</span><span class="n">valid_index</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+            <span class="c1"># Step 3 : vertical integral image</span>
+            <span class="n">step3</span> <span class="o">=</span> <span class="n">cbca_step_3</span><span class="p">(</span><span class="n">step2</span><span class="p">)</span>
+
+            <span class="c1"># Step 4 : aggregate cost volume</span>
+            <span class="n">step4</span><span class="p">,</span> <span class="n">sum4</span> <span class="o">=</span> <span class="n">cbca_step_4</span><span class="p">(</span><span class="n">step3</span><span class="p">,</span> <span class="n">sum2</span><span class="p">,</span> <span class="n">cross_ref</span><span class="p">,</span> <span class="n">cross_sec</span><span class="p">[</span><span class="n">i_sec</span><span class="p">],</span> <span class="n">range_col</span><span class="p">[</span><span class="n">valid_index</span><span class="p">],</span> <span class="n">range_col_sec</span><span class="p">[</span><span class="n">valid_index</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+
+            <span class="c1"># Added the pixel anchor pixel to the number of support pixels used during the aggregation</span>
+            <span class="n">sum4</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># Add the aggregate cost to the output</span>
+            <span class="n">agg</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">step4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># Normalize the aggregated cost</span>
+            <span class="n">agg</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">sum4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">cv</span><span class="p">[</span><span class="s1">&#39;cost_volume&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;aggregation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cbca&#39;</span>
+
+        <span class="c1"># Maximal cost of the cost volume after agregation</span>
+        <span class="n">cmax</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;cmax&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_cbca_distance</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">cv</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;cmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmax</span>
+
+        <span class="k">return</span> <span class="n">cv</span></div></div>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="s1">&#39;f4[:, :](f4[:, :])&#39;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="cbca_step_1"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.cbca_step_1">[docs]</a><span class="k">def</span> <span class="nf">cbca_step_1</span><span class="p">(</span><span class="n">cv</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Giving the matching cost for one disparity, build a horizontal integral image storing the cumulative row sum,</span>
+<span class="sd">    S_h(x, y) = S_h(x-1, y) + cv(x, y)</span>
+
+<span class="sd">    :param cv: cost volume for the current disparity</span>
+<span class="sd">    :type cv: 2D np.array (row, col) dtype = np.float32</span>
+<span class="sd">    :return: the horizontal integral image, step 1</span>
+<span class="sd">    :rtype: 2D np.array (row, col + 1) dtype = np.float32</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># Allocate the intermediate cost volume S_h</span>
+    <span class="c1"># added a column to manage the case in the step 2 : x - left_arm_length -1 = -1</span>
+    <span class="n">step1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ny_</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nx_</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">step1</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># Do not propagate nan</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">cv</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]):</span>
+                <span class="n">step1</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">step1</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cv</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">step1</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">step1</span></div>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="s1">&#39;(f4[:, :], i2[:, :, :], i2[:, :, :], i8[:], i8[:])&#39;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="cbca_step_2"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.cbca_step_2">[docs]</a><span class="k">def</span> <span class="nf">cbca_step_2</span><span class="p">(</span><span class="n">step1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cross_ref</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cross_sec</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">range_col</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                <span class="n">range_col_sec</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Giving the horizontal integral image, computed the horizontal matching cost for one disparity,</span>
+<span class="sd">    E_h(x, y) = S_h(x + right_arm_length, y) - S_h(x - left_arm_length -1, y)</span>
+
+<span class="sd">    :param step1: horizontal integral image, from the cbca_step1, with an extra column that contains 0</span>
+<span class="sd">    :type step1: 2D np.array (row, col + 1) dtype = np.float32</span>
+<span class="sd">    :param cross_ref: cross support of the reference image</span>
+<span class="sd">    :type cross_ref: 3D np.array (row, col, [left, right, top, bot]) dtype=np.int16</span>
+<span class="sd">    :param cross_sec: cross support of the secondary image</span>
+<span class="sd">    :type cross_sec: 3D np.array (row, col, [left, right, tpo, bot]) dtype=np.int16</span>
+<span class="sd">    :param range_col: reference column for the current disparity (i.e : np.arrange(nb columns), where the correspondent</span>
+<span class="sd">        in the right image is reachable)</span>
+<span class="sd">    :type range_col: 1D np.array</span>
+<span class="sd">    :param range_col_sec: secondary column for the current disparity (i.e : np.arrange(nb columns) - disparity, where</span>
+<span class="sd">        column - disparity &gt;= 0 and &lt;= nb columns)</span>
+<span class="sd">    :type range_col_sec: 1D np.array</span>
+<span class="sd">    :return: the horizontal matching cost for the current disparity, and the number of support pixels used for the</span>
+<span class="sd">        step 2</span>
+<span class="sd">    :rtype: tuple (2D np.array (row, col) dtype = np.float32, 2D np.array (row, col) dtype = np.float32)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">step1</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># Allocate the intermediate cost volume E_h</span>
+    <span class="c1"># , remove the extra column from the step 1</span>
+    <span class="n">step2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">sum_step2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">step1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">range_col</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cross_ref</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span> <span class="n">cross_sec</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col_sec</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cross_ref</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cross_sec</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col_sec</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">step2</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span> <span class="o">=</span> <span class="n">step1</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="n">right</span><span class="p">]</span> <span class="o">-</span> <span class="n">step1</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">left</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">sum_step2</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">right</span> <span class="o">+</span> <span class="n">left</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">step2</span><span class="p">,</span> <span class="n">sum_step2</span></div>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="s1">&#39;f4[:, :](f4[:, :])&#39;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="cbca_step_3"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.cbca_step_3">[docs]</a><span class="k">def</span> <span class="nf">cbca_step_3</span><span class="p">(</span><span class="n">step2</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Giving the horizontal matching cost, build a vertical integral image for one disparity,</span>
+<span class="sd">    S_v = S_v(x, y - 1) + E_h(x, y)</span>
+
+<span class="sd">    :param step2: horizontal matching cost, from the cbca_step2</span>
+<span class="sd">    :type step2: 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">    :return: the vertical integral image for the current disparity</span>
+<span class="sd">    :rtype: 2D np.array (row + 1, col) dtype = np.float32</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">step2</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># Allocate the intermediate cost volume S_v</span>
+    <span class="c1"># added a row to manage the case in the step 4 : y - up_arm_length -1 = -1</span>
+    <span class="n">step3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nx_</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">step3</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">step2</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ny_</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nx_</span><span class="p">):</span>
+            <span class="n">step3</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">step3</span><span class="p">[</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="n">step2</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">step3</span></div>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="s1">&#39;(f4[:, :], f4[:, :], i2[:, :, :], i2[:, :, :], i8[:], i8[:])&#39;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="cbca_step_4"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.cbca_step_4">[docs]</a><span class="k">def</span> <span class="nf">cbca_step_4</span><span class="p">(</span><span class="n">step3</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sum2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cross_ref</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cross_sec</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                <span class="n">range_col</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">range_col_sec</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Giving the vertical integral image, build the fully aggregated matching cost for one disparity,</span>
+<span class="sd">    E = S_v(x, y + bottom_arm_length) - S_v(x, y - top_arm_length - 1)</span>
+
+<span class="sd">    :param step3: vertical integral image, from the cbca_step3, with an extra row that contains 0</span>
+<span class="sd">    :type step3: 2D np.array (row + 1, col) dtype = np.float32</span>
+<span class="sd">    :param sum2: the number of support pixels used for the step 2</span>
+<span class="sd">    :type sum2: 2D np.array (row, col) dtype = np.float32</span>
+<span class="sd">    :param cross_ref: cross support of the reference image</span>
+<span class="sd">    :type cross_ref: 3D np.array (row, col, [left, right, top, bot]) dtype=np.int16</span>
+<span class="sd">    :param cross_sec: cross support of the secondary image</span>
+<span class="sd">    :type cross_sec: 3D np.array (row, col, [left, right, tpo, bot]) dtype=np.int16</span>
+<span class="sd">    :param range_col: reference column for the current disparity (i.e : np.arrange(nb columns), where the correspondent</span>
+<span class="sd">        in the right image is reachable)</span>
+<span class="sd">    :type range_col: 1D np.array</span>
+<span class="sd">    :param range_col_sec: secondary column for the current disparity (i.e : np.arrange(nb columns) - disparity, where</span>
+<span class="sd">        column - disparity &gt;= 0 and &lt;= nb columns)</span>
+<span class="sd">    :type range_col_sec: 1D np.array</span>
+<span class="sd">    :return: the fully aggregated matching cost, and the total number of support pixels used for the aggregation</span>
+<span class="sd">    :rtype: tuple(2D np.array (row , col) dtype = np.float32, 2D np.array (row , col) dtype = np.float32)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">step3</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># Allocate the final cost volume E</span>
+    <span class="c1"># , remove the extra row from the step 3</span>
+    <span class="n">step4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nx_</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">sum4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">sum2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">step4</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">range_col</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">top</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cross_ref</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">2</span><span class="p">],</span> <span class="n">cross_sec</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col_sec</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">bot</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cross_ref</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">3</span><span class="p">],</span> <span class="n">cross_sec</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col_sec</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">3</span><span class="p">])</span>
+
+            <span class="n">step4</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span> <span class="o">=</span> <span class="n">step3</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="n">bot</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span> <span class="o">-</span> <span class="n">step3</span><span class="p">[</span><span class="n">y</span> <span class="o">-</span> <span class="n">top</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span>
+
+            <span class="n">sum4</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">top</span> <span class="o">+</span> <span class="n">bot</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">top</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sum4</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum2</span><span class="p">[</span><span class="n">y</span><span class="o">-</span><span class="n">top</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]])</span>
+            <span class="k">if</span> <span class="n">bot</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sum4</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum2</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">y</span><span class="o">+</span><span class="n">bot</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">range_col</span><span class="p">[</span><span class="n">x</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">step4</span><span class="p">,</span> <span class="n">sum4</span></div>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="s1">&#39;i2[:, :, :](f4[:, :], i2, f4)&#39;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="cross_support"><a class="viewcode-back" href="../../../api_reference/pandora/aggregation/cbca/index.html#pandora.aggregation.cbca.cross_support">[docs]</a><span class="k">def</span> <span class="nf">cross_support</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">len_arms</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the cross support for an image: find the 4 arms</span>
+
+<span class="sd">    :param image: image</span>
+<span class="sd">    :type image: 2D np.array (row , col) dtype = np.float32</span>
+<span class="sd">    :param len_arms: maximal length arms</span>
+<span class="sd">    :param len_arms: int16</span>
+<span class="sd">    :param intensity: maximal intensity</span>
+<span class="sd">    :param intensity: float 32</span>
+<span class="sd">    :return: a 3D np.array ( row, col, [left, right, top, bot] ),</span>
+<span class="sd">         with the four arms lengths computes for each pixel</span>
+<span class="sd">    :rtype:  3D np.array ( row, col, [left, right, top, bot] ), dtype=np.int16</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">cross</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ny_</span><span class="p">,</span> <span class="n">nx_</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ny_</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nx_</span><span class="p">):</span>
+            <span class="n">left_len</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">left</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">len_arms</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">left</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">intensity</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">left_len</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># enforces a minimum support region of 3×3</span>
+            <span class="n">cross</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">left_len</span><span class="p">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">right_len</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">right</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">len_arms</span><span class="p">,</span> <span class="n">nx_</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">right</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">intensity</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">right_len</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># enforces a minimum support region of 3×3</span>
+            <span class="n">cross</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">right_len</span><span class="p">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">nx_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">up_len</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">up</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="nb">max</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">len_arms</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">image</span><span class="p">[</span><span class="n">up</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">intensity</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">up_len</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># enforces a minimum support region of 3×3</span>
+            <span class="n">cross</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">up_len</span><span class="p">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">bot_len</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">bot</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">len_arms</span><span class="p">,</span> <span class="n">ny_</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">image</span><span class="p">[</span><span class="n">bot</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">intensity</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">bot_len</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># enforces a minimum support region of 3×3</span>
+            <span class="n">cross</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">bot_len</span><span class="p">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">ny_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">cross</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

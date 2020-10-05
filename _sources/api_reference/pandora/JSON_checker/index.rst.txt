@@ -1,0 +1,225 @@
+:mod:`pandora.JSON_checker`
+===========================
+
+.. py:module:: pandora.JSON_checker
+
+.. autoapi-nested-parse::
+
+   This module contains functions allowing to check the configuration given to Pandora pipeline.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pandora.JSON_checker.gdal_can_open_mandatory
+   pandora.JSON_checker.gdal_can_open
+   pandora.JSON_checker.check_images
+   pandora.JSON_checker.check_disparity
+   pandora.JSON_checker.get_config_pipeline
+   pandora.JSON_checker.get_config_input
+   pandora.JSON_checker.get_config_image
+   pandora.JSON_checker.check_pipeline_section
+   pandora.JSON_checker.check_image_section
+   pandora.JSON_checker.check_input_section
+   pandora.JSON_checker.check_conf
+   pandora.JSON_checker.concat_conf
+   pandora.JSON_checker.read_config_file
+   pandora.JSON_checker.update_conf
+   pandora.JSON_checker.is_method
+
+
+.. function:: gdal_can_open_mandatory(f: str) -> bool
+
+   Test if file f can be open by gdal
+
+   :param f: File to test
+   :type f: string
+   :returns: True if rasterio can open file and False otherwise
+   :rtype: bool
+
+
+.. function:: gdal_can_open(f: str) -> bool
+
+   Test if file f can be open by gdal
+
+   :param f: File to test
+   :type f: string
+   :returns: True if rasterio can open file and False otherwise
+   :rtype: bool
+
+
+.. function:: check_images(img_ref: str, img_sec: str, msk_ref: str, msk_sec: str) -> None
+
+   Check the images
+
+   :param img_ref: path to the reference image
+   :type img_ref: string
+   :param img_sec: path to the secondary image
+   :type img_sec: string
+   :param msk_ref: path to the mask of the reference image
+   :type msk_ref: string
+   :param msk_sec: path to the mask of the secondary image
+   :type msk_sec: string
+
+
+.. function:: check_disparity(disp_min: int, disp_max: int) -> None
+
+   Check the disparity
+
+   :param disp_min: minimal disparity
+   :type disp_min: int
+   :param disp_max: maximal disparity
+   :type disp_max: int
+
+
+.. function:: get_config_pipeline(user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Get the pipeline configuration
+
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return cfg: partial configuration
+   :rtype cfg: dict
+
+
+.. function:: get_config_input(user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Get the input configuration
+
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return cfg: partial configuration
+   :rtype cfg: dict
+
+
+.. function:: get_config_image(user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Get the image configuration
+
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return cfg: partial configuration
+   :rtype cfg: dict
+
+
+.. function:: check_pipeline_section(user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Complete and check if the pipeline dictionary is correct
+
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return cfg: global configuration
+   :rtype cfg: dict
+
+
+.. function:: check_image_section(user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Complete and check if the dictionary is correct
+
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return cfg: global configuration
+   :rtype cfg: dict
+
+
+.. function:: check_input_section(user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Complete and check if the dictionary is correct
+
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return cfg: global configuration
+   :rtype cfg: dict
+
+
+.. function:: check_conf(user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Complete and check if the dictionary is correct
+
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return cfg: global configuration
+   :rtype cfg: dict
+
+
+.. function:: concat_conf(cfg_list: List[Dict[str, dict]]) -> Dict[str, dict]
+
+   Concatenate dictionaries
+
+   :param cfg_list: list of configurations
+   :type cfg_list: List of dict
+   :return cfg: global configuration
+   :rtype cfg: dict
+
+
+.. data:: input_configuration_schema
+   
+
+   
+
+.. data:: image_configuration_schema
+   
+
+   
+
+.. data:: default_short_configuration_image
+   
+
+   
+
+.. data:: default_short_configuration_input
+   
+
+   
+
+.. data:: default_short_configuration_pipeline
+   
+
+   
+
+.. data:: default_short_configuration
+   
+
+   
+
+.. function:: read_config_file(config_file: str) -> Dict[str, dict]
+
+   Read a json configuration file
+
+   :param config_file: path to a json file containing the algorithm parameters
+   :type config_file: string
+   :return user_cfg: configuration dictionary
+   :rtype: dict
+
+
+.. function:: update_conf(def_cfg: Dict[str, dict], user_cfg: Dict[str, dict]) -> Dict[str, dict]
+
+   Update the default configuration with the user configuration,
+
+   :param def_cfg: default configuration
+   :type def_cfg: dict
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+   :return: the user and default configuration
+   :rtype: dict
+
+
+.. function:: is_method(s: str, methods: List[str]) -> bool
+
+   Test if s is a method in methods
+
+   :param s: String to test
+   :type s: string
+   :param methods: list of available methods
+   :type methods: list of strings
+   :returns: True if s a method and False otherwise
+   :rtype: bool
+
+

@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.stereo.sad_ssd &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../pandora.html">pandora</a> &raquo;</li>
+        
+          <li><a href="../stereo.html">pandora.stereo</a> &raquo;</li>
+        
+      <li>pandora.stereo.sad_ssd</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora.stereo.sad_ssd</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions associated to SAD and SSD methods used in the cost volume measure step.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">json_checker</span> <span class="kn">import</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">And</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="kn">from</span> <span class="nn">pandora.JSON_checker</span> <span class="kn">import</span> <span class="n">is_method</span>
+<span class="kn">from</span> <span class="nn">pandora.stereo</span> <span class="kn">import</span> <span class="n">stereo</span>
+<span class="kn">from</span> <span class="nn">pandora.img_tools</span> <span class="kn">import</span> <span class="n">shift_sec_img</span>
+
+
+<div class="viewcode-block" id="SadSsd"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd">[docs]</a><span class="nd">@stereo</span><span class="o">.</span><span class="n">AbstractStereo</span><span class="o">.</span><span class="n">register_subclass</span><span class="p">(</span><span class="s1">&#39;sad&#39;</span><span class="p">,</span> <span class="s1">&#39;ssd&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SadSsd</span><span class="p">(</span><span class="n">stereo</span><span class="o">.</span><span class="n">AbstractStereo</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    SadSsd class allows to compute the cost volume</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Default configuration, do not change these values</span>
+<div class="viewcode-block" id="SadSsd._WINDOW_SIZE"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd._WINDOW_SIZE">[docs]</a>    <span class="n">_WINDOW_SIZE</span> <span class="o">=</span> <span class="mi">5</span></div>
+<div class="viewcode-block" id="SadSsd._SUBPIX"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd._SUBPIX">[docs]</a>    <span class="n">_SUBPIX</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param cfg: optional configuration,  {&#39;stereo_method&#39;: value, &#39;window_size&#39;: value, &#39;subpix&#39;: value}</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_conf</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;stereo_method&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;subpix&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_wise_methods</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;sad&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ad_cost</span><span class="p">,</span> <span class="s1">&#39;ssd&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sd_cost</span><span class="p">}</span>
+
+<div class="viewcode-block" id="SadSsd.check_conf"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd.check_conf">[docs]</a>    <span class="k">def</span> <span class="nf">check_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add default values to the dictionary if there are missing elements and check if the dictionary is correct</span>
+
+<span class="sd">        :param cfg: stereo configuration</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        :return cfg: stereo configuration updated</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Give the default value if the required element is not in the configuration</span>
+        <span class="k">if</span> <span class="s1">&#39;window_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;window_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WINDOW_SIZE</span>
+        <span class="k">if</span> <span class="s1">&#39;subpix&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;subpix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SUBPIX</span>
+
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;stereo_method&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">is_method</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ssd&#39;</span><span class="p">,</span> <span class="s1">&#39;sad&#39;</span><span class="p">])),</span>
+            <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;subpix&quot;</span><span class="p">:</span> <span class="n">And</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="n">checker</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg</span></div>
+
+<div class="viewcode-block" id="SadSsd.desc"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd.desc">[docs]</a>    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Describes the stereo method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; similarity measure&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SadSsd.compute_cost_volume"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd.compute_cost_volume">[docs]</a>    <span class="k">def</span> <span class="nf">compute_cost_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                            <span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the cost volume for a pair of images</span>
+
+<span class="sd">        :param img_ref: reference Dataset image</span>
+<span class="sd">        :type img_ref:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk : 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param disp_min: minimum disparity</span>
+<span class="sd">        :type disp_min: int</span>
+<span class="sd">        :param disp_max: maximum disparity</span>
+<span class="sd">        :type disp_max: int</span>
+<span class="sd">        :param cfg: images configuration containing the mask convention : valid_pixels, no_data</span>
+<span class="sd">        :type cfg: dict</span>
+<span class="sd">        :return: the cost volume dataset</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">            xarray.Dataset, with the data variables:</span>
+<span class="sd">                - cost_volume 3D xarray.DataArray (row, col, disp)</span>
+<span class="sd">                - confidence_measure 3D xarray.DataArray (row, col, indicator)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Contains the shifted secondary images</span>
+        <span class="n">img_sec_shift</span> <span class="o">=</span> <span class="n">shift_sec_img</span><span class="p">(</span><span class="n">img_sec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span><span class="p">)</span>
+
+        <span class="c1"># Computes the maximal cost of the cost volume</span>
+        <span class="n">min_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">max_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">min_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">max_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">==</span> <span class="s1">&#39;sad&#39;</span><span class="p">:</span>
+            <span class="c1"># Maximal cost of the cost volume with sad measure</span>
+            <span class="n">cmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">max_ref</span> <span class="o">-</span> <span class="n">min_sec</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">max_sec</span> <span class="o">-</span> <span class="n">min_ref</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">==</span> <span class="s1">&#39;ssd&#39;</span><span class="p">:</span>
+            <span class="c1"># Maximal cost of the cost volume with ssd measure</span>
+            <span class="n">cmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">max_ref</span> <span class="o">-</span> <span class="n">min_sec</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">max_sec</span> <span class="o">-</span> <span class="n">min_ref</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;measure&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">,</span> <span class="s2">&quot;subpixel&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span><span class="p">,</span>
+                    <span class="s2">&quot;offset_row_col&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span>
+                    <span class="s2">&quot;type_measure&quot;</span><span class="p">:</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;cmax&quot;</span><span class="p">:</span> <span class="n">cmax</span><span class="p">}</span>
+
+        <span class="c1"># Disparity range</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">disparity_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">disparity_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span><span class="p">))</span>
+            <span class="n">disparity_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">disparity_range</span><span class="p">,</span> <span class="p">[</span><span class="n">disp_max</span><span class="p">])</span>
+
+        <span class="c1"># Allocate the numpy cost volume cv = (disp, col, row), for efficient memory management</span>
+        <span class="n">cv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">disparity_range</span><span class="p">),</span> <span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">cv</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="c1"># Allocate the 3D masks (disp, col, row) that will contains valid pixels = 0, and invalid pixels = np.nan</span>
+        <span class="c1"># First pixel in the image that is fully computable (aggregation windows are complete)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">offset</span><span class="p">)</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">offset</span><span class="p">)</span>
+        <span class="n">cv_masks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">disparity_range</span><span class="p">),</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="c1"># Masks are truncated truncated for points that are not calculable</span>
+        <span class="n">mask_ref</span><span class="p">,</span> <span class="n">mask_sec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">masks_dilatation</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+
+        <span class="n">offset_mask</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Giving the 2 images, the matching cost will be calculated as :</span>
+        <span class="c1">#                 1, 1, 1                2, 5, 6</span>
+        <span class="c1">#                 2, 1, 4                1, 1, 3</span>
+        <span class="c1">#                 1, 3, 1                6, 1, 2</span>
+        <span class="c1">#</span>
+        <span class="c1"># for disp = 0, the costvolume will be</span>
+        <span class="c1">#                        (1 - 2) (1 - 5) (1 - 6)</span>
+        <span class="c1">#                        (2 - 1) (1 - 1) (4 - 3)</span>
+        <span class="c1">#                        (1 - 6) (3 - 1) (1 - 2)</span>
+        <span class="c1"># , we make the difference between the two full images</span>
+        <span class="c1">#</span>
+        <span class="c1"># for disp = -1, compute the difference between</span>
+        <span class="c1">#                    1, 1                   2, 5</span>
+        <span class="c1">#                    1, 4                   1, 1</span>
+        <span class="c1">#                    3, 1                   6, 1</span>
+        <span class="c1"># , the costvolume will be</span>
+        <span class="c1">#                        nan  (1-2) (1-5)</span>
+        <span class="c1">#                        nan  (1-1) (4-1)</span>
+        <span class="c1">#                        nan  (3-6) (1-1)</span>
+        <span class="c1"># , nan correspond to the first column of the reference image that cannot be calculated,</span>
+        <span class="c1">#  because there is no corresponding column for the disparity -1.</span>
+        <span class="c1">#</span>
+        <span class="c1"># In the following loop, the tuples p,q describe to which part of the image the difference will be applied,</span>
+        <span class="c1"># for disp = 0, we compute the difference on the whole images so p=(:,0:3) et q=(:,0:3),</span>
+        <span class="c1"># for disp = -1, we use only a part of the images so p=(:,1:3) et q=(:,0:2)</span>
+
+        <span class="c1"># Computes the matching cost</span>
+        <span class="c1"># In the loop, cv is of shape (disp, col, row) and images / masks of shape (row, col)</span>
+        <span class="c1"># np.swapaxes allow to interchange row and col in images and masks</span>
+        <span class="k">for</span> <span class="n">disp</span> <span class="ow">in</span> <span class="n">disparity_range</span><span class="p">:</span>
+            <span class="n">i_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">disp</span> <span class="o">%</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span><span class="p">)</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_interval</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec_shift</span><span class="p">[</span><span class="n">i_sec</span><span class="p">],</span> <span class="n">disp</span><span class="p">)</span>
+            <span class="c1"># Masks are truncated for points that are not calculable</span>
+            <span class="n">p_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">offset_mask</span><span class="p">)</span>
+            <span class="n">q_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">offset_mask</span><span class="p">)</span>
+            <span class="c1"># mask_sec is of size 2</span>
+            <span class="n">i_mask_sec</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i_sec</span><span class="p">)</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">disp</span> <span class="o">-</span> <span class="n">disp_min</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span><span class="p">)</span>
+
+            <span class="n">cv_masks</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">p_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">p_mask</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">mask_sec</span><span class="p">[</span><span class="n">i_mask_sec</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">q_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">q_mask</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> \
+                                                  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">mask_ref</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">p_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">p_mask</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">cv</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> \
+                <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_wise_methods</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">](</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec_shift</span><span class="p">[</span><span class="n">i_sec</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Apply aggregation</span>
+        <span class="n">cv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_wise_aggregation</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># Invalid pixels</span>
+        <span class="n">cv</span> <span class="o">+=</span> <span class="n">cv_masks</span>
+        <span class="c1"># Reallocates the cost because its size has decreased due to the aggregation step</span>
+        <span class="n">cv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allocate_costvolume</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subpix</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+                                      <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">cv</span></div>
+
+<div class="viewcode-block" id="SadSsd.ad_cost"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd.ad_cost">[docs]</a>    <span class="k">def</span> <span class="nf">ad_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">q</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the absolute difference</span>
+
+<span class="sd">        :param p: Point interval, in the reference image, over which the squared difference will be applied</span>
+<span class="sd">        :type p: tuple</span>
+<span class="sd">        :param q: Point interval, in the secondary image, over which the squared difference will be applied</span>
+<span class="sd">        :type q: tuple</span>
+<span class="sd">        :param img_ref: reference Dataset image</span>
+<span class="sd">        :type img_ref:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :return: the absolute difference pixel-wise between elements in the interval</span>
+<span class="sd">        :rtype: numpy array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span></div>
+
+<div class="viewcode-block" id="SadSsd.sd_cost"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd.sd_cost">[docs]</a>    <span class="k">def</span> <span class="nf">sd_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the square difference</span>
+
+<span class="sd">        :param p: Point interval, in the reference image, over which the squared difference will be applied</span>
+<span class="sd">        :type p: tuple</span>
+<span class="sd">        :param q: Point interval, in the secondary image, over which the squared difference will be applied</span>
+<span class="sd">        :type q: tuple</span>
+<span class="sd">        :param img_ref: reference Dataset image</span>
+<span class="sd">        :type img_ref:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :param img_sec: secondary Dataset image</span>
+<span class="sd">        :type img_sec:</span>
+<span class="sd">            xarray.Dataset containing :</span>
+<span class="sd">                - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">                - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">        :return: the squared difference pixel-wise between elements in the interval</span>
+<span class="sd">        :rtype: numpy array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">img_ref</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">img_sec</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+<div class="viewcode-block" id="SadSsd.pixel_wise_aggregation"><a class="viewcode-back" href="../../../api_reference/pandora/stereo/sad_ssd/index.html#pandora.stereo.sad_ssd.SadSsd.pixel_wise_aggregation">[docs]</a>    <span class="k">def</span> <span class="nf">pixel_wise_aggregation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cost_volume</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Summing pixel wise matching cost over square windows</span>
+
+<span class="sd">         :param cost_volume: the cost volume</span>
+<span class="sd">         :type cost_volume: numpy array 3D (disp, col, row)</span>
+<span class="sd">         :return: the cost volume aggregated</span>
+<span class="sd">         :rtype: numpy array 3D ( disp, col, row)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nb_disp</span><span class="p">,</span> <span class="n">nx_</span><span class="p">,</span> <span class="n">ny_</span> <span class="o">=</span> <span class="n">cost_volume</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># Created a view of each window, by manipulating the internal data structure of array</span>
+        <span class="c1"># The view allow to looking at the array data in memory in a new way, without additional cost on the memory.</span>
+        <span class="c1"># str_row, str_col, str_disp = cost_volume.strides</span>
+        <span class="n">str_disp</span><span class="p">,</span> <span class="n">str_col</span><span class="p">,</span> <span class="n">str_row</span> <span class="o">=</span> <span class="n">cost_volume</span><span class="o">.</span><span class="n">strides</span>
+
+        <span class="n">shape_windows</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="n">nb_disp</span><span class="p">,</span> <span class="n">nx_</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ny_</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">strides_windows</span> <span class="o">=</span> <span class="p">(</span><span class="n">str_row</span><span class="p">,</span> <span class="n">str_col</span><span class="p">,</span> <span class="n">str_disp</span><span class="p">,</span> <span class="n">str_col</span><span class="p">,</span> <span class="n">str_row</span><span class="p">)</span>
+        <span class="n">aggregation_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">stride_tricks</span><span class="o">.</span><span class="n">as_strided</span><span class="p">(</span><span class="n">cost_volume</span><span class="p">,</span> <span class="n">shape_windows</span><span class="p">,</span> <span class="n">strides_windows</span><span class="p">)</span>
+        <span class="n">cost_volume</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">aggregation_window</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cost_volume</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

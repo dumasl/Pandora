@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userguide.html">Userguide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>pandora</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pandora</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding: utf8</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2020 Centre National d&#39;Etudes Spatiales (CNES).</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PANDORA</span>
+<span class="c1">#</span>
+<span class="c1">#     https://github.com/CNES/Pandora_pandora</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions to run Pandora pipeline.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.config</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">iter_entry_points</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">stereo</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">aggregation</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">filter</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">disparity</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">validation</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">refinement</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">optimization</span>
+<span class="kn">from</span> <span class="nn">.img_tools</span> <span class="kn">import</span> <span class="n">read_img</span>
+<span class="kn">from</span> <span class="nn">.JSON_checker</span> <span class="kn">import</span> <span class="n">check_conf</span><span class="p">,</span> <span class="n">read_config_file</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
+
+
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../api_reference/pandora/index.html#pandora.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run the pandora pipeline</span>
+
+<span class="sd">    :param img_ref: reference Dataset image</span>
+<span class="sd">    :type img_ref:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param img_sec: secondary Dataset image</span>
+<span class="sd">    :type img_sec:</span>
+<span class="sd">        xarray.Dataset containing :</span>
+<span class="sd">            - im : 2D (row, col) xarray.DataArray</span>
+<span class="sd">            - msk (optional): 2D (row, col) xarray.DataArray</span>
+<span class="sd">    :param disp_min: minimal disparity</span>
+<span class="sd">    :type disp_min: int</span>
+<span class="sd">    :param disp_max: maximal disparity</span>
+<span class="sd">    :type disp_max: int</span>
+<span class="sd">    :param cfg: configuration</span>
+<span class="sd">    :type cfg: dict</span>
+<span class="sd">    :return:</span>
+<span class="sd">        Two xarray.Dataset :</span>
+<span class="sd">            - ref : the reference dataset, which contains the variables :</span>
+<span class="sd">                - disparity_map : the disparity map in the geometry of the reference image 2D DataArray (row, col)</span>
+<span class="sd">                - confidence_measure : the confidence measure in the geometry of the reference image 3D DataArray (row, col, indicator)</span>
+<span class="sd">                - validity_mask : the validity mask in the geometry of the reference image 2D DataArray (row, col)</span>
+
+<span class="sd">            - sec : the secondary dataset. If there is no validation step, the secondary Dataset will be empty.</span>
+<span class="sd">                If a validation step is configured, the dataset will contain the variables :</span>
+<span class="sd">                - disparity_map : the disparity map in the geometry of the secondary image 2D DataArray (row, col)</span>
+<span class="sd">                - confidence_measure : the confidence measure in the geometry of the reference image 3D DataArray (row, col, indicator)</span>
+<span class="sd">                - validity_mask : the validity mask in the geometry of the reference image 2D DataArray (row, col)</span>
+
+<span class="sd">    :rtype: tuple (xarray.Dataset, xarray.Dataset)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initializes the plugins</span>
+    <span class="n">stereo_</span> <span class="o">=</span> <span class="n">stereo</span><span class="o">.</span><span class="n">AbstractStereo</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;stereo&#39;</span><span class="p">])</span>
+    <span class="n">aggregation_</span> <span class="o">=</span> <span class="n">aggregation</span><span class="o">.</span><span class="n">AbstractAggregation</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;aggregation&#39;</span><span class="p">])</span>
+    <span class="n">optimization_</span> <span class="o">=</span> <span class="n">optimization</span><span class="o">.</span><span class="n">AbstractOptimization</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;optimization&#39;</span><span class="p">])</span>
+    <span class="n">filter_</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">AbstractFilter</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;filter&#39;</span><span class="p">])</span>
+    <span class="n">refinement_</span> <span class="o">=</span> <span class="n">refinement</span><span class="o">.</span><span class="n">AbstractRefinement</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;refinement&#39;</span><span class="p">])</span>
+    <span class="n">validation_</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">AbstractValidation</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">])</span>
+    <span class="n">interpolate_</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">AbstractInterpolation</span><span class="p">(</span><span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Run the pandora pipeline</span>
+
+    <span class="c1"># Matching cost computation</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Matching cost computation...&#39;</span><span class="p">)</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">stereo_</span><span class="o">.</span><span class="n">compute_cost_volume</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Cost (support) aggregation</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Cost aggregation...&#39;</span><span class="p">)</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">aggregation_</span><span class="o">.</span><span class="n">cost_volume_aggregation</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">cv</span><span class="p">)</span>
+
+    <span class="c1"># Cost optimization</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Cost optimization...&#39;</span><span class="p">)</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">optimization_</span><span class="o">.</span><span class="n">optimize_cv</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">)</span>
+
+    <span class="c1"># Disparity computation and validity mask</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Disparity computation...&#39;</span><span class="p">)</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="n">disparity</span><span class="o">.</span><span class="n">to_disp</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;invalid_disparity&#39;</span><span class="p">],</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">)</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="n">disparity</span><span class="o">.</span><span class="n">validity_mask</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Subpixel disparity refinement</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Subpixel refinement...&#39;</span><span class="p">)</span>
+    <span class="n">cv</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">refinement_</span><span class="o">.</span><span class="n">subpixel_refinement</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">)</span>
+
+    <span class="c1"># Disparity filter</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Disparity filtering...&#39;</span><span class="p">)</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="n">filter_</span><span class="o">.</span><span class="n">filter_disparity</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">cv</span><span class="p">)</span>
+
+    <span class="n">sec</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">][</span><span class="s1">&#39;validation_method&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cross_checking&#39;</span><span class="p">:</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Computing the right disparity map with the accurate method...&#39;</span><span class="p">)</span>
+        <span class="n">cv_right</span> <span class="o">=</span> <span class="n">stereo_</span><span class="o">.</span><span class="n">compute_cost_volume</span><span class="p">(</span><span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="o">-</span><span class="n">disp_max</span><span class="p">,</span> <span class="o">-</span><span class="n">disp_min</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">])</span>
+        <span class="n">cv_right</span> <span class="o">=</span> <span class="n">aggregation_</span><span class="o">.</span><span class="n">cost_volume_aggregation</span><span class="p">(</span><span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">cv_right</span><span class="p">)</span>
+        <span class="n">cv_right</span> <span class="o">=</span> <span class="n">optimization_</span><span class="o">.</span><span class="n">optimize_cv</span><span class="p">(</span><span class="n">cv_right</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">)</span>
+        <span class="n">sec</span> <span class="o">=</span> <span class="n">disparity</span><span class="o">.</span><span class="n">to_disp</span><span class="p">(</span><span class="n">cv_right</span><span class="p">,</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;invalid_disparity&#39;</span><span class="p">],</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">)</span>
+        <span class="n">sec</span> <span class="o">=</span> <span class="n">disparity</span><span class="o">.</span><span class="n">validity_mask</span><span class="p">(</span><span class="n">sec</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">cv_right</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">])</span>
+        <span class="n">cv_right</span><span class="p">,</span> <span class="n">sec</span> <span class="o">=</span> <span class="n">refinement_</span><span class="o">.</span><span class="n">subpixel_refinement</span><span class="p">(</span><span class="n">cv_right</span><span class="p">,</span> <span class="n">sec</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span><span class="n">img_ref</span><span class="p">)</span>
+
+        <span class="n">sec</span> <span class="o">=</span> <span class="n">filter_</span><span class="o">.</span><span class="n">filter_disparity</span><span class="p">(</span><span class="n">sec</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">cv_right</span><span class="p">)</span>
+
+        <span class="c1"># Computes the validation mask</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">validation_</span><span class="o">.</span><span class="n">disparity_checking</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">cv</span><span class="p">)</span>
+        <span class="n">sec</span> <span class="o">=</span> <span class="n">validation_</span><span class="o">.</span><span class="n">disparity_checking</span><span class="p">(</span><span class="n">sec</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">cv_right</span><span class="p">)</span>
+
+        <span class="c1"># Interpolated mismatch and occlusions</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">interpolate_</span><span class="o">.</span><span class="n">interpolated_disparity</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">cv</span><span class="p">)</span>
+        <span class="n">sec</span> <span class="o">=</span> <span class="n">interpolate_</span><span class="o">.</span><span class="n">interpolated_disparity</span><span class="p">(</span><span class="n">sec</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">cv_right</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">][</span><span class="s1">&#39;filter_interpolated_disparities&#39;</span><span class="p">]:</span>
+            <span class="n">ref</span> <span class="o">=</span> <span class="n">filter_</span><span class="o">.</span><span class="n">filter_disparity</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">cv</span><span class="p">)</span>
+            <span class="n">sec</span> <span class="o">=</span> <span class="n">filter_</span><span class="o">.</span><span class="n">filter_disparity</span><span class="p">(</span><span class="n">sec</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">img_ref</span><span class="p">,</span> <span class="n">cv</span><span class="p">)</span>
+
+        <span class="c1"># Resize the output products : add rows and columns that have been truncated</span>
+        <span class="n">sec</span> <span class="o">=</span> <span class="n">disparity</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">sec</span><span class="p">,</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;invalid_disparity&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Resize the output products : add rows and columns that have been truncated</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="n">disparity</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;invalid_disparity&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">ref</span><span class="p">,</span> <span class="n">sec</span></div>
+
+
+<div class="viewcode-block" id="setup_logging"><a class="viewcode-back" href="../api_reference/pandora/index.html#pandora.setup_logging">[docs]</a><span class="k">def</span> <span class="nf">setup_logging</span><span class="p">(</span><span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Setup the logging configuration</span>
+
+<span class="sd">    :param verbose: verbose mode</span>
+<span class="sd">    :type verbose: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">][</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">][</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="import_plugin"><a class="viewcode-back" href="../api_reference/pandora/index.html#pandora.import_plugin">[docs]</a><span class="k">def</span> <span class="nf">import_plugin</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load all the registered entry points</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">entry_point</span> <span class="ow">in</span> <span class="n">iter_entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;pandora.plugin&#39;</span><span class="p">):</span>
+        <span class="n">entry_point</span><span class="o">.</span><span class="n">load</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../api_reference/pandora/index.html#pandora.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">cfg_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check config file and run pandora framework accordingly</span>
+
+<span class="sd">    :param cfg_path: path to the json configuration file</span>
+<span class="sd">    :type cfg_path: string</span>
+<span class="sd">    :param output: Path to output directory</span>
+<span class="sd">    :type output: string</span>
+<span class="sd">    :param verbose: verbose mode</span>
+<span class="sd">    :type verbose: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Read the user configuration file</span>
+    <span class="n">user_cfg</span> <span class="o">=</span> <span class="n">read_config_file</span><span class="p">(</span><span class="n">cfg_path</span><span class="p">)</span>
+
+    <span class="c1"># Import pandora plugins</span>
+    <span class="n">import_plugin</span><span class="p">()</span>
+
+    <span class="c1"># check the configuration</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">check_conf</span><span class="p">(</span><span class="n">user_cfg</span><span class="p">)</span>
+
+    <span class="c1"># setup the logging configuration</span>
+    <span class="n">setup_logging</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="c1"># Read images and masks</span>
+    <span class="n">img_ref</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;img_ref&#39;</span><span class="p">],</span> <span class="n">no_data</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">][</span><span class="s1">&#39;nodata1&#39;</span><span class="p">],</span> <span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span>
+                       <span class="n">mask</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;ref_mask&#39;</span><span class="p">])</span>
+    <span class="n">img_sec</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;img_sec&#39;</span><span class="p">],</span> <span class="n">no_data</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">][</span><span class="s1">&#39;nodata2&#39;</span><span class="p">],</span> <span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span>
+                       <span class="n">mask</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;sec_mask&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Run the Pandora pipeline</span>
+    <span class="n">ref</span><span class="p">,</span> <span class="n">sec</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;disp_min&#39;</span><span class="p">],</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;disp_max&#39;</span><span class="p">],</span> <span class="n">cfg</span><span class="p">)</span>
+
+    <span class="c1"># Save the reference and secondary DataArray in tiff files</span>
+    <span class="n">common</span><span class="o">.</span><span class="n">save_results</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">sec</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+
+    <span class="c1"># Save the configuration</span>
+    <span class="n">common</span><span class="o">.</span><span class="n">save_config</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

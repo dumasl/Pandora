@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.aggregation.aggregation &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="pandora.aggregation.cbca" href="../cbca/index.html" />
+    <link rel="prev" title="pandora.aggregation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optimization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.optimization</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../refinement/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.refinement</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../stereo/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.stereo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.validation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation.aggregation</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/api_reference/pandora/aggregation/aggregation/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.aggregation.aggregation">
+<span id="pandora-aggregation-aggregation"></span><h1><a class="reference internal" href="#module-pandora.aggregation.aggregation" title="pandora.aggregation.aggregation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.aggregation.aggregation</span></code></a><a class="headerlink" href="#module-pandora.aggregation.aggregation" title="Permalink to this headline">¶</a></h1>
+<p>This module contains classes and functions associated to the cost volume aggregation step.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.aggregation.aggregation.AbstractAggregation" title="pandora.aggregation.aggregation.AbstractAggregation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AbstractAggregation</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.aggregation.aggregation.NoneAggregation" title="pandora.aggregation.aggregation.NoneAggregation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NoneAggregation</span></code></a></p></td>
+<td><p>Default plugin that does not perform aggregation</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="pandora.aggregation.aggregation.AbstractAggregation">
+<em class="property">class </em><code class="sig-prename descclassname">pandora.aggregation.aggregation.</code><code class="sig-name descname">AbstractAggregation</code><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#AbstractAggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.AbstractAggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="pandora.aggregation.aggregation.AbstractAggregation.__metaclass__">
+<code class="sig-name descname">__metaclass__</code><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#AbstractAggregation.__metaclass__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.AbstractAggregation.__metaclass__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pandora.aggregation.aggregation.AbstractAggregation.aggreg_methods_avail">
+<code class="sig-name descname">aggreg_methods_avail</code><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#AbstractAggregation.aggreg_methods_avail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.AbstractAggregation.aggreg_methods_avail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.aggregation.AbstractAggregation.register_subclass">
+<em class="property">classmethod </em><code class="sig-name descname">register_subclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cls</span></em>, <em class="sig-param"><span class="n">short_name</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#AbstractAggregation.register_subclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.AbstractAggregation.register_subclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to register the subclass with its short name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>short_name</strong> (<em>string</em>) – the subclass to be registered</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.aggregation.AbstractAggregation.desc">
+<em class="property">abstract </em><code class="sig-name descname">desc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#AbstractAggregation.desc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.AbstractAggregation.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the aggregation method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.aggregation.AbstractAggregation.cost_volume_aggregation">
+<em class="property">abstract </em><code class="sig-name descname">cost_volume_aggregation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#AbstractAggregation.cost_volume_aggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.AbstractAggregation.cost_volume_aggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregate the cost volume for a pair of images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+<li><p><strong>cv</strong> – the cost volume dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the cost volume aggregated in the dataset</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>xarray.Dataset, with the data variables:</dt><dd><ul class="simple">
+<li><p>cost_volume 3D xarray.DataArray (row, col, disp)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pandora.aggregation.aggregation.NoneAggregation">
+<em class="property">class </em><code class="sig-prename descclassname">pandora.aggregation.aggregation.</code><code class="sig-name descname">NoneAggregation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">cfg</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#NoneAggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.NoneAggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pandora.aggregation.aggregation.AbstractAggregation" title="pandora.aggregation.aggregation.AbstractAggregation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandora.aggregation.aggregation.AbstractAggregation</span></code></a></p>
+<p>Default plugin that does not perform aggregation</p>
+<dl class="py method">
+<dt id="pandora.aggregation.aggregation.NoneAggregation.check_conf">
+<em class="property">static </em><code class="sig-name descname">check_conf</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">cfg</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#NoneAggregation.check_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.NoneAggregation.check_conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add default values to the dictionary if there are missing elements and check if the dictionary is correct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<em>dict</em>) – aggregation configuration</p>
+</dd>
+<dt class="field-even">Return cfg</dt>
+<dd class="field-even"><p>aggregation configuration updated</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.aggregation.NoneAggregation.desc">
+<code class="sig-name descname">desc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#NoneAggregation.desc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.NoneAggregation.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the aggregation method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pandora.aggregation.aggregation.NoneAggregation.cost_volume_aggregation">
+<code class="sig-name descname">cost_volume_aggregation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">img_ref</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">cv</span><span class="p">:</span> <span class="n">xr.Dataset</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../../_modules/pandora/aggregation/aggregation.html#NoneAggregation.cost_volume_aggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.aggregation.aggregation.NoneAggregation.cost_volume_aggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the cost volume without aggregation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_ref</strong> – reference Dataset image</p></li>
+<li><p><strong>img_sec</strong> – secondary Dataset image</p></li>
+<li><p><strong>cv</strong> – cost volume dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the cost volume without aggregation in the dataset</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>xarray.Dataset, with the data variables:</dt><dd><ul class="simple">
+<li><p>cost_volume 3D xarray.DataArray (row, col, disp)</p></li>
+<li><p>confidence_measure 3D xarray.DataArray (row, col, indicator)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../cbca/index.html" class="btn btn-neutral float-right" title="pandora.aggregation.cbca" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="pandora.aggregation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

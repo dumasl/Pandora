@@ -1,0 +1,72 @@
+:mod:`pandora.common`
+=====================
+
+.. py:module:: pandora.common
+
+.. autoapi-nested-parse::
+
+   This module contains functions allowing to save the results and the configuration of Pandora pipeline.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pandora.common.write_data_array
+   pandora.common.mkdir_p
+   pandora.common.save_results
+   pandora.common.save_config
+
+
+.. function:: write_data_array(data_array: xr.DataArray, filename: str, dtype: rasterio.dtypes = rasterio.dtypes.float32) -> None
+
+   Write a xarray.DataArray in a tiff file
+
+   :param data_array: data
+   :type data_array: 2D xarray.DataArray (row, col) or 3D xarray.DataArray (row, col, indicator)
+   :param filename:  output filename
+   :type filename: string
+   :param dtype: band types
+   :type dtype: GDALDataType
+
+
+.. function:: mkdir_p(path: str) -> None
+
+   Create a directory without complaining if it already exists.
+
+
+.. function:: save_results(ref: xr.Dataset, sec: xr.Dataset, output: str) -> None
+
+   Save results in the output directory
+
+   :param ref: reference dataset, which contains the variables :
+               - disparity_map : the disparity map in the geometry of the reference image 2D DataArray (row, col)
+               - confidence_measure : the confidence measure in the geometry of the reference image 3D DataArray (row, col, indicator)
+               - validity_mask : the validity mask in the geometry of the reference image 2D DataArray (row, col)
+   :type ref: xr.Dataset
+   :param sec: secondary dataset. If there is no validation step, the secondary Dataset will be empty.
+               If a validation step is configured, the dataset will contain the variables :
+               - disparity_map : the disparity map in the geometry of the secondary image 2D DataArray (row, col)
+               - confidence_measure : the confidence in the geometry of the secondary image 3D DataArray (row, col, indicator)
+               - validity_mask : the validity mask in the geometry of the reference image 2D DataArray (row, col)
+   :type sec: xr.Dataset
+   :param output: output directory
+   :type output: string
+
+
+.. function:: save_config(output: str, user_cfg: Dict) -> None
+
+   Save the user configuration in json file
+
+   :param output: Path to output directory
+   :type output: string
+   :param user_cfg: user configuration
+   :type user_cfg: dict
+
+

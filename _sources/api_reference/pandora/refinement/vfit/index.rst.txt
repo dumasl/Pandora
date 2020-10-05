@@ -1,0 +1,134 @@
+:mod:`pandora.refinement.vfit`
+==============================
+
+.. py:module:: pandora.refinement.vfit
+
+.. autoapi-nested-parse::
+
+   This module contains functions associated to the vfit method used in the refinement step.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pandora.refinement.vfit.Vfit
+
+
+
+.. py:class:: Vfit(**cfg: str)
+
+   Bases: :class:`pandora.refinement.refinement.AbstractRefinement`
+
+   Vfit class allows to perform the subpixel cost refinement step
+
+   .. method:: check_conf(**cfg: str) -> Dict[str, str]
+      :staticmethod:
+
+      Add default values to the dictionary if there are missing elements and check if the dictionary is correct
+
+      :param cfg: refinement configuration
+      :type cfg: dict
+      :return cfg: refinement configuration updated
+      :rtype: dict
+
+
+   .. method:: desc(self)
+
+      Describes the subpixel refinement method
+
+
+   .. method:: subpixel_refinement(self, cv: xr.Dataset, disp: xr.Dataset, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None) -> Tuple[xr.Dataset, xr.Dataset]
+
+      Subpixel refinement of disparities and costs.
+
+      :param cv: the cost volume dataset
+      :type cv:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :param disp: Dataset
+      :type disp: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param img_ref: reference Dataset image
+      :type img_ref:
+          xarray.Dataset containing:
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param img_sec: secondary Dataset image
+      :type img_sec:
+          xarray.Dataset containing:
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :return:
+          cv Dataset with the variables (unchanged):
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          disp Dataset with the variables:
+              - disparity_map 2D xarray.DataArray (row, col) that contains the refined disparities
+              - confidence_measure 3D xarray.DataArray (row, col, indicator) (unchanged)
+              - validity_mask 2D xarray.DataArray (row, col) with the state of the pixel ( Information:
+                  calculations stopped at the pixel step, sub-pixel interpolation did not succeed )
+              - interpolated_coeff 2D xarray.DataArray (row, col) that contains the refined cost
+      :rtype: tuple(Dataset cv, Dataset disp)
+
+
+   .. method:: approximate_subpixel_refinement(self, cv_ref: xr.Dataset, disp_sec: xr.Dataset, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None) -> xr.Dataset
+
+      Subpixel refinement of the secondary disparities map, which was created with the approximate method : a diagonal
+      search for the minimum on the reference cost volume
+
+      :param cv_ref: the reference cost volume dataset
+      :type cv_ref:
+          xarray.Dataset, with the data variables:
+              - cost_volume 3D xarray.DataArray (row, col, disp)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+      :param disp_sec: secondary disparity map
+      :type disp_sec: xarray.Dataset with the variables :
+          - disparity_map 2D xarray.DataArray (row, col)
+          - confidence_measure 3D xarray.DataArray (row, col, indicator)
+          - validity_mask 2D xarray.DataArray (row, col)
+      :param img_ref: reference Dataset image
+      :type img_ref:
+          xarray.Dataset containing:
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :param img_sec: secondary Dataset image
+      :type img_sec:
+          xarray.Dataset containing:
+              - im : 2D (row, col) xarray.DataArray
+              - msk : 2D (row, col) xarray.DataArray
+      :return:
+          disp_sec Dataset with the variables :
+              - disparity_map 2D xarray.DataArray (row, col) that contains the refined disparities
+              - confidence_measure 3D xarray.DataArray (row, col, indicator) (unchanged)
+              - validity_mask 2D xarray.DataArray (row, col) with the value of bit 3 ( Information:
+                  calculations stopped at the pixel step, sub-pixel interpolation did not succeed )
+              - interpolated_coeff 2D xarray.DataArray (row, col) that contains the refined cost
+      :rtype: Dataset
+
+
+   .. method:: vfit(cost: np.ndarray, disp: float, measure: str) -> Tuple[float, float, int]
+      :staticmethod:
+
+      Return the subpixel disparity and cost, by matching a symmetric V shape (linear interpolation)
+
+      :param cost: cost of the values disp - 1, disp, disp + 1
+      :type cost: 1D numpy array : [cost[disp -1], cost[disp], cost[disp + 1]]
+      :param disp: the disparity
+      :type disp: float
+      :param measure: the type of measure used to create the cost volume
+      :param measure: string = min | max
+      :return: the refined disparity (disp + sub_disp), the refined cost and the state of the pixel( Information:
+      calculations stopped at the pixel step, sub-pixel interpolation did not succeed )
+      :rtype: float, float, int
+
+
+

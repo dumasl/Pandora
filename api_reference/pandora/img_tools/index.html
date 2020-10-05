@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pandora.img_tools &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="pandora.marge" href="../marge/index.html" />
+    <link rel="prev" title="pandora.disparity" href="../disparity/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide.html">Userguide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../JSON_checker/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.JSON_checker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../common/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.common</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../disparity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.disparity</span></code></a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.img_tools</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../marge/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.marge</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../output_tree_design/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.output_tree_design</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.img_tools</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api_reference/pandora/img_tools/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pandora.img_tools">
+<span id="pandora-img-tools"></span><h1><a class="reference internal" href="#module-pandora.img_tools" title="pandora.img_tools"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandora.img_tools</span></code></a><a class="headerlink" href="#module-pandora.img_tools" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions associated to raster images.</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.img_tools.read_img" title="pandora.img_tools.read_img"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_img</span></code></a>(img: str, no_data: float, cfg: Dict, mask: xr.Dataset = None) → xr.Dataset</p></td>
+<td><p>Read image and mask, and return the corresponding xarray.DataSet</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.img_tools.shift_sec_img" title="pandora.img_tools.shift_sec_img"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shift_sec_img</span></code></a>(img_sec: xr.Dataset, subpix: int) → List[xr.Dataset]</p></td>
+<td><p>Return an array that contains the shifted secondary images</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.img_tools.check_inside_image" title="pandora.img_tools.check_inside_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_inside_image</span></code></a>(img: xr.Dataset, x: int, y: int) → bool</p></td>
+<td><p>Check if the coordinates x,y are inside the image</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.img_tools.census_transform" title="pandora.img_tools.census_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">census_transform</span></code></a>(image: xr.Dataset, window_size: int) → xr.Dataset</p></td>
+<td><p>Generates the census transformed image from an image</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.img_tools.compute_mean_raster" title="pandora.img_tools.compute_mean_raster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_mean_raster</span></code></a>(img: xr.Dataset, win_size: int) → np.ndarray</p></td>
+<td><p>Compute the mean within a sliding window for the whole image</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pandora.img_tools.compute_mean_patch" title="pandora.img_tools.compute_mean_patch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_mean_patch</span></code></a>(img: xr.Dataset, x: int, y: int, win_size: int) → float</p></td>
+<td><p>Compute the mean within a window centered at position x,y</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pandora.img_tools.compute_std_raster" title="pandora.img_tools.compute_std_raster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_std_raster</span></code></a>(img: xr.Dataset, win_size: int) → np.ndarray</p></td>
+<td><p>Compute the standard deviation within a sliding window for the whole image</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="pandora.img_tools.read_img">
+<code class="sig-prename descclassname">pandora.img_tools.</code><code class="sig-name descname">read_img</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">no_data</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span></em>, <em class="sig-param"><span class="n">mask</span><span class="p">:</span> <span class="n">xr.Dataset</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../_modules/pandora/img_tools.html#read_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.img_tools.read_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read image and mask, and return the corresponding xarray.DataSet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>string</em>) – Path to the image</p></li>
+<li><p><strong>cfg</strong> – image configuration, containing the mask conventions generated by this function</p></li>
+<li><p><strong>cfg</strong> – dict</p></li>
+<li><p><strong>mask</strong> (<em>string</em>) – Path to the mask (optional)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>xarray.DataSet</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>xarray.DataSet containing the variables :</dt><dd><ul class="simple">
+<li><p>im : 2D (row, col) xarray.DataArray float32</p></li>
+<li><p>msk : 2D (row, col) xarray.DataArray int16, with the convention defined in the configuration file</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.img_tools.shift_sec_img">
+<code class="sig-prename descclassname">pandora.img_tools.</code><code class="sig-name descname">shift_sec_img</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img_sec</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">subpix</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>xr.Dataset<span class="p">]</span><a class="reference internal" href="../../../_modules/pandora/img_tools.html#shift_sec_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.img_tools.shift_sec_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an array that contains the shifted secondary images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>img_sec</strong> – secondary Dataset image</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>xarray.Dataset containing :</dt><dd><ul class="simple">
+<li><p>im : 2D (row, col) xarray.DataArray</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>subpix</strong> (<em>int</em>) – subpixel precision = (1 or 2 or 4)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an array that contains the shifted secondary images</p>
+</dd>
+</dl>
+<p>:rtype : array of xarray.Dataset</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.img_tools.check_inside_image">
+<code class="sig-prename descclassname">pandora.img_tools.</code><code class="sig-name descname">check_inside_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../../../_modules/pandora/img_tools.html#check_inside_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.img_tools.check_inside_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the coordinates x,y are inside the image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Dataset image</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – row coordinates</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – column coordinates</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a boolean</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.img_tools.census_transform">
+<code class="sig-prename descclassname">pandora.img_tools.</code><code class="sig-name descname">census_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">window_size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; xr.Dataset<a class="reference internal" href="../../../_modules/pandora/img_tools.html#census_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.img_tools.census_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the census transformed image from an image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>xarray.Dataset containing the image im : 2D</em><em> (</em><em>row</em><em>, </em><em>col</em><em>) </em><em>xarray.Dataset</em>) – Dataset image</p></li>
+<li><p><strong>window_size</strong> (<em>int</em>) – Census window size</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dataset census transformed uint32</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>xarray.Dataset containing the transformed image im: 2D (row, col) xarray.DataArray uint32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.img_tools.compute_mean_raster">
+<code class="sig-prename descclassname">pandora.img_tools.</code><code class="sig-name descname">compute_mean_raster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">win_size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../_modules/pandora/img_tools.html#compute_mean_raster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.img_tools.compute_mean_raster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the mean within a sliding window for the whole image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Dataset image</p></li>
+<li><p><strong>win_size</strong> (<em>int</em>) – window size</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>mean raster</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.img_tools.compute_mean_patch">
+<code class="sig-prename descclassname">pandora.img_tools.</code><code class="sig-name descname">compute_mean_patch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">win_size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="../../../_modules/pandora/img_tools.html#compute_mean_patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.img_tools.compute_mean_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the mean within a window centered at position x,y</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Dataset image</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – row coordinates</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – column coordinates</p></li>
+<li><p><strong>win_size</strong> (<em>int</em>) – window size</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>mean</p>
+</dd>
+</dl>
+<p>:rtype : float</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pandora.img_tools.compute_std_raster">
+<code class="sig-prename descclassname">pandora.img_tools.</code><code class="sig-name descname">compute_std_raster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span><span class="p">:</span> <span class="n">xr.Dataset</span></em>, <em class="sig-param"><span class="n">win_size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; np.ndarray<a class="reference internal" href="../../../_modules/pandora/img_tools.html#compute_std_raster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pandora.img_tools.compute_std_raster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the standard deviation within a sliding window for the whole image
+with the formula : std = sqrt( E[x^2] - E[x]^2 )</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Dataset image</p></li>
+<li><p><strong>win_size</strong> (<em>int</em>) – window size</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std raster</p>
+</dd>
+</dl>
+<p>:rtype : numpy array</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../marge/index.html" class="btn btn-neutral float-right" title="pandora.marge" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../disparity/index.html" class="btn btn-neutral float-left" title="pandora.disparity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

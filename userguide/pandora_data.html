@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pandora’s data &mdash; Pandora  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../api_reference/index.html" />
+    <link rel="prev" title="Stereo correspondence: step by step" href="step_by_step.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Pandora
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../userguide.html">Userguide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="step_by_step.html">Stereo correspondence: step by step</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pandora’s data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cost-volume">Cost volume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disparity-map">Disparity map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validaty-mask">Validaty mask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#border-management">Border management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reference-image">Reference image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#secondary-image">Secondary image</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pandora</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../userguide.html">Userguide</a> &raquo;</li>
+        
+      <li>Pandora’s data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/userguide/pandora_data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pandora-s-data">
+<h1>Pandora’s data<a class="headerlink" href="#pandora-s-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cost-volume">
+<h2>Cost volume<a class="headerlink" href="#cost-volume" title="Permalink to this headline">¶</a></h2>
+<p>Pandora generates a cost volume during the first step: <em>Matching cost computation</em>. The cost volume is a
+xarray.DataArray 3D float32 type, stored in a xarray.Dataset.
+When matching is impossible, the matching cost is np.nan.</p>
+<p>This Dataset also has a :</p>
+<ul class="simple">
+<li><p>xarray.DataArray 3D confidence_measure, which contains the standard deviation of pixel intensity indicator.
+More specifically, this indicator represents standard deviation of pixel intensity of the reference image
+inside a window (the same as the window used for matching cost)
+It is generated during the first step: <em>Matching cost computation</em>.</p></li>
+<li><p>xarray.DataArray disp_indices, which contains the minimum cost indices calculated in step <em>Disparity computation</em>..</p></li>
+</ul>
+<p>Example of a cost volume</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="o">&gt;</span>
+<span class="n">Dimensions</span><span class="p">:</span>       <span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="mi">996</span><span class="p">,</span> <span class="n">disp</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span> <span class="n">indicator</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="mi">996</span><span class="p">)</span>
+<span class="n">Coordinates</span><span class="p">:</span>
+  <span class="o">*</span> <span class="n">row</span>           <span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="n">int64</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="o">...</span> <span class="mi">991</span> <span class="mi">992</span> <span class="mi">993</span> <span class="mi">994</span> <span class="mi">995</span> <span class="mi">996</span> <span class="mi">997</span>
+  <span class="o">*</span> <span class="n">col</span>           <span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="n">int64</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="o">...</span> <span class="mi">991</span> <span class="mi">992</span> <span class="mi">993</span> <span class="mi">994</span> <span class="mi">995</span> <span class="mi">996</span> <span class="mi">997</span>
+  <span class="o">*</span> <span class="n">disp</span>          <span class="p">(</span><span class="n">disp</span><span class="p">)</span> <span class="n">int64</span> <span class="o">-</span><span class="mi">30</span> <span class="o">-</span><span class="mi">29</span> <span class="o">-</span><span class="mi">28</span> <span class="o">-</span><span class="mi">27</span> <span class="o">-</span><span class="mi">26</span> <span class="o">-</span><span class="mi">25</span> <span class="o">-</span><span class="mi">24</span> <span class="o">...</span> <span class="mi">28</span> <span class="mi">29</span> <span class="mi">30</span> <span class="mi">31</span> <span class="mi">32</span> <span class="mi">33</span>
+  <span class="o">*</span> <span class="n">indicator</span>     <span class="p">(</span><span class="n">indicator</span><span class="p">)</span> <span class="nb">object</span> <span class="s1">&#39;stereo_pandora_intensityStd&#39;</span>
+<span class="n">Data</span> <span class="n">variables</span><span class="p">:</span>
+    <span class="n">cost_volume</span>   <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">disp</span><span class="p">)</span> <span class="n">float32</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span> <span class="o">...</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span>
+    <span class="n">confidence_measure</span>   <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">indicator</span><span class="p">)</span> <span class="n">float32</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span> <span class="o">...</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span> <span class="n">nan</span>
+    <span class="n">disp_indices</span>  <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="n">float32</span> <span class="mf">10.0</span> <span class="mf">10.0</span> <span class="mf">10.0</span> <span class="mf">10.0</span> <span class="o">...</span> <span class="o">-</span><span class="mf">10.0</span> <span class="o">-</span><span class="mf">9.0</span> <span class="o">-</span><span class="mf">10.0</span>
+<span class="n">Attributes</span><span class="p">:</span>
+    <span class="n">measure</span><span class="p">:</span>         <span class="n">census</span>
+    <span class="n">subpixel</span><span class="p">:</span>        <span class="mi">1</span>
+    <span class="n">offset_row_col</span><span class="p">:</span>  <span class="mi">2</span>
+    <span class="n">window_size</span><span class="p">:</span>     <span class="mi">5</span>
+    <span class="n">type_measure</span><span class="p">:</span>    <span class="nb">min</span>
+    <span class="n">cmax</span><span class="p">:</span>            <span class="mi">24</span>
+    <span class="n">optimization</span><span class="p">:</span>    <span class="n">sgm</span>
+</pre></div>
+</div>
+<p>The cost volume corresponds to the variable cv ( and cv_right for the right / left cost volume ) in the file pandora/__init__.py :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">path_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_sec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="c1"># Matching cost computation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Matching cost computation...&#39;</span><span class="p">)</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">stereo_</span><span class="o">.</span><span class="n">compute_cost_volume</span><span class="p">(</span><span class="n">pandora_ref</span><span class="p">,</span> <span class="n">pandora_sec</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">)</span>
+    <span class="o">...</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computing the right disparity map with the accurate method...&#39;</span><span class="p">)</span>
+    <span class="n">cv_right</span> <span class="o">=</span> <span class="n">stereo_</span><span class="o">.</span><span class="n">compute_cost_volume</span><span class="p">(</span><span class="n">pandora_sec</span><span class="p">,</span> <span class="n">pandora_ref</span><span class="p">,</span> <span class="o">-</span><span class="n">disp_max</span><span class="p">,</span> <span class="o">-</span><span class="n">disp_min</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cost volume contains only the similarity factors calculated with the steps <em>Calculation of mapping costs</em>,
+<em>Aggregation of costs</em>, <em>Optimization</em>. It does not contain the interpolated factors ( calculated in step
+<em>disparity refinement</em>), these are available in the <em>interpolated_coeff</em> variable in the Disparity Dataset.</p>
+</div>
+</div>
+<div class="section" id="disparity-map">
+<h2>Disparity map<a class="headerlink" href="#disparity-map" title="Permalink to this headline">¶</a></h2>
+<p>The <em>Disparity computation</em> step generates a disparity map in cost volume geometry. This disparity map is
+a float32 type 2D xarray.DataArray, stored in a xarray.Dataset.
+This Dataset also has a :</p>
+<ul class="simple">
+<li><p>xarray.DataArray 3D confidence_measure, which contains quality indicators. It can be enriched by indicators calculated in the different plugins.</p>
+<ul>
+<li><p>standard deviation of the intensities within the a window: “stereo_pandora_intensityStd”</p></li>
+<li><p>distance between left-right (or right-left) disparities: “validation_pandora_distanceOfDisp”, if “cross_checking” validation is enabled</p></li>
+</ul>
+</li>
+<li><p>xarray.DataArray validity_mask which represents the <a class="reference internal" href="#validity-mask-data"><span class="std std-ref">Validaty mask</span></a>.</p></li>
+<li><p>xarray.DataArray interpolated_coeff, which contains the similarity coefficients interpolated by the Disparity Refinement Method.</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:             (col: 1000, indicator: 2, row: 1000)
+Coordinates:
+  * row                 (row) int64 0 1 2 3 4 5 6 ... 994 995 996 997 998 999
+  * col                 (col) int64 0 1 2 3 4 5 6 ... 994 995 996 997 998 999
+  * indicator           (indicator) object &#39;stereo_pandora_intensityStd&#39; &#39;validation_pandora_distanceOfDisp&#39;
+Data variables:
+    disparity_map       (row, col) float32 0.0 0.0 0.0 0.0 ... 0.0 0.0 0.0 0.0
+    validity_mask       (row, col) uint16 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
+    interpolated_coeff  (row, col) float64 nan nan nan nan ... nan nan nan nan
+    confidence_measure  (row, col, indicator) float32 nan nan nan ... nan nan nan
+Attributes:
+    measure:                census
+    subpixel:               1
+    offset_row_col:         0
+    window_size:            5
+    type_measure:           min
+    cmax:                   24
+    optimization:           sgm
+    disp_min:               -30
+    disp_max:               33
+    refinement:             vfit
+    filter:                 median
+    validation:             cross_checking
+    interpolated_disparity: none
+</pre></div>
+</div>
+<p>The disparity maps correspond to the variables ref, sec in the pandora file __init__.py:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">img_ref</span><span class="p">,</span> <span class="n">img_sec</span><span class="p">,</span> <span class="n">disp_min</span><span class="p">,</span> <span class="n">disp_max</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">path_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_sec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="c1"># Disparity computation and validity mask</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Disparity computation...&#39;</span><span class="p">)</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="n">disparity</span><span class="o">.</span><span class="n">to_disp</span><span class="p">(</span><span class="n">cv</span><span class="p">)</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="n">ref</span><span class="p">,</span> <span class="n">sec</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="validaty-mask">
+<span id="validity-mask-data"></span><h2>Validaty mask<a class="headerlink" href="#validaty-mask" title="Permalink to this headline">¶</a></h2>
+<p>Validity masks are 2D xarray.DataArray and are 16-bit encoded: each bit represents a
+rejection criterion (= 1 if rejection, = 0 otherwise):</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 92%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Bit</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>The point is invalid, there are two possible cases:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>border of reference image</p></li>
+<li><p>nodata of reference image</p></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>The point is invalid, there are two possible cases:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Disparity range does not permit to find any point on the secondary image</p></li>
+<li><p>nodata of secondary image</p></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Information : disparity range cannot be used completely , reaching border of secondary image</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Information: calculations stopped at the pixel stage, sub-pixel interpolation was not successful
+(for vfit: pixels d-1 and/or d+1 could not be calculated)</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Information : closed occlusion</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>Information : closed mismatch</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>The point is invalid: invalidated by the validity mask associated to the reference image</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>The point is invalid: secondary positions to be scanned invalidated by the mask of the secondary image</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>The Point is invalid: point located in an occlusion zone</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>The point is invalid: mismatch</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>The validity masks are stored in the xarray.Dataset ref and sec in the pandora/__init__.py file.</p>
+</div>
+<div class="section" id="border-management">
+<h2>Border management<a class="headerlink" href="#border-management" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reference-image">
+<h3>Reference image<a class="headerlink" href="#reference-image" title="Permalink to this headline">¶</a></h3>
+<p>Pixels of the reference image for which the measurement thumbnail protrudes from the reference image are truncated
+in the cost volume, disparity maps and masks. Therefore, the memory occupancy of the cost volume is
+diminished.
+For a similarity measurement with a 5x5 window, these incalculable pixels in the reference image correspond
+to a 2-pixel crown at the top, bottom, right and left, and are represented by the offset_row_col attribute in
+the xarray.Dataset. For an image of 100x100 with a window of 5x5, the products will be of dimension :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:      (col: 96, row: 96)
+Coordinates:
+  * row          (row) int64 2 3 4 5 6 7 8 9 10 ... 89 90 91 92 93 94 95 96 97
+  * col          (col) int64 2 3 4 5 6 7 8 9 10 ... 89 90 91 92 93 94 95 96 97
+Attributes:
+    offset_row_col:  2
+</pre></div>
+</div>
+<p>The resize method of the disparity module, allows to restitute disparity maps and masks with the size
+original: add the pixels that have been truncated:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:      (col: 100, row: 100)
+Coordinates:
+  * row          (row) int64 0 1 2 3 4 5 6 7 8 9 ... 91 92 93 94 95 96 97 98 99
+  * col          (col) int64 0 1 2 3 4 5 6 7 8 9 ... 91 92 93 94 95 96 97 98 99
+Attributes:
+    offset_row_col:  0
+</pre></div>
+</div>
+<p>These pixels will have bit 0 set, <em>The point is invalid: reference image edge</em>, in the <a class="reference internal" href="usage.html#validity-mask"><span class="std std-ref">Validity mask</span></a> and
+will be assigned the <em>invalid_disparity</em> ( configurable in the json configuration file ) in the disparity maps.</p>
+</div>
+<div class="section" id="secondary-image">
+<h3>Secondary image<a class="headerlink" href="#secondary-image" title="Permalink to this headline">¶</a></h3>
+<p>Because of the disparity range choice, it is possible that there is no available point to scan on the secondary image.
+In this case, matching cost cannot be computed for this pixel and the value will be set to <img class="math" src="../_images/math/16c29f7cc4864fe0fe5ceca632790dfab4c677b2.png" alt="nan"/> .
+Then bit 1 will be set : <em>The point is invalid: the disparity interval to explore is
+absent in the secondary image</em> and the point disparity will be set to <em>invalid_disparity</em>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api_reference/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="step_by_step.html" class="btn btn-neutral float-left" title="Stereo correspondence: step by step" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, CNES
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

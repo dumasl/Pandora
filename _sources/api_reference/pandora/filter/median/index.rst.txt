@@ -1,0 +1,76 @@
+:mod:`pandora.filter.median`
+============================
+
+.. py:module:: pandora.filter.median
+
+.. autoapi-nested-parse::
+
+   This module contains functions associated to the median filter used to filter the disparity map.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pandora.filter.median.MedianFilter
+
+
+
+.. py:class:: MedianFilter(**cfg: Union[str, int])
+
+   Bases: :class:`pandora.filter.filter.AbstractFilter`
+
+   MedianFilter class allows to perform the filtering step
+
+   .. attribute:: _FILTER_SIZE
+      :annotation: = 3
+
+      
+
+   .. method:: check_conf(self, **cfg: Union[str, int]) -> Dict[str, Union[str, int]]
+
+      Add default values to the dictionary if there are missing elements and check if the dictionary is correct
+
+      :param cfg: filter configuration
+      :type cfg: dict
+      :return cfg: filter configuration updated
+      :rtype: dict
+
+
+   .. method:: desc(self)
+
+      Describes the filtering method
+
+
+   .. method:: filter_disparity(self, disp: xr.Dataset, img_ref: xr.Dataset = None, img_sec: xr.Dataset = None, cv: xr.Dataset = None) -> xr.Dataset
+
+      Apply a median filter on valid pixels.
+      Invalid pixels are not filtered. If a valid pixel contains an invalid pixel in its filter, the invalid pixel is
+      ignored for the calculation of the median.
+
+      :param disp: the disparity map dataset
+      :type disp:
+          xarray.Dataset with the variables :
+              - disparity_map 2D xarray.DataArray (row, col)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+              - validity_mask 2D xarray.DataArray (row, col)
+      :param img_ref: reference Dataset image
+      :tye img_ref: xarray.Dataset
+      :param img_sec: secondary Dataset image
+      :type img_sec: xarray.Dataset
+      :param cv: cost volume dataset
+      :type cv: xarray.Dataset
+      :return: the Dataset with the filtered DataArray disparity_map
+      :rtype:
+          xarray.Dataset with the variables :
+              - disparity_map 2D xarray.DataArray (row, col)
+              - confidence_measure 3D xarray.DataArray (row, col, indicator)
+              - validity_mask 2D xarray.DataArray (row, col)
+
+
+
