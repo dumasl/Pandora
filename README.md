@@ -4,6 +4,7 @@ This CNES software implements a stereo pipeline which produces disparity map fro
 stereo algorithms are available. The implementation  is  modular  and  can  easily  be  ex-tended to include other 
 algorithms. 
 
+
 The pipeline performs the following steps:
 
     1. matching cost computation
