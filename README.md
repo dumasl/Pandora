@@ -5,6 +5,7 @@ stereo algorithms are available. The implementation  is  modular  and  can  easi
 algorithms. 
 
 
+
 The pipeline performs the following steps:
 
     1. matching cost computation
