@@ -1,20 +1,21 @@
 language: python
 python:
-  - 3.6
+- 3.6
 before_install:
-  - python --version
-  - pip install -U pip
-  - pip install nose2
-  - pip install codecov
+- python --version
+- pip install -U pip
+- pip install nose2
+- pip install codecov
 install:
-  - pip install .
-script: 
-  - export NUMBA_DISABLE_JIT="1" && nose2 --plugin nose2.plugins.junitxml --with-coverage --coverage pandora --coverage-report xml -X
- deploy:
+- pip install .
+script:
+- export NUMBA_DISABLE_JIT="1" && nose2 --plugin nose2.plugins.junitxml --with-coverage
+  --coverage pandora --coverage-report xml -X
+deploy:
   provider: pypi
-  username: "__token__"
+  username: __token__
   password:
-    secure: "Your encrypted token"
+    secure: ECrOC/ncSkPbj713mDMDot572v6TfT0y/YqBkTEayvIeZqyq4Bq93iuKm39VGToiWl8KdxKsLVJYbRjrXthnR5aK8cwnFEJWEm50HG+3BEVFIic/81q6jDMaWlgErGU+k6lwHGOQlvqZG8PUHS2Qyplqg04j65WkRdiIZz9EUty24MHlgH0A9wE3DOcx9txg71FUEX2ichG+mx+YTPij/KvetALOQ6MuGGByQopW24xdnDp3MkPfIbJn0UinZsETxIyjbCT3xLtbOdngxhIpTi1vocB/lqfx4C3okXJZ4smOidajZN/IYLvTjOXwzsMoWllZiFnI0qRRSzCeYsqdQ+Ati5k51aTiIY/rFik7HVU19qG+vpX49JjHsVPZz2sxeXs27rOlwoJJk9j9AAwr4MMEuHckqI0U41MrT2kD2qETnLuLDO4bLtqDgWon4PP6mgpLTTBOCPbq++j2wsyKixfVOQyCr0PTk1Ju4Vw0X/ddmG1c8bJimXVcgj+Q4PvF00s+hZBT/iN8QUQT/b8HPohMIUIT99Zg6NMu4/mysFB2EW8F9JLE0pKqf0bUF7niXN4Qe1Mxlg6FQJl+tnDKoolXwLJDgOE1/NSObY9FGnrTaTswqW4sWGoT9jfXaBq8OdhsyRHigsEfFViPiARsUo22mvPw5jdmK3zcCUPfl4s=
   on:
     tags: true
   server: https://test.pypi.org/legacy/
