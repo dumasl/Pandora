@@ -50,7 +50,7 @@ def readme():
         return f.read()
 
 
-setup(name='pandora',
+setup(name='pandora_pour_tester_quoi_juste_ok',
       version='x.y.z',
       description='Pandora is a stereo matching framework that helps emulate state of the art algorithms',
       long_description=readme(),
