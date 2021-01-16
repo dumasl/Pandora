@@ -30,3 +30,4 @@ deploy:
   on:
     tags: true
   server: https://test.pypi.org/legacy/
+  skip_cleanup: true
