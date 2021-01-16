@@ -19,7 +19,7 @@ script:
 before_deploy: 
 - echo 'update version according to the tag name'
 - sed -i "/version=/d" setup.py
-- sed -i 's|long_description=readme(),|long_description=readme(),\\n      version='"'${TRAVIS_TAG}'"',|' setup.py
+- sed -i 's|long_description=readme(),|long_description=readme(),\n      version='"'${TRAVIS_TAG}'"',|' setup.py
 - cat setup.py | grep version
 
 deploy:
